@@ -14,8 +14,8 @@
     <!-- layout for Beatname -->
     <!-- layout for Shopname -->
     <!-- layout for Customername -->
-
-    <LinearLayout
+    
+	<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
