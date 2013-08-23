@@ -5,12 +5,12 @@
 
     <!-- Order Page Title -->
 
-    <TextView
+    <!-- <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="@string/addorderdetails"
-        android:textSize="20sp" />
+        android:text="@string/title_order_page"
+        android:textSize="20sp" /> -->
     <!-- layout for Beatname -->
     <!-- layout for Shopname -->
     <!-- layout for Customername -->
