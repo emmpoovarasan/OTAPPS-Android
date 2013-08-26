@@ -13,25 +13,34 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.Scroller;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 public class OrderPage extends Activity {
 	Button btnAddOrder;//, btnOrderList;
 	Spinner spnBeatName, spnShopName, spnCustomerName;
+	ScrollView scrollPage;
+	LinearLayout linerLayoutContentView;
 	public String pathName;
 	public String actualPathName = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_order_page);
+		scrollPage = (ScrollView)findViewById(R.id.scroll_view);
+		linerLayoutContentView = (LinearLayout)findViewById(R.id.content);
 		//find the location of the excel file
 		loadExternalPath();
 		//load spinnerBeatName
@@ -49,8 +58,26 @@ public class OrderPage extends Activity {
 		/*addOrderDetails.setOnClickListener(clickButton);
 		btnOrderList = (Button)findViewById(R.id.orderlist);
 		btnOrderList.setOnClickListener(clickButton);*/
+		//scrollPage.setOnTouchListener(test);
+		scrollPage.post(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				scrollPage.scrollTo(0, linerLayoutContentView.getPaddingTop());
+			}
+		});
 	}
 	
+	/*private OnTouchListener test = new OnTouchListener() {
+		
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+			// TODO Auto-generated method stub
+			scrollPage.scrollTo(0, linerLayoutContentView.getPaddingTop());
+			return false;
+		}
+	};*/
 	private OnClickListener checkMyDir = new OnClickListener() {
 		
 		@Override
