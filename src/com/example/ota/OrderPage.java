@@ -39,6 +39,7 @@ public class OrderPage extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_order_page);
+		// added this line to scroll the page
 		scrollPage = (ScrollView)findViewById(R.id.scroll_view);
 		linerLayoutContentView = (LinearLayout)findViewById(R.id.content);
 		//find the location of the excel file
@@ -59,6 +60,8 @@ public class OrderPage extends Activity {
 		btnOrderList = (Button)findViewById(R.id.orderlist);
 		btnOrderList.setOnClickListener(clickButton);*/
 		//scrollPage.setOnTouchListener(test);
+		
+		// for adding this code scrolling the page;
 		scrollPage.post(new Runnable() {
 			
 			@Override
