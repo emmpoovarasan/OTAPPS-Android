@@ -31,8 +31,8 @@ import android.widget.Toast;
 public class OrderPage extends Activity {
 	Button btnAddOrder;//, btnOrderList;
 	Spinner spnBeatName, spnShopName, spnCustomerName;
-	ScrollView scrollPage;
-	LinearLayout linerLayoutContentView;
+	ScrollView scrollOrderPage;
+	LinearLayout lnrLayContentViewOrderPage;
 	public String pathName;
 	public String actualPathName = null;
 	@Override
@@ -40,8 +40,9 @@ public class OrderPage extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_order_page);
 		// added this line to scroll the page
-		scrollPage = (ScrollView)findViewById(R.id.scroll_view);
-		linerLayoutContentView = (LinearLayout)findViewById(R.id.content);
+		//Setting scroll view & content view
+		scrollOrderPage = (ScrollView)findViewById(R.id.scroll_view);
+		lnrLayContentViewOrderPage = (LinearLayout)findViewById(R.id.content);
 		//find the location of the excel file
 		loadExternalPath();
 		//load spinnerBeatName
@@ -62,12 +63,12 @@ public class OrderPage extends Activity {
 		//scrollPage.setOnTouchListener(test);
 		
 		// for adding this code scrolling the page;
-		scrollPage.post(new Runnable() {
+		scrollOrderPage.post(new Runnable() {
 			
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				scrollPage.scrollTo(0, linerLayoutContentView.getPaddingTop());
+				scrollOrderPage.scrollTo(0, lnrLayContentViewOrderPage.getPaddingTop());
 			}
 		});
 	}

@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity {
@@ -22,11 +24,18 @@ public class LoginActivity extends Activity {
 	String userName, passWord;
 	EditText username, password;
 	Button login;
+	ScrollView scrollLoginPage;
+	LinearLayout lnrLayContentViewLoginPage;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		// added this line to scroll the page
+		//Setting scroll view & content view
+		scrollLoginPage = (ScrollView)findViewById(R.id.scroll_view_login);
+		lnrLayContentViewLoginPage = (LinearLayout)findViewById(R.id.content_login);
+		// load excel file path
 		loadExternalPath();
 		// UI elements gets bind in form of Java Objects
 		username = (EditText)findViewById(R.id.username);
@@ -37,6 +46,15 @@ public class LoginActivity extends Activity {
         // i.e. OnClick Event
 		login.setOnClickListener(loginListener);
 		
+		// for adding this code scrolling the page;
+		scrollLoginPage.post(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				scrollLoginPage.scrollTo(0, lnrLayContentViewLoginPage.getPaddingTop());
+			}
+		});
 	}
 	private OnClickListener loginListener = new OnClickListener() {
 		
