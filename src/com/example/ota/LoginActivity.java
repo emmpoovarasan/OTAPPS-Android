@@ -101,15 +101,31 @@ public class LoginActivity extends Activity {
 		/**
 		 * find the location of the excel file
 		 */
-		pathName = Environment.getExternalStorageDirectory().toString()+"//OTA";
-		Log.d("Files", "Path : "+pathName);		
-		File f = new File(pathName);
-		File fl[] = f.listFiles();
-		Log.d("Files", "Size : "+fl.length);		
-		for(int i=0; i<fl.length;i++){
-			Log.d("Files", "File Name : "+fl[i].getName());
-			Log.d("Files", "AbsFile Path : "+fl[i].getAbsolutePath());
-			actualPathName = fl[i].getAbsolutePath();			
+		try {
+			if(Environment.isExternalStorageRemovable()==true){
+				Toast.makeText(getApplicationContext(), "ExternalStoageDirectory is found "+Environment.isExternalStorageRemovable(), Toast.LENGTH_SHORT).show();
+				Log.d("ExternalStoageDirectory Found", "ExternalStoageDirectory is found "+Environment.isExternalStorageRemovable());
+				pathName = Environment.getExternalStorageDirectory().toString()+"//OTA";
+				Log.d("Files", "Path : "+pathName);		
+				File f = new File(pathName);
+				File fl[] = f.listFiles();
+				Log.d("Files", "Size : "+fl.length);		
+				for(int i=0; i<fl.length;i++){
+					Log.d("Files", "File Name : "+fl[i].getName());
+					Log.d("Files", "AbsFile Path : "+fl[i].getAbsolutePath());
+					actualPathName = fl[i].getAbsolutePath();			
+				}
+				
+			}else{
+				Toast.makeText(getApplicationContext(), "No ExternalStoageDirectory", Toast.LENGTH_SHORT).show();
+				Log.d("No ExternalStoageDirectory", "No ExternalStoageDirectory");
+			}
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			Toast.makeText(getApplicationContext(), "File not found", Toast.LENGTH_SHORT).show();
+			Log.d("File Not Found", "File Not Found");
 		}
 	}
 }

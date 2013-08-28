@@ -54,19 +54,67 @@
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_margin="10dp" />
+	        <TextView
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_margin="10dp"
+	            android:text="@string/productname" />
+	        <Spinner
+	            android:id="@+id/spinnerProductname"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_margin="10dp" />
+	        <Button
+		        android:id="@+id/getorderdetails"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_margin="10dp"
+		        android:text="@string/getorderdetails" />
+
+	        <TableLayout
+	            android:id="@+id/tableLayoutOrder"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:stretchColumns="true"
+	            android:shrinkColumns="true" >
+	        </TableLayout>
+	        <!-- <TableRow
+	                android:id="@+id/tableRow1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content">
+	                <TextView
+			            android:layout_width="fill_parent"
+			            android:layout_height="wrap_content"
+			            android:layout_margin="10dp"
+			            android:text="Product Name" />
+	                <TextView
+			            android:layout_width="fill_parent"
+			            android:layout_height="wrap_content"
+			            android:layout_margin="10dp"
+			            android:text="In Stock" />
+	                <TextView
+			            android:layout_width="fill_parent"
+			            android:layout_height="wrap_content"
+			            android:layout_margin="10dp"
+			            android:text="Order Qty" />
+	                <TextView
+			            android:layout_width="fill_parent"
+			            android:layout_height="wrap_content"
+			            android:layout_margin="10dp"
+			            android:text="Amount" />
+	                <TextView
+			            android:layout_width="fill_parent"
+			            android:layout_height="wrap_content"
+			            android:layout_margin="10dp"
+			            android:text="Net Amount" />
+	            </TableRow> -->
+	        
 	        <Button
 		        android:id="@+id/orderlist"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        android:layout_margin="10dp"
 		        android:text="@string/orderList" />
-	
-		    <Button
-		        android:id="@+id/addorderdetails"
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-		        android:layout_margin="10dp"
-		        android:text="@string/addorderdetails" />
 	    </LinearLayout>
 	</LinearLayout>
 </ScrollView>

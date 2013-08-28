@@ -4,10 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.TreeSet;
 
+import android.R.integer;
 import android.util.Log;
 
 import jxl.Cell;
@@ -21,11 +20,36 @@ public class JXLReader {
   private String inputFile;
   private String sheetName;
   private String areaName;
+  
 
   public void setInputFile(String inputFile, String sheetName, String areaName) {
     this.inputFile = inputFile;
     this.sheetName = sheetName;
     this.areaName = areaName;
+  }
+  public ArrayList<String> getProductName() throws IOException{
+	  Log.d("getProductName function", "Successfully entered to getProductName");
+	  File inputWorkbook = new File(inputFile);
+	  Workbook w;
+	  TreeSet treeSetProductName = new TreeSet();
+	  ArrayList<String> arrayProductName = new ArrayList<String>();
+	  try {
+		w = Workbook.getWorkbook(inputWorkbook);
+		Sheet sheet = w.getSheet(sheetName);
+		for(int i=1;i<sheet.getRows();i++){
+			Cell cellProductName = sheet.getCell(1, i);
+			Cell cellInStock = sheet.getCell(2, i);
+			Cell cellAmount = sheet.getCell(4, i);
+			Log.d("Values of Products", cellProductName.getContents() +"@"+ cellInStock.getContents()+"@"+cellAmount.getContents());
+			if(!"".equals(cellProductName.getContents())){
+					treeSetProductName.add(cellProductName.getContents()+"@"+cellInStock.getContents()+"@"+cellAmount.getContents());	
+			}
+		}
+		arrayProductName.addAll(treeSetProductName);
+	} catch (Exception e) {
+		// TODO: handle exception
+	}
+	return arrayProductName;
   }
   public ArrayList<String> getCustomerName() throws IOException{
 	  Log.d("getCustomerName function", "Successfully entered to getCustomerName");
@@ -50,6 +74,7 @@ public class JXLReader {
 	}
 	  return arrayListCustomerName;
   }
+  
   public ArrayList<String> getShopName() throws IOException{
 	  Log.d("getShopName function", "Successfully entered to getShopName");
 	  File inputWorkbook = new File(inputFile);
@@ -138,6 +163,20 @@ public class JXLReader {
 	  return loginStatus;
 	  
   }
+  /*public boolean getWriteOrderList(String inputFile, String sheetName, String productName) throws IOException{
+	  boolean status = false;
+	  File inputWorkbook = new File(inputFile);
+	  
+	  Workbook w;
+	  try {
+		  w = Workbook.getWorkbook(inputWorkbook);
+		  
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+	}
+	  return status;
+  }*/
   
 //public static void main(String[] args) throws IOException {
 //	JXLReader test = new JXLReader();

@@ -4,10 +4,9 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="17" />
-    
+    <uses-sdk android:minSdkVersion="8" />
+    <!-- android:targetSdkVersion="17" -->
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -25,6 +24,10 @@
         <activity
             android:name="com.example.ota.OrderPage"
             android:label="@string/title_order_page" >
+        </activity>
+        <activity
+            android:name="com.example.ota.OrderDetailsActivity"
+            android:label="@string/title_activity_order_details" >
         </activity>
     </application>
 
