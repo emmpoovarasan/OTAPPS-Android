@@ -29,6 +29,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Scroller;
@@ -45,6 +46,7 @@ public class OrderPage extends Activity {
 	LinearLayout lnrLayContentViewOrderPage;
 	public String pathName;
 	public String actualPathName = null;
+	TableLayout table1;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,7 @@ public class OrderPage extends Activity {
 		loadProductName();
 		
 		// load table dynamic
-		buildOrderTable();
+		//buildOrderTable();
 		// for adding this code scrolling the page;
 		scrollOrderPage.post(new Runnable() {
 			
@@ -101,13 +103,14 @@ public class OrderPage extends Activity {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			Toast.makeText(getApplicationContext(), "Add to Order List", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getApplicationContext(), "Add to Order List", Toast.LENGTH_SHORT).show();
+			Log.d("Click Order Button", "Add to Order List");
 			//Log.d("checkMyDir", actualPathName);
 			// to navigate other page
 			/*Intent myintent = new Intent(getApplicationContext(), OrderDetailsActivity.class);
 			Toast.makeText(getApplicationContext(), "Navigate to order details page", Toast.LENGTH_SHORT).show();
 			startActivity(myintent);*/
-			
+			setTable();
 		}
 	};
 
@@ -146,16 +149,28 @@ public class OrderPage extends Activity {
 		/**
 		 * find the location of the excel file
 		 */
-		pathName = Environment.getExternalStorageDirectory().toString()+"//OTA";
-		Log.d("Files", "Path : "+pathName);		
-		File f = new File(pathName);
-		File fl[] = f.listFiles();
-		Log.d("Files", "Size : "+fl.length);		
-		for(int i=0; i<fl.length;i++){
-			Log.d("Files", "File Name : "+fl[i].getName());
-			Log.d("Files", "AbsFile Path : "+fl[i].getAbsolutePath());
-			actualPathName = fl[i].getAbsolutePath();			
+		try {
+			if(Environment.isExternalStorageRemovable()==true){
+				//Toast.makeText(getApplicationContext(), "ExternalStoageDirectory is found "+Environment.isExternalStorageRemovable(), Toast.LENGTH_SHORT).show();
+				Log.d("ExternalStoageDirectory Found", "ExternalStoageDirectory is found "+Environment.isExternalStorageRemovable());
+				pathName = Environment.getExternalStorageDirectory().toString()+"//OTA";
+				Log.d("Files", "Path : "+pathName);		
+				File f = new File(pathName);
+				File fl[] = f.listFiles();
+				Log.d("Files", "Size : "+fl.length);		
+				for(int i=0; i<fl.length;i++){
+					Log.d("Files", "File Name : "+fl[i].getName());
+					Log.d("Files", "AbsFile Path : "+fl[i].getAbsolutePath());
+					actualPathName = fl[i].getAbsolutePath();			
+				}
+			}else{
+				//Toast.makeText(getApplicationContext(), "No ExternalStoageDirectory", Toast.LENGTH_SHORT).show();
+				Log.d("No ExternalStoageDirectory", "No ExternalStoageDirectory");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
+		
 	}
 	private void loadBeatName(){
 		/**
@@ -274,7 +289,8 @@ public class OrderPage extends Activity {
 		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
 			// TODO Auto-generated method stub
-			Toast.makeText(getApplicationContext(), String.valueOf(spnCustomerName.getSelectedItem()), Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getApplicationContext(), String.valueOf(spnCustomerName.getSelectedItem()), Toast.LENGTH_SHORT).show();
+			Log.d("Get Custname", String.valueOf(spnCustomerName.getSelectedItem()));
 			
 		}
 		@Override
@@ -309,7 +325,8 @@ public class OrderPage extends Activity {
 		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
 			// TODO Auto-generated method stub
-			Toast.makeText(getApplication(), String.valueOf(spnProductName.getSelectedItem()), Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getApplication(), String.valueOf(spnProductName.getSelectedItem()), Toast.LENGTH_SHORT).show();
+			Log.d("Select ProdcutName", String.valueOf(spnProductName.getSelectedItem()));
 			/*try {
 				if(CheckWriteOrderList() == true){
 					Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
@@ -329,6 +346,62 @@ public class OrderPage extends Activity {
 			
 		}
 	};
+	private void setTable(){
+		//Toast.makeText(getApplication(), "setTable()", Toast.LENGTH_SHORT).show();
+		Log.d("setTable()", "setTable() is called");
+		String productName = String.valueOf(spnProductName.getSelectedItem());
+		final String[] splitString = productName.split("@");
+		
+		table1 = (TableLayout)findViewById(R.id.tableLayoutOrder);
+		
+		// Create the table from the source code without xml:
+		TableRow row = new TableRow(this);
+		row.setBackgroundColor(color.darker_gray);
+		table1.addView(row);
+		
+		// number of rows
+		TextView nr = new TextView(this);
+		nr.setBackgroundColor(color.white);
+		nr.setTextColor(Color.BLUE);
+		nr.setText(String.valueOf(table1.getChildCount()));
+		row.addView(nr);
+		
+		// product name
+		TextView prdName = new TextView(this);
+		prdName.setBackgroundColor(Color.WHITE);
+		prdName.setTextColor(Color.BLUE);
+		prdName.setText(String.valueOf(splitString[0]));
+		prdName.setHorizontalFadingEdgeEnabled(true);
+		row.addView(prdName);
+						
+		// instock
+		TextView inStock = new TextView(this);
+		inStock.setBackgroundColor(Color.WHITE);
+		inStock.setTextColor(Color.BLUE);
+		inStock.setText(String.valueOf(splitString[1]));
+		row.addView(inStock);
+		
+		// orderqty
+		EditText orderQty = new EditText(this);
+		orderQty.setBackgroundColor(Color.YELLOW);
+		orderQty.setTextColor(Color.BLACK);
+		row.addView(orderQty);
+		
+		// amount
+		TextView amount = new TextView(this);
+		amount.setBackgroundColor(Color.WHITE);
+		amount.setTextColor(Color.BLUE);
+		amount.setText(String.valueOf(splitString[2]));
+		row.addView(amount);
+		Double Total = Integer.parseInt(String.valueOf(splitString[1])) * Double.parseDouble(String.valueOf(splitString[2]));
+		// netamount
+		TextView netAmount = new TextView(this);
+		netAmount.setBackgroundColor(Color.WHITE);
+		netAmount.setTextColor(Color.BLUE);
+		netAmount.setText(String.valueOf(Total));
+		row.addView(netAmount);
+				
+	}
 	private void buildOrderTable(){
 		int rowCount = 5;
 		TableLayout table = (TableLayout)findViewById(R.id.tableLayoutOrder);
@@ -344,12 +417,16 @@ public class OrderPage extends Activity {
 		}
 		
 	}
-	public void fillRow(TableRow row, int noRow){
+	private void fillRow(TableRow row, int noRow){
+		String productName = String.valueOf(spnProductName.getSelectedItem());
+		final String[] splitString = productName.split("@");
+		
+		
 		// number of rows
 		TextView nr = new TextView(this);
 		nr.setBackgroundColor(color.white);
 		nr.setTextColor(Color.BLUE);
-		nr.setText(String.valueOf(noRow + 1));
+		nr.setText(String.valueOf(noRow));
 		row.addView(nr);
 		/*LinearLayout.LayoutParams llp = (LinearLayout.LayoutParams) nr.getLayoutParams();
 		llp.setMargins(0, 0, 0, 1);
@@ -361,7 +438,7 @@ public class OrderPage extends Activity {
 		firstN.setBackgroundColor(Color.WHITE);
 		firstN.setTextColor(Color.BLUE);
 		//firstN.setText(firstNames[noRow]);
-		firstN.setText(String.valueOf(noRow+" Productname"));
+		firstN.setText(String.valueOf(splitString[0]));
 		row.addView(firstN);
 		/*llp = (LinearLayout.LayoutParams) firstN.getLayoutParams();
 		llp.setMargins(0, 0, 0, 1);
@@ -373,7 +450,7 @@ public class OrderPage extends Activity {
 		TextView lastN = new TextView(this);
 		lastN.setBackgroundColor(Color.WHITE);
 		lastN.setTextColor(Color.BLUE);
-		lastN.setText(String.valueOf(noRow+" Productname"));
+		lastN.setText(String.valueOf(splitString[1]));
 		row.addView(lastN);
 		/*llp = (LinearLayout.LayoutParams) lastN.getLayoutParams();
 		llp.setMargins(0, 0, 0, 1);

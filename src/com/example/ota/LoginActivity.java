@@ -103,7 +103,7 @@ public class LoginActivity extends Activity {
 		 */
 		try {
 			if(Environment.isExternalStorageRemovable()==true){
-				Toast.makeText(getApplicationContext(), "ExternalStoageDirectory is found "+Environment.isExternalStorageRemovable(), Toast.LENGTH_SHORT).show();
+				//Toast.makeText(getApplicationContext(), "ExternalStoageDirectory is found "+Environment.isExternalStorageRemovable(), Toast.LENGTH_SHORT).show();
 				Log.d("ExternalStoageDirectory Found", "ExternalStoageDirectory is found "+Environment.isExternalStorageRemovable());
 				pathName = Environment.getExternalStorageDirectory().toString()+"//OTA";
 				Log.d("Files", "Path : "+pathName);		
@@ -117,7 +117,7 @@ public class LoginActivity extends Activity {
 				}
 				
 			}else{
-				Toast.makeText(getApplicationContext(), "No ExternalStoageDirectory", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(getApplicationContext(), "No ExternalStoageDirectory", Toast.LENGTH_SHORT).show();
 				Log.d("No ExternalStoageDirectory", "No ExternalStoageDirectory");
 			}
 			
