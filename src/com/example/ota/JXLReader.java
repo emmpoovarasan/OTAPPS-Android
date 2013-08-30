@@ -163,21 +163,20 @@ public class JXLReader {
 	  return loginStatus;
 	  
   }
-  /*public boolean getWriteOrderList(String inputFile, String sheetName, String productName) throws IOException{
-	  boolean status = false;
+
+  public static Integer getProductRows(String inputFile, String sheetName){
+	  Integer actualRows=0;
 	  File inputWorkbook = new File(inputFile);
-	  
 	  Workbook w;
 	  try {
-		  w = Workbook.getWorkbook(inputWorkbook);
-		  
-		
+		w = Workbook.getWorkbook(inputWorkbook);
+		Sheet sheet = w.getSheet(sheetName);
+		actualRows = sheet.getRows()-1;
 	} catch (Exception e) {
 		// TODO: handle exception
 	}
-	  return status;
-  }*/
-  
+	  return actualRows;
+  }
 //public static void main(String[] args) throws IOException {
 //	JXLReader test = new JXLReader();
 //  test.setInputFile("c:/temp/lars.xls");

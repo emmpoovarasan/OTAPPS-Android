@@ -17,12 +17,13 @@
     <string name="cutomername">Customer name</string>
     <string name="getorderdetails">Get Order Details</string>
     <string name="orderList">Order List</string>
-    <!--  Order details activity page-->
+    <!-- Order details activity page -->
     <string name="title_activity_order_details">Order Details Activity</string>
     <string name="productname">Product Name</string>
     <string name="instockqty">In Stock</string>
     <string name="orderqty">Order Qty</string>
     <string name="amount">Amount</string>
     <string name="netamount">Net Amount</string>
+    <string name="title_activity_dashboard_page">DashboardPage</string>
 
 </resources>

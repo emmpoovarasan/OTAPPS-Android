@@ -19,8 +19,6 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity {
-	private String pathName;
-	private String actualPathName = null;
 	String userName, passWord;
 	EditText username, password;
 	Button login;
@@ -35,15 +33,10 @@ public class LoginActivity extends Activity {
 		//Setting scroll view & content view
 		scrollLoginPage = (ScrollView)findViewById(R.id.scroll_view_login);
 		lnrLayContentViewLoginPage = (LinearLayout)findViewById(R.id.content_login);
-		// load excel file path
-		loadExternalPath();
-		// UI elements gets bind in form of Java Objects
+		
 		username = (EditText)findViewById(R.id.username);
 		password = (EditText)findViewById(R.id.password);
 		login = (Button)findViewById(R.id.login);
-		// now we have got the handle over the UI widgets
-        // setting listener on Login Button
-        // i.e. OnClick Event
 		login.setOnClickListener(loginListener);
 		
 		// for adding this code scrolling the page;
@@ -61,9 +54,7 @@ public class LoginActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			//getting inputs from user and performing data operations
-			//if(username.getText().toString().equals("poo") && password.getText().toString().equals("poo")){
-				try {
+			try {
 					Log.d("Login status", String.valueOf(checkLoginStatus()));
 					if(checkLoginStatus() == true){
 						// responding to the User inputs
@@ -80,10 +71,7 @@ public class LoginActivity extends Activity {
 				}
 				
 				
-			}/*else{
-				Toast.makeText(getApplicationContext(), "Login not successfully", Toast.LENGTH_LONG).show();
 			}
-		}*/
 	}; 
 
 	@Override
@@ -94,38 +82,12 @@ public class LoginActivity extends Activity {
 	}
 	
 	private boolean checkLoginStatus() throws IOException{
-		JXLReader jxlLogin = new JXLReader();
-		return jxlLogin.getLogin(actualPathName, "REP NAME", username.getText().toString().toUpperCase(), password.getText().toString().toUpperCase());
-	}
-	private void loadExternalPath(){
-		/**
-		 * find the location of the excel file
-		 */
-		try {
-			if(Environment.isExternalStorageRemovable()==true){
-				//Toast.makeText(getApplicationContext(), "ExternalStoageDirectory is found "+Environment.isExternalStorageRemovable(), Toast.LENGTH_SHORT).show();
-				Log.d("ExternalStoageDirectory Found", "ExternalStoageDirectory is found "+Environment.isExternalStorageRemovable());
-				pathName = Environment.getExternalStorageDirectory().toString()+"//OTA";
-				Log.d("Files", "Path : "+pathName);		
-				File f = new File(pathName);
-				File fl[] = f.listFiles();
-				Log.d("Files", "Size : "+fl.length);		
-				for(int i=0; i<fl.length;i++){
-					Log.d("Files", "File Name : "+fl[i].getName());
-					Log.d("Files", "AbsFile Path : "+fl[i].getAbsolutePath());
-					actualPathName = fl[i].getAbsolutePath();			
-				}
-				
+			JXLReader jxlLogin = new JXLReader();	
+			if(FilePath.getExternalPath() !=null){
+				return jxlLogin.getLogin(FilePath.getExternalPath(), "REP NAME", username.getText().toString().toUpperCase(), password.getText().toString().toUpperCase());	
 			}else{
-				//Toast.makeText(getApplicationContext(), "No ExternalStoageDirectory", Toast.LENGTH_SHORT).show();
-				Log.d("No ExternalStoageDirectory", "No ExternalStoageDirectory");
+				return false;
 			}
-			
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-			Toast.makeText(getApplicationContext(), "File not found", Toast.LENGTH_SHORT).show();
-			Log.d("File Not Found", "File Not Found");
-		}
+		
 	}
 }
