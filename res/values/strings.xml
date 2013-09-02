@@ -14,9 +14,10 @@
     <string name="title_order_page">Add an order details</string>
     <string name="beatname">Beat name</string>
     <string name="shopname">Shop name</string>
-    <string name="cutomername">Customer name</string>
-    <string name="getorderdetails">Get Order Details</string>
-    <string name="orderList">Order List</string>
+    <!-- <string name="cutomername">Customer name</string> -->
+    <string name="loadProductList">Load Product List</string>
+    <string name="saveOrder">Save Order</string>
+    
     <!-- Order details activity page -->
     <string name="title_activity_order_details">Order Details Activity</string>
     <string name="productname">Product Name</string>

@@ -27,11 +27,11 @@ public class JXLReader {
     this.sheetName = sheetName;
     this.areaName = areaName;
   }
-  public ArrayList<String> getProductName() throws IOException{
+  public  ArrayList<String> getProductName() throws IOException{
 	  Log.d("getProductName function", "Successfully entered to getProductName");
 	  File inputWorkbook = new File(inputFile);
 	  Workbook w;
-	  TreeSet treeSetProductName = new TreeSet();
+	  //TreeSet treeSetProductName = new TreeSet();
 	  ArrayList<String> arrayProductName = new ArrayList<String>();
 	  try {
 		w = Workbook.getWorkbook(inputWorkbook);
@@ -42,10 +42,11 @@ public class JXLReader {
 			Cell cellAmount = sheet.getCell(4, i);
 			Log.d("Values of Products", cellProductName.getContents() +"@"+ cellInStock.getContents()+"@"+cellAmount.getContents());
 			if(!"".equals(cellProductName.getContents())){
-					treeSetProductName.add(cellProductName.getContents()+"@"+cellInStock.getContents()+"@"+cellAmount.getContents());	
+					//treeSetProductName.add(cellProductName.getContents()+"@"+cellInStock.getContents()+"@"+cellAmount.getContents());	
+				arrayProductName.add(cellProductName.getContents()+"@"+cellInStock.getContents()+"@"+cellAmount.getContents());
 			}
 		}
-		arrayProductName.addAll(treeSetProductName);
+		//arrayProductName.addAll(treeSetProductName);
 	} catch (Exception e) {
 		// TODO: handle exception
 	}
@@ -164,19 +165,6 @@ public class JXLReader {
 	  
   }
 
-  public static Integer getProductRows(String inputFile, String sheetName){
-	  Integer actualRows=0;
-	  File inputWorkbook = new File(inputFile);
-	  Workbook w;
-	  try {
-		w = Workbook.getWorkbook(inputWorkbook);
-		Sheet sheet = w.getSheet(sheetName);
-		actualRows = sheet.getRows()-1;
-	} catch (Exception e) {
-		// TODO: handle exception
-	}
-	  return actualRows;
-  }
 //public static void main(String[] args) throws IOException {
 //	JXLReader test = new JXLReader();
 //  test.setInputFile("c:/temp/lars.xls");
