@@ -9,7 +9,11 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
 import jxl.read.biff.BiffException;
+import jxl.read.biff.CellValue;
 
 import android.R.color;
 import android.os.Bundle;
@@ -32,6 +36,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Scroller;
@@ -47,6 +52,7 @@ public class OrderPage extends Activity {
 	ScrollView scrollOrderPage;
 	LinearLayout lnrLayContentViewOrderPage;
 	TableLayout tblLoadProductList;
+	HorizontalScrollView hsv;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +66,24 @@ public class OrderPage extends Activity {
 		
 		fnloadShopName();
 		
+		hsv = (HorizontalScrollView)findViewById(R.id.horizontalView);
+		hsv.post(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				hsv.pageScroll(hsv.getMaxScrollAmount());
+				
+			}
+		});
+		
 		scrollOrderPage.post(new Runnable() {
 			
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				scrollOrderPage.scrollTo(0, lnrLayContentViewOrderPage.getPaddingTop());
+				//scrollOrderPage.scrollTo(0, lnrLayContentViewOrderPage.getPaddingTop());
+				scrollOrderPage.pageScroll(scrollOrderPage.getMaxScrollAmount());
 			}
 		});
 		
@@ -85,7 +103,8 @@ public class OrderPage extends Activity {
 			/*Intent myintent = new Intent(getApplicationContext(), DashboardPage.class);
 			Toast.makeText(getApplicationContext(), "Navigate to order details page", Toast.LENGTH_SHORT).show();
 			startActivity(myintent);*/
-			setTable();
+			//setTable();
+			fngetProducts();
 		}
 	};
 
@@ -207,6 +226,119 @@ public class OrderPage extends Activity {
 		}
 		
 				
+	}
+	
+	private void fngetProducts(){
+		File f = new File(FilePath.getExternalPath());
+		Workbook w;
+		try {
+			w = Workbook.getWorkbook(f);
+			Sheet sheet = w.getSheet("PRODUCT NAME");
+			
+			tblLoadProductList = (TableLayout)findViewById(R.id.tableLayoutOrder);
+			
+			//tblLoadProductList.setColumnShrinkable(0, true);
+			//tblLoadProductList.setColumnShrinkable(1, true);
+			//tblLoadProductList.setColumnShrinkable(2, true);
+			/*tblLoadProductList.setColumnShrinkable(3, true);
+			tblLoadProductList.setColumnShrinkable(4, true);
+			tblLoadProductList.setColumnShrinkable(5, true);*/
+			
+			
+			for(int i=1;i<sheet.getRows();i++){
+				
+				Cell cellProductName = sheet.getCell(1, i);
+				Cell cellInStock = sheet.getCell(2, i);
+				Cell cellAmount = sheet.getCell(4, i);
+				
+				Log.d("Values of Products in loading tables"+i, cellProductName.getContents() +"@"+ cellInStock.getContents()+"@"+cellAmount.getContents());
+				if(cellProductName.getContents().toString() != ""){
+						//treeSetProductName.add(cellProductName.getContents()+"@"+cellInStock.getContents()+"@"+cellAmount.getContents());	
+					//arrayProductName.add(cellProductName.getContents()+"@"+cellInStock.getContents()+"@"+cellAmount.getContents());
+					// Create the table from the source code without xml:
+					TableRow row = new TableRow(this);
+					row.setBackgroundColor(color.darker_gray);
+					tblLoadProductList.addView(row);
+					// number of rows
+					TextView nr = new TextView(this);
+					nr.setBackgroundColor(color.darker_gray);
+					nr.setTextColor(Color.BLUE);
+					nr.setText(String.valueOf(tblLoadProductList.getChildCount()));
+					row.addView(nr);
+					LinearLayout.LayoutParams llp = (LinearLayout.LayoutParams) nr.getLayoutParams();
+					llp.setMargins(0, 0, 0, 1);
+					nr.setLayoutParams(llp);
+					nr.setPadding(10, 10, 40, 3);
+					
+					// product name
+					TextView prdName = new TextView(this);
+					prdName.setBackgroundColor(color.darker_gray);
+					prdName.setTextColor(Color.BLUE);
+					prdName.setText(String.valueOf(cellProductName.getContents().toString()));
+					prdName.setHorizontalFadingEdgeEnabled(true);
+					row.addView(prdName);
+					llp = (LinearLayout.LayoutParams) prdName.getLayoutParams();
+					llp.setMargins(0, 0, 0, 1);
+					prdName.setLayoutParams(llp);
+					prdName.setPadding(10, 10, 40, 3);
+									
+					// instock
+					TextView inStock = new TextView(this);
+					inStock.setBackgroundColor(color.darker_gray);
+					inStock.setTextColor(Color.BLUE);
+					inStock.setText(String.valueOf(cellInStock.getContents().toString()));
+					row.addView(inStock);
+					llp = (LinearLayout.LayoutParams) inStock.getLayoutParams();
+					llp.setMargins(0, 0, 0, 1);
+					inStock.setLayoutParams(llp);
+					inStock.setPadding(10, 10, 40, 3);
+					
+					// orderqty
+					EditText orderQty = new EditText(this);
+					orderQty.setBackgroundColor(Color.YELLOW);
+					orderQty.setTextColor(Color.BLACK);
+					//orderQty.setText(String.valueOf("12345"));
+					row.addView(orderQty);
+					llp = (LinearLayout.LayoutParams) orderQty.getLayoutParams();
+					llp.setMargins(0, 0, 0, 1);
+					orderQty.setLayoutParams(llp);
+					orderQty.setPadding(10, 10, 40, 3);
+					
+					// amount
+					TextView amount = new TextView(this);
+					amount.setBackgroundColor(color.darker_gray);
+					amount.setTextColor(Color.BLUE);
+					amount.setText(String.valueOf(cellAmount.getContents().toString()));
+					row.addView(amount);
+					llp = (LinearLayout.LayoutParams) amount.getLayoutParams();
+					llp.setMargins(0, 0, 0, 1);
+					amount.setLayoutParams(llp);
+					amount.setPadding(10, 10, 40, 3);
+					//calculate
+					//Double Total = Integer.parseInt(String.valueOf(splitString[1])) * Double.parseDouble(String.valueOf(splitString[2]));
+					// netamount
+					TextView netAmount = new TextView(this);
+					netAmount.setBackgroundColor(color.darker_gray);
+					netAmount.setTextColor(Color.BLUE);
+					netAmount.setText("00000.00");
+					row.addView(netAmount);
+					llp = (LinearLayout.LayoutParams) netAmount.getLayoutParams();
+					llp.setMargins(0, 0, 0, 1);
+					netAmount.setLayoutParams(llp);
+					netAmount.setPadding(10, 10, 40, 3);
+					
+				}
+			}
+		} catch (BiffException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	
 	}
 	
 	private void fnFillRow(TableRow row, Object element){
