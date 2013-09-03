@@ -27,26 +27,6 @@
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_margin="10dp" />
-	        <!-- <TextView
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:layout_margin="10dp"
-	            android:text="@string/cutomername" />
-	        <Spinner
-	            android:id="@+id/spinnerCutomername"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_margin="10dp" />
-	        <TextView
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:layout_margin="10dp"
-	            android:text="@string/productname" />
-	        <Spinner
-	            android:id="@+id/spinnerProductname"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_margin="10dp" /> -->
 	        <Button
 		        android:id="@+id/btnLoadProductList"
 		        android:layout_width="match_parent"
@@ -64,19 +44,15 @@
 			         android:layout_width="match_parent"
 			         android:layout_height="wrap_content"
 			         android:stretchColumns="*">
-		    </TableLayout>
-		    </HorizontalScrollView>
-	        
-	        <Button
-		        android:id="@+id/btnSaveOrder"
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-		        android:layout_margin="10dp"
-		        android:text="@string/saveOrder" />
-	        <!-- <TableRow
+			         <TableRow
 	                android:id="@+id/tableRow1"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content">
+	                <TextView
+			            android:layout_width="fill_parent"
+			            android:layout_height="wrap_content"
+			            android:layout_margin="10dp"
+			            android:text="S.No" />
 	                <TextView
 			            android:layout_width="fill_parent"
 			            android:layout_height="wrap_content"
@@ -102,6 +78,35 @@
 			            android:layout_height="wrap_content"
 			            android:layout_margin="10dp"
 			            android:text="Net Amount" />
-	            </TableRow> -->
+	            </TableRow>
+		    </TableLayout>
+		    </HorizontalScrollView>
+	        
+	        <Button
+		        android:id="@+id/btnSaveOrder"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_margin="10dp"
+		        android:text="@string/saveOrder" />
 	</LinearLayout>
 </ScrollView>
+ <!-- <TextView
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_margin="10dp"
+	            android:text="@string/cutomername" />
+	        <Spinner
+	            android:id="@+id/spinnerCutomername"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_margin="10dp" />
+	        <TextView
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_margin="10dp"
+	            android:text="@string/productname" />
+	        <Spinner
+	            android:id="@+id/spinnerProductname"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_margin="10dp" /> -->

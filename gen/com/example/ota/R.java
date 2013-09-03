@@ -25,7 +25,7 @@ public final class R {
     }
     public static final class id {
         public static final int btnLoadProductList=0x7f080009;
-        public static final int btnSaveOrder=0x7f08000c;
+        public static final int btnSaveOrder=0x7f08000d;
         public static final int content=0x7f080006;
         public static final int content_login=0x7f080001;
         public static final int horizontalView=0x7f08000a;
@@ -36,6 +36,7 @@ public final class R {
         public static final int spinnerBeatname=0x7f080007;
         public static final int spinnerShopname=0x7f080008;
         public static final int tableLayoutOrder=0x7f08000b;
+        public static final int tableRow1=0x7f08000c;
         public static final int username=0x7f080002;
     }
     public static final class layout {

@@ -91,6 +91,9 @@ public class OrderPage extends Activity {
 		btnLoadProductList.setOnClickListener(listenerLoadProductList);
 		Log.d("Loaded", getClass().getSimpleName());
 		
+		btnSaveOrder = (Button)findViewById(R.id.btnSaveOrder);
+		btnSaveOrder.setOnClickListener(listenerSaveOrder);
+		
 	}
 	private OnClickListener listenerLoadProductList = new OnClickListener() {
 		
@@ -107,7 +110,34 @@ public class OrderPage extends Activity {
 			fngetProducts();
 		}
 	};
+	
+	private OnClickListener listenerSaveOrder = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			fnReadTableRowValues();
+		}
+	};
 
+	private void fnReadTableRowValues(){
+		//TableLayout t1 = (TableLayout)findViewById(R.id.tableLayoutOrder);
+		//TableRow row = new TableRow(this.getParent());
+		Toast.makeText(getApplicationContext(), "Total Child Count is "+tblLoadProductList.getChildCount(), Toast.LENGTH_SHORT).show();
+		for(int i = 1; i<=tblLoadProductList.getChildCount();i++){
+			Log.d("tblLoadProductList.getChildAt(i)", String.valueOf(tblLoadProductList.getChildAt(i)));
+			String s = String.valueOf(tblLoadProductList.getChildAt(i));
+			Log.d("String of s", s.length() + "===" + s.toString());
+			//Toast.makeText(getApplicationContext(), "Get Row value "+ String.valueOf(tblLoadProductList.getChildAt(i).getContentDescription().toString()), Toast.LENGTH_SHORT).show();
+			/*Toast.makeText(getApplicationContext(), "Total child count of Rows "+row.getChildCount(), Toast.LENGTH_SHORT).show();
+			for(int j=1; j<=row.getChildCount();j++){
+				Toast.makeText(getApplicationContext(), "Get Row Column value "+ String.valueOf(row.getChildAt(j)), Toast.LENGTH_SHORT).show();
+			}*/
+			if(i==3){
+				break;
+			}
+		}
+	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -263,7 +293,7 @@ public class OrderPage extends Activity {
 					TextView nr = new TextView(this);
 					nr.setBackgroundColor(color.darker_gray);
 					nr.setTextColor(Color.BLUE);
-					nr.setText(String.valueOf(tblLoadProductList.getChildCount()));
+					nr.setText(String.valueOf(i));
 					row.addView(nr);
 					LinearLayout.LayoutParams llp = (LinearLayout.LayoutParams) nr.getLayoutParams();
 					llp.setMargins(0, 0, 0, 1);
