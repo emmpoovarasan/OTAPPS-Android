@@ -124,18 +124,38 @@ public class OrderPage extends Activity {
 		//TableLayout t1 = (TableLayout)findViewById(R.id.tableLayoutOrder);
 		//TableRow row = new TableRow(this.getParent());
 		Toast.makeText(getApplicationContext(), "Total Child Count is "+tblLoadProductList.getChildCount(), Toast.LENGTH_SHORT).show();
-		for(int i = 1; i<=tblLoadProductList.getChildCount();i++){
+		for(int i = 1; i<tblLoadProductList.getChildCount();i++){
+			/*Integer iRow,inStock,orderQty;
+			String productNames;
+			Double amount,netAmount;*/
+			String iRow,inStock,orderQty,productNames,amount,netAmount;
+			
 			Log.d("tblLoadProductList.getChildAt(i)", String.valueOf(tblLoadProductList.getChildAt(i)));
-			String s = String.valueOf(tblLoadProductList.getChildAt(i));
-			Log.d("String of s", s.length() + "===" + s.toString());
+			//String s = String.valueOf(tblLoadProductList.getChildAt(i));
+			
 			//Toast.makeText(getApplicationContext(), "Get Row value "+ String.valueOf(tblLoadProductList.getChildAt(i).getContentDescription().toString()), Toast.LENGTH_SHORT).show();
 			/*Toast.makeText(getApplicationContext(), "Total child count of Rows "+row.getChildCount(), Toast.LENGTH_SHORT).show();
 			for(int j=1; j<=row.getChildCount();j++){
 				Toast.makeText(getApplicationContext(), "Get Row Column value "+ String.valueOf(row.getChildAt(j)), Toast.LENGTH_SHORT).show();
 			}*/
-			if(i==3){
+			
+			/*//TableRow row = (TableRow)tblLayout.getChildAt(0);
+			//TextView textView = (TextView)row.getChildAt(XXX);
+			// blah blah textView.getText();*/			
+			iRow=String.valueOf(i);
+			productNames = String.valueOf(((TextView)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(1)).getText());
+			inStock = String.valueOf(((TextView)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(2)).getText());
+			orderQty = String.valueOf(((EditText)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(3)).getText().toString());
+			
+			amount = String.valueOf(((TextView)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(4)).getText());
+			netAmount = String.valueOf(((TextView)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(5)).getText());
+			
+			//Log.d("Value of row" + i,String.valueOf(((TextView)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(1)).getText()));
+			Log.d("List of products"+i, String.valueOf(iRow+"@"+productNames+"@"+inStock+"@"+orderQty+"@"+amount+"@"+netAmount));
+			
+			/*if(i==3){
 				break;
-			}
+			}*/
 		}
 	}
 	@Override
