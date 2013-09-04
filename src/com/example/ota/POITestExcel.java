@@ -1,4 +1,5 @@
 package com.example.ota;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,12 +20,28 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 
 public class POITestExcel {
-
+	public static String poiDynamicCreateSheet(String mySheet) throws IOException, FileNotFoundException{
+		String test=null;
+		String filename = "C:\\Users\\NITHYA\\git\\OTAPPS-Android\\OTA\\ORDER APPS.xls";
+		//"C:\\Users\\POO\\git\\OTAPPS-Android\\OTA\\ORDER APPS.xls"
+		File fp = new File(filename);
+		FileInputStream is = new FileInputStream(filename);
+		HSSFWorkbook workbook = null;
+		if(fp.exists() == true){
+			workbook = new HSSFWorkbook(is);
+			HSSFSheet sheet = workbook.createSheet(mySheet);
+			test = mySheet;
+		}
+		FileOutputStream out = new FileOutputStream(new File(filename));
+		workbook.write(out);
+		out.close();
+		return test;
+	}
 	/**
 	 * @param args
 	 * @throws IOException 
 	 */
-	public static void main(String[] args) throws IOException {
+	/*public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		System.out.println("Starts");
 		File fp = new File("C:\\Users\\POO\\git\\OTAPPS-Android\\OTA\\ORDER APPS.xls");
@@ -71,7 +88,7 @@ public class POITestExcel {
 			out.close();
 			System.out.println("Ends");
 					
-			/*System.out.println("Get Sheet Counts =======> "+workbook.getNumberOfSheets());
+			System.out.println("Get Sheet Counts =======> "+workbook.getNumberOfSheets());
 			
 			System.out.println("Get Sheet Counts =======> "+workbook.getNumberOfSheets());
 			int i = 0;
@@ -83,11 +100,11 @@ public class POITestExcel {
 			
 			//workbook.write(fout);
 			//is.close();
-*/			
+			
 		}else{
 			System.out.println("file exist==="+String.valueOf(fp.exists()));
 		}
 
 	}
-
+*/
 }

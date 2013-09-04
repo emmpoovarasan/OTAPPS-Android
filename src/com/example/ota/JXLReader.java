@@ -164,6 +164,21 @@ public class JXLReader {
 	  return loginStatus;
 	  
   }
+  
+  public static ArrayList<String> getMyExcelSheetNames() throws IOException{
+	  ArrayList<String> arraySheetName = new ArrayList<String>();
+	  //File inputWorkbook = new File(FilePath.getExternalPath());
+	  File inputWorkbook = new File("C:\\Users\\NITHYA\\git\\OTAPPS-Android\\OTA\\ORDER APPS.xls");
+	  Workbook w;
+	  try {
+		w = Workbook.getWorkbook(inputWorkbook);
+		w.getSheetNames();
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+	}
+	  return null;
+  }
 
 //public static void main(String[] args) throws IOException {
 //	JXLReader test = new JXLReader();

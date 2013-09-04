@@ -1,9 +1,14 @@
 package com.example.ota;
 
+
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
+import jxl.Sheet;
 import jxl.Workbook;
+import jxl.read.biff.BiffException;
 import jxl.write.WritableWorkbook;
 /*import java.io.File;
 import java.text.SimpleDateFormat;
@@ -22,15 +27,62 @@ public class JXLWriter {
 
 	/**
 	 * @param args
+	 * @throws BiffException 
 	 * @throws IOException 
 	 * @throws WriteException 
 	 */
 	
-	public static String writeExcelSheet(){
-		File fp = new File("C:\\Users\\POO\\git\\OTAPPS-Android\\OTA\\ORDER APPS.xls");
+	public static ArrayList<String> otaWriteExcelSheet() throws BiffException, IOException{
+		String filename;
+		//"C:\\Users\\POO\\git\\OTAPPS-Android\\OTA\\ORDER APPS.xls"
+		System.out.println(POITestExcel.poiDynamicCreateSheet("VIA"));
+		System.out.println(POITestExcel.poiDynamicCreateSheet("VIA1"));
+		filename = "C:\\Users\\NITHYA\\git\\OTAPPS-Android\\OTA\\ORDER APPS.xls";
+		File fp = new File(filename);
 		Workbook wb;
+		wb = Workbook.getWorkbook(fp);
+		Sheet st = null;
 		
-		return null;
+		
+		ArrayList<String> arr = new ArrayList<String>();
+		for(int i = 0; i<wb.getNumberOfSheets();i++){
+			st = wb.getSheet(i);
+			arr.add(st.getName());
+		}
+		
+		return arr;
+		
+	}
+	public static void main(String[] args) throws BiffException, IOException{
+		
+		ArrayList<String> test = otaWriteExcelSheet();
+		
+		Iterator itr = test.iterator();
+		while (itr.hasNext()) {
+			Object type = itr.next();
+			//test.add((String)type);
+			//System.out.println(type+",");
+		}
+		
+		System.out.println(test);
+		
+		/*String filename1 = "C:\\Users\\NITHYA\\git\\OTAPPS-Android\\OTA\\ORDER APPS.xls";
+		File fp1 = new File(filename1);
+		Workbook wb1;
+		wb1 = Workbook.getWorkbook(fp1);
+		Sheet s = null;
+		
+		for(int i = 0; i<wb1.getNumberOfSheets();i++){
+			s = wb1.getSheet(i);
+			System.out.println(s.getName()+",");
+			
+			//System.out.println(wb1.getSheetNames());
+			
+		}
+*/		
+		
+		
+		
 	}
 	/*public static void main(String[] args) throws IOException, WriteException {
 		// TODO Auto-generated method stub
