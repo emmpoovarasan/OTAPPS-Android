@@ -60,7 +60,7 @@ public class LoginActivity extends Activity {
 						// responding to the User inputs
 						Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_LONG).show();
 						// to navigate other page
-						Intent myintent = new Intent(getApplicationContext(), OrderPage.class);
+						Intent myintent = new Intent(getApplicationContext(), MainActivity.class);
 						startActivity(myintent);
 					}else{
 						Toast.makeText(getApplicationContext(), "Login not successfully", Toast.LENGTH_LONG).show();

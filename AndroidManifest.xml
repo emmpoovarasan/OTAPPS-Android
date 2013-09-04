@@ -25,6 +25,10 @@
             android:name="com.example.ota.OrderPage"
             android:label="@string/title_order_page" >
         </activity>
+        <activity
+            android:name="com.example.ota.MainActivity"
+            android:label="@string/title_activity_main" >
+        </activity>
     </application>
 
 </manifest>

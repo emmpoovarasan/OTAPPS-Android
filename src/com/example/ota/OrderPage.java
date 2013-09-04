@@ -47,7 +47,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class OrderPage extends Activity {
-	Button btnLoadProductList, btnSaveOrder;
+	Button btnLoadProductList, btnSaveOrder, btnDashBoard, btnLogOut;
 	Spinner spnBeatName, spnShopName;//, spnCustomerName, spnProductName;
 	ScrollView scrollOrderPage;
 	LinearLayout lnrLayContentViewOrderPage;
@@ -94,7 +94,35 @@ public class OrderPage extends Activity {
 		btnSaveOrder = (Button)findViewById(R.id.btnSaveOrder);
 		btnSaveOrder.setOnClickListener(listenerSaveOrder);
 		
+		btnDashBoard = (Button)findViewById(R.id.btnDashboard);
+		btnDashBoard.setOnClickListener(listenerDashBoard);
+		
+		btnLogOut = (Button)findViewById(R.id.btnLogOut);
+		btnLogOut.setOnClickListener(listenerLogOut);
+		
+		
 	}
+	
+	private OnClickListener listenerLogOut = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			Intent myInt = new Intent(getApplicationContext(), LoginActivity.class);
+			startActivity(myInt);
+		}
+	};
+	
+	private OnClickListener listenerDashBoard = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			Intent myInt = new Intent(getApplicationContext(), MainActivity.class);
+			startActivity(myInt);
+		}
+	};
+	
 	private OnClickListener listenerLoadProductList = new OnClickListener() {
 		
 		@Override
