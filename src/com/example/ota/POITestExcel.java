@@ -22,14 +22,18 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 public class POITestExcel {
 	public static String poiDynamicCreateSheet(String mySheet) throws IOException, FileNotFoundException{
 		String test=null;
-		String filename = "C:\\Users\\NITHYA\\git\\OTAPPS-Android\\OTA\\ORDER APPS.xls";
-		//"C:\\Users\\POO\\git\\OTAPPS-Android\\OTA\\ORDER APPS.xls"
+		String filename = null;
+		filename = FilePath.getExternalPath();
+		//filename = "C:\\Users\\NITHYA\\git\\OTAPPS-Android\\OTA\\ORDER APPS.xls";
+		//filename = "C:\\Users\\POO\\git\\OTAPPS-Android\\OTA\\ORDER APPS.xls";
 		File fp = new File(filename);
 		FileInputStream is = new FileInputStream(filename);
 		HSSFWorkbook workbook = null;
+		HSSFSheet sheet = null;
 		if(fp.exists() == true){
 			workbook = new HSSFWorkbook(is);
-			HSSFSheet sheet = workbook.createSheet(mySheet);
+			sheet = workbook.createSheet(mySheet);
+			//HSSFSheet sheet = workbook.createSheet(mySheet);
 			test = mySheet;
 		}
 		FileOutputStream out = new FileOutputStream(new File(filename));

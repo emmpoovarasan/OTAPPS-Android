@@ -1,13 +1,24 @@
 package com.example.ota;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import jxl.Cell;
 import jxl.Sheet;
@@ -16,6 +27,7 @@ import jxl.read.biff.BiffException;
 import jxl.read.biff.CellValue;
 
 import android.R.color;
+import android.R.integer;
 import android.os.Bundle;
 import android.os.Environment;
 import android.app.Activity;
@@ -149,27 +161,162 @@ public class OrderPage extends Activity {
 	};
 
 	private void fnReadTableRowValues(){
-		//TableLayout t1 = (TableLayout)findViewById(R.id.tableLayoutOrder);
+		//Toast.makeText(getApplicationContext(), "Total Child Count is "+tblLoadProductList.getChildCount(), Toast.LENGTH_SHORT).show();
+		try {
+			HSSFWorkbook workbook = null;
+			HSSFSheet sheet = null;
+			HSSFRow row = null;
+			HSSFCell cell = null;
+			String formule_NetAmount = null;
+			String filename = null;
+			filename = FilePath.getExternalPath();
+			File fp = new File(filename);
+			FileInputStream is = new FileInputStream(fp);
+			String sheetName = spnShopName.getSelectedItem().toString();
+			
+			Date now = Calendar.getInstance().getTime();
+			SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy");
+			String theDate = df.format(now);
+			//System.out.println(theDate); 
+			
+			if(fp.exists() == true){
+				workbook = new HSSFWorkbook(is);
+				String st=null;
+				boolean status = false;
+				for(int s=0;s<workbook.getNumberOfSheets();s++){
+					st = workbook.getSheetName(s);
+			
+					if(st.equals(sheetName)){
+						status=true;
+						Log.d("Got Sheet Names"+s+"/"+sheetName, st);
+					}else{
+						Log.d("No Action made on sheet"+s+"/"+sheetName, st);
+					}
+				}
+				if(status == false){
+					sheet = workbook.createSheet(sheetName);
+					Log.d("Status of boolean", String.valueOf(status));
+				}else{
+					sheet = workbook.getSheet(sheetName);
+					Log.d("Status of boolean", String.valueOf(status));
+				}
+				
+				
+				//Toast.makeText(getApplicationContext(), "Total Child Count is "+tblLoadProductList.getChildCount(), Toast.LENGTH_SHORT).show();
+				
+				for(int i = 1; i<tblLoadProductList.getChildCount();i++){
+					
+					String iRow,inStock,orderQty,productNames,amount,netAmount;
+					
+					iRow=String.valueOf(i);
+					productNames = String.valueOf(((TextView)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(1)).getText());
+					inStock = String.valueOf(((TextView)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(2)).getText());
+					orderQty = String.valueOf(((EditText)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(3)).getText().toString());	
+					amount = String.valueOf(((TextView)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(4)).getText());
+					netAmount = String.valueOf(((TextView)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(5)).getText());
+					//netAmount = String.valueOf(Double.parseDouble(orderQty)*Double.parseDouble(amount));
+					//netAmount =  String.valueOf(((EditText)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(3)).getText().toString());
+						if(i==1){
+							row = sheet.createRow(i-1);
+							Log.d("Main Row value", String.valueOf(i-1));
+							cell = row.createCell((short)0);
+							cell.setCellValue("Order No");
+							cell = row.createCell((short)1);
+							cell.setCellValue(theDate+"/"+iRow);
+							cell = row.createCell((short)2);
+							cell.setCellValue("Date");
+							cell = row.createCell((short)3);
+							cell.setCellValue(theDate);
+							
+							row = sheet.createRow(i);
+							Log.d("Header Row value", String.valueOf(i+1));
+							cell = row.createCell((short)0);
+							cell.setCellValue("S.No");
+							
+							cell = row.createCell((short)1);
+							cell.setCellValue("Product Name");
+							
+							cell = row.createCell((short)2);
+							cell.setCellValue("Stock Qty");
+							
+							cell = row.createCell((short)3);
+							cell.setCellValue("Ordered Qty");
+							
+							cell = row.createCell((short)4);
+							cell.setCellValue("Amount");
+							
+							cell = row.createCell((short)5);
+							cell.setCellValue("Net Amount");
+						}
+						
+						row = sheet.createRow(i+1);
+						Log.d("Details rows", String.valueOf(i+2));
+						cell = row.createCell((short)0);
+						cell.setCellValue(iRow);
+						
+						cell = row.createCell((short)1);
+						cell.setCellValue(productNames);
+						
+						cell = row.createCell((short)2);
+						cell.setCellValue(inStock);
+						
+						cell = row.createCell((short)3);
+						cell.setCellValue(orderQty);
+						
+						cell = row.createCell((short)4);
+						cell.setCellValue(amount);
+						
+						cell = row.createCell((short)5);
+						//formule_NetAmount = "SUM(D"+(i+1)+",E"+(i+1)+")";
+						//cell.setCellType(HSSFCell.CELL_TYPE_FORMULA);
+						cell.setCellValue(netAmount);
+						//cell.setCellFormula(formule_NetAmount);
+						
+					
+					//Log.d("tblLoadProductList.getChildAt(i)", String.valueOf(tblLoadProductList.getChildAt(i)));
+					Log.d("List of products"+i, String.valueOf(iRow+"@"+productNames+"@"+inStock+"@"+orderQty+"@"+amount+"@"+netAmount));
+					
+				}
+				
+			}
+			is.close();
+			FileOutputStream out = new FileOutputStream(new File(filename));
+			workbook.write(out);
+			out.close();
+			
+			Toast.makeText(getApplicationContext(), sheetName+" is successfully saved", Toast.LENGTH_SHORT).show();
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			Log.d("File Not Found Exception", e.getMessage());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			Log.d("IO Exception", e.getMessage());
+		}
+		
+	}
+	private void commented(){
+		/*//TableLayout t1 = (TableLayout)findViewById(R.id.tableLayoutOrder);
 		//TableRow row = new TableRow(this.getParent());
 		Toast.makeText(getApplicationContext(), "Total Child Count is "+tblLoadProductList.getChildCount(), Toast.LENGTH_SHORT).show();
 		for(int i = 1; i<tblLoadProductList.getChildCount();i++){
-			/*Integer iRow,inStock,orderQty;
+			Integer iRow,inStock,orderQty;
 			String productNames;
-			Double amount,netAmount;*/
+			Double amount,netAmount;
 			String iRow,inStock,orderQty,productNames,amount,netAmount;
 			
 			Log.d("tblLoadProductList.getChildAt(i)", String.valueOf(tblLoadProductList.getChildAt(i)));
 			//String s = String.valueOf(tblLoadProductList.getChildAt(i));
 			
 			//Toast.makeText(getApplicationContext(), "Get Row value "+ String.valueOf(tblLoadProductList.getChildAt(i).getContentDescription().toString()), Toast.LENGTH_SHORT).show();
-			/*Toast.makeText(getApplicationContext(), "Total child count of Rows "+row.getChildCount(), Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "Total child count of Rows "+row.getChildCount(), Toast.LENGTH_SHORT).show();
 			for(int j=1; j<=row.getChildCount();j++){
 				Toast.makeText(getApplicationContext(), "Get Row Column value "+ String.valueOf(row.getChildAt(j)), Toast.LENGTH_SHORT).show();
-			}*/
+			}
 			
-			/*//TableRow row = (TableRow)tblLayout.getChildAt(0);
+			//TableRow row = (TableRow)tblLayout.getChildAt(0);
 			//TextView textView = (TextView)row.getChildAt(XXX);
-			// blah blah textView.getText();*/			
+			// blah blah textView.getText();			
 			iRow=String.valueOf(i);
 			productNames = String.valueOf(((TextView)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(1)).getText());
 			inStock = String.valueOf(((TextView)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(2)).getText());
@@ -181,10 +328,10 @@ public class OrderPage extends Activity {
 			//Log.d("Value of row" + i,String.valueOf(((TextView)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(1)).getText()));
 			Log.d("List of products"+i, String.valueOf(iRow+"@"+productNames+"@"+inStock+"@"+orderQty+"@"+amount+"@"+netAmount));
 			
-			/*if(i==3){
+			if(i==3){
 				break;
-			}*/
-		}
+			}
+		}*/
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

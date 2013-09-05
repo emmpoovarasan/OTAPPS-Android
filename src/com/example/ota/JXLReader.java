@@ -168,7 +168,7 @@ public class JXLReader {
   public static ArrayList<String> getMyExcelSheetNames() throws IOException{
 	  ArrayList<String> arraySheetName = new ArrayList<String>();
 	  //File inputWorkbook = new File(FilePath.getExternalPath());
-	  File inputWorkbook = new File("C:\\Users\\NITHYA\\git\\OTAPPS-Android\\OTA\\ORDER APPS.xls");
+	  File inputWorkbook = new File(FilePath.getExternalPath());
 	  Workbook w;
 	  try {
 		w = Workbook.getWorkbook(inputWorkbook);

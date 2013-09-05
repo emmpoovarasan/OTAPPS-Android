@@ -35,14 +35,15 @@ public class JXLWriter {
 	public static ArrayList<String> otaWriteExcelSheet() throws BiffException, IOException{
 		String filename;
 		//"C:\\Users\\POO\\git\\OTAPPS-Android\\OTA\\ORDER APPS.xls"
-		System.out.println(POITestExcel.poiDynamicCreateSheet("VIA"));
-		System.out.println(POITestExcel.poiDynamicCreateSheet("VIA1"));
-		filename = "C:\\Users\\NITHYA\\git\\OTAPPS-Android\\OTA\\ORDER APPS.xls";
+		//System.out.println(POITestExcel.poiDynamicCreateSheet("VIA"));
+		//System.out.println(POITestExcel.poiDynamicCreateSheet("VIA1"));
+		//filename = "C:\\Users\\NITHYA\\git\\OTAPPS-Android\\OTA\\ORDER APPS.xls";
+		//filename = "C:\\Users\\POO\\git\\OTAPPS-Android\\OTA\\ORDER APPS.xls";
+		filename = FilePath.getExternalPath();
 		File fp = new File(filename);
 		Workbook wb;
 		wb = Workbook.getWorkbook(fp);
 		Sheet st = null;
-		
 		
 		ArrayList<String> arr = new ArrayList<String>();
 		for(int i = 0; i<wb.getNumberOfSheets();i++){
