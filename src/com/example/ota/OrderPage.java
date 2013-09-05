@@ -175,7 +175,7 @@ public class OrderPage extends Activity {
 			String sheetName = spnShopName.getSelectedItem().toString();
 			
 			Date now = Calendar.getInstance().getTime();
-			SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy");
+			SimpleDateFormat df = new SimpleDateFormat("MMddyyyy");
 			String theDate = df.format(now);
 			//System.out.println(theDate); 
 			
@@ -214,6 +214,13 @@ public class OrderPage extends Activity {
 					orderQty = String.valueOf(((EditText)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(3)).getText().toString());	
 					amount = String.valueOf(((TextView)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(4)).getText());
 					netAmount = String.valueOf(((TextView)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(5)).getText());
+					if(orderQty.length()>0){
+						netAmount = String.valueOf(Double.parseDouble(orderQty)*Double.parseDouble(amount));
+					}else{
+						orderQty="0";
+						netAmount = String.valueOf(Double.parseDouble(orderQty)*Double.parseDouble(amount));
+					}
+					
 					//netAmount = String.valueOf(Double.parseDouble(orderQty)*Double.parseDouble(amount));
 					//netAmount =  String.valueOf(((EditText)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(3)).getText().toString());
 						if(i==1){
