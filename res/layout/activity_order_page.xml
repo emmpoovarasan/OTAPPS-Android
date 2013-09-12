@@ -1,7 +1,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scroll_view"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:background="@android:color/darker_gray">
 	<LinearLayout
 	    android:id="@+id/content"
 	    android:layout_width="fill_parent"
@@ -38,12 +39,12 @@
         android:layout_height="wrap_content"     
         android:scrollbars="horizontal|vertical" 
         android:layout_width="wrap_content"     
-        android:layout_marginTop="5dip">
-			<TableLayout
+        android:layout_marginTop="5dip">			<TableLayout
 			         android:id="@+id/tableLayoutOrder"
 			         android:layout_width="match_parent"
 			         android:layout_height="wrap_content"
-			         android:stretchColumns="*">
+			         android:stretchColumns="*"
+			         android:saveEnabled="true">
 			         <TableRow
 	                android:id="@+id/tableRow1"
 	                android:layout_width="wrap_content"

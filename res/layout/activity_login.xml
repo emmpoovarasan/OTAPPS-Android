@@ -21,7 +21,8 @@
  <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scroll_view_login"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:background="@android:color/darker_gray">
 	<LinearLayout android:id="@+id/content_login"
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
