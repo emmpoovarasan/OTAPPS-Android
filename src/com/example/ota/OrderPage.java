@@ -59,6 +59,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class OrderPage extends Activity {
+	// create variables for Button, Spinner, ScrollView, LinearLayout, TableLayout & HorizontalScrollView
 	Button btnLoadProductList, btnSaveOrder, btnDashBoard, btnLogOut;
 	Spinner spnBeatName, spnShopName;//, spnCustomerName, spnProductName;
 	ScrollView scrollOrderPage;
@@ -71,13 +72,14 @@ public class OrderPage extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_order_page);
 
-		scrollOrderPage = (ScrollView)findViewById(R.id.scroll_view);
-		lnrLayContentViewOrderPage = (LinearLayout)findViewById(R.id.content);
+		scrollOrderPage = (ScrollView)findViewById(R.id.scroll_view); // assign ScrollView
+		lnrLayContentViewOrderPage = (LinearLayout)findViewById(R.id.content); // assign LinearView
 		
-		fnloadBeatName();
+		fnloadBeatName(); // Load Beat Name
 		
-		fnloadShopName();
+		fnloadShopName(); // Load Shop Name
 		
+		// code for HorizontalScrolling
 		hsv = (HorizontalScrollView)findViewById(R.id.horizontalView);
 		hsv.post(new Runnable() {
 			
@@ -88,33 +90,31 @@ public class OrderPage extends Activity {
 				
 			}
 		});
-		
+		// Scroll for Vertical Scrolling 
 		scrollOrderPage.post(new Runnable() {
 			
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				//scrollOrderPage.scrollTo(0, lnrLayContentViewOrderPage.getPaddingTop());
 				scrollOrderPage.pageScroll(scrollOrderPage.getMaxScrollAmount());
 			}
 		});
 		
+		// load all products from excel file
 		btnLoadProductList = (Button)findViewById(R.id.btnLoadProductList);
 		btnLoadProductList.setOnClickListener(listenerLoadProductList);
 		Log.d("Loaded", getClass().getSimpleName());
-		
+		// button for save order
 		btnSaveOrder = (Button)findViewById(R.id.btnSaveOrder);
 		btnSaveOrder.setOnClickListener(listenerSaveOrder);
-		
+		// button for dashboard
 		btnDashBoard = (Button)findViewById(R.id.btnDashboard);
 		btnDashBoard.setOnClickListener(listenerDashBoard);
-		
+		// button for logout
 		btnLogOut = (Button)findViewById(R.id.btnLogOut);
 		btnLogOut.setOnClickListener(listenerLogOut);
-		
-		
 	}
-	
+	// set OnClickListener for logout
 	private OnClickListener listenerLogOut = new OnClickListener() {
 		
 		@Override
@@ -124,44 +124,33 @@ public class OrderPage extends Activity {
 			startActivity(myInt);
 		}
 	};
-	
+	// set OnClickListener for Dashboard
 	private OnClickListener listenerDashBoard = new OnClickListener() {
-		
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
 			Intent myInt = new Intent(getApplicationContext(), MainActivity.class);
 			startActivity(myInt);
 		}
 	};
-	
+	// set OnClickListener for Load Product List
 	private OnClickListener listenerLoadProductList = new OnClickListener() {
-		
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			//Toast.makeText(getApplicationContext(), "Add to Order List", Toast.LENGTH_SHORT).show();
 			Log.d("Click LoadProduct List", "Click LoadProduct List");
-			
-			/*Intent myintent = new Intent(getApplicationContext(), DashboardPage.class);
-			Toast.makeText(getApplicationContext(), "Navigate to order details page", Toast.LENGTH_SHORT).show();
-			startActivity(myintent);*/
-			//setTable();
 			fngetProducts();
 		}
 	};
-	
+	// set OnClickListener for Save Order
 	private OnClickListener listenerSaveOrder = new OnClickListener() {
 		
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
+			// call save order list to excel file
 			fnReadTableRowValues();
 		}
 	};
-
+	// Save order list to Excel file
 	private void fnReadTableRowValues(){
-		//Toast.makeText(getApplicationContext(), "Total Child Count is "+tblLoadProductList.getChildCount(), Toast.LENGTH_SHORT).show();
 		try {
 			HSSFWorkbook workbook = null;
 			HSSFSheet sheet = null;
@@ -173,11 +162,10 @@ public class OrderPage extends Activity {
 			File fp = new File(filename);
 			FileInputStream is = new FileInputStream(fp);
 			String sheetName = spnShopName.getSelectedItem().toString();
-			
+			// generate current time
 			Date now = Calendar.getInstance().getTime();
 			SimpleDateFormat df = new SimpleDateFormat("MMddyyyy");
 			String theDate = df.format(now);
-			//System.out.println(theDate); 
 			
 			if(fp.exists() == true){
 				workbook = new HSSFWorkbook(is);
@@ -185,7 +173,6 @@ public class OrderPage extends Activity {
 				boolean status = false;
 				for(int s=0;s<workbook.getNumberOfSheets();s++){
 					st = workbook.getSheetName(s);
-			
 					if(st.equals(sheetName)){
 						status=true;
 						Log.d("Got Sheet Names"+s+"/"+sheetName, st);
@@ -200,12 +187,9 @@ public class OrderPage extends Activity {
 					sheet = workbook.getSheet(sheetName);
 					Log.d("Status of boolean", String.valueOf(status));
 				}
-				
-				
 				//Toast.makeText(getApplicationContext(), "Total Child Count is "+tblLoadProductList.getChildCount(), Toast.LENGTH_SHORT).show();
-				
+				// getting values from tablelayout and place to excel
 				for(int i = 1; i<tblLoadProductList.getChildCount();i++){
-					
 					String iRow,inStock,orderQty,productNames,amount,netAmount;
 					
 					iRow=String.valueOf(i);
@@ -220,9 +204,6 @@ public class OrderPage extends Activity {
 						orderQty="0";
 						netAmount = String.valueOf(Double.parseDouble(orderQty)*Double.parseDouble(amount));
 					}
-					
-					//netAmount = String.valueOf(Double.parseDouble(orderQty)*Double.parseDouble(amount));
-					//netAmount =  String.valueOf(((EditText)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(3)).getText().toString());
 						if(i==1){
 							row = sheet.createRow(i-1);
 							Log.d("Main Row value", String.valueOf(i-1));
@@ -282,7 +263,6 @@ public class OrderPage extends Activity {
 					
 					//Log.d("tblLoadProductList.getChildAt(i)", String.valueOf(tblLoadProductList.getChildAt(i)));
 					Log.d("List of products"+i, String.valueOf(iRow+"@"+productNames+"@"+inStock+"@"+orderQty+"@"+amount+"@"+netAmount));
-					
 				}
 				
 			}
@@ -410,56 +390,8 @@ public class OrderPage extends Activity {
 				android.R.layout.simple_spinner_item, arrayShopName);
 		dataAdapterShopName.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spnShopName.setAdapter(dataAdapterShopName);
-
 	}
-	
-	
-	
-	private void setTable(){
-		
-		tblLoadProductList = (TableLayout)findViewById(R.id.tableLayoutOrder);
-		
-		// Create the table from the source code without xml:
-		TableRow row = new TableRow(this);
-		row.setBackgroundColor(color.darker_gray);
-		tblLoadProductList.addView(row);
-		
-		JXLReader jl = new JXLReader();
-		jl.setInputFile(FilePath.getExternalPath(), "PRODUCT NAME", null);
-		
-		Toast.makeText(getApplication(), "setTable()", Toast.LENGTH_SHORT).show();
-		
-		Log.d("setTable()", "setTable() is called");
-		
-		List productList = new ArrayList();
-		
-		try {
-			productList.add(jl.getProductName());
-			Log.d("End of getProductName", "productList.add(jl.getProductName()) is called");
-			if (productList.size() > 0){
-				Log.d("Check Status of productList.size()", String.valueOf(productList.size()));
-				Iterator itr = productList.iterator();
-				Log.d("Test",itr.toString()); 
-				while(itr.hasNext()){
-					Object element = itr.next();
-					Log.d("Object element ", element.toString());
-					Toast.makeText(getApplicationContext(), (String)element.toString(), Toast.LENGTH_SHORT).show();
-					Log.d("Object element splited ", String.valueOf(element.toString().split(",").toString()+"\n"));
-					fnFillRow(row, element);
-				}
-			}else{
-				Log.d("productList.size() is", String.valueOf(productList.size()));
-			}
-				
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-				
-	}
-	
+	// load all products to table layout from excel
 	private void fngetProducts(){
 		File f = new File(FilePath.getExternalPath());
 		Workbook w;
@@ -468,25 +400,13 @@ public class OrderPage extends Activity {
 			Sheet sheet = w.getSheet("PRODUCT NAME");
 			
 			tblLoadProductList = (TableLayout)findViewById(R.id.tableLayoutOrder);
-			
-			//tblLoadProductList.setColumnShrinkable(0, true);
-			//tblLoadProductList.setColumnShrinkable(1, true);
-			//tblLoadProductList.setColumnShrinkable(2, true);
-			/*tblLoadProductList.setColumnShrinkable(3, true);
-			tblLoadProductList.setColumnShrinkable(4, true);
-			tblLoadProductList.setColumnShrinkable(5, true);*/
-			
-			
+			// load values from excel to tablelayout
 			for(int i=1;i<sheet.getRows();i++){
-				
 				Cell cellProductName = sheet.getCell(1, i);
 				Cell cellInStock = sheet.getCell(2, i);
 				Cell cellAmount = sheet.getCell(4, i);
-				
 				Log.d("Values of Products in loading tables"+i, cellProductName.getContents() +"@"+ cellInStock.getContents()+"@"+cellAmount.getContents());
 				if(cellProductName.getContents().toString() != ""){
-						//treeSetProductName.add(cellProductName.getContents()+"@"+cellInStock.getContents()+"@"+cellAmount.getContents());	
-					//arrayProductName.add(cellProductName.getContents()+"@"+cellInStock.getContents()+"@"+cellAmount.getContents());
 					// Create the table from the source code without xml:
 					TableRow row = new TableRow(this);
 					row.setBackgroundColor(color.darker_gray);
@@ -573,333 +493,5 @@ public class OrderPage extends Activity {
 	
 	}
 	
-	private void fnFillRow(TableRow row, Object element){
-		Log.d("fnFillRow(TableRow row, String element)", String.valueOf(element.toString()));
-		ArrayList arrayString = new ArrayList();
-		arrayString.add(element);
-		Iterator it = arrayString.iterator();
-		int i = 1;
-		while(it.hasNext()){
-			Object ele = it.next();
-			Log.d(i+"===>", ele.toString());
-			i++;
-			/*final String[] splitString = element.split("@");
-			// number of rows
-			TextView nr = new TextView(this);
-			nr.setBackgroundColor(color.darker_gray);
-			nr.setTextColor(Color.BLUE);
-			nr.setText(String.valueOf(tblLoadProductList.getChildCount()));
-			row.addView(nr);
-			LinearLayout.LayoutParams llp = (LinearLayout.LayoutParams) nr.getLayoutParams();
-			llp.setMargins(0, 0, 0, 1);
-			nr.setLayoutParams(llp);
-			nr.setPadding(10, 10, 40, 3);
-			
-			// product name
-			TextView prdName = new TextView(this);
-			prdName.setBackgroundColor(color.darker_gray);
-			prdName.setTextColor(Color.BLUE);
-			prdName.setText(String.valueOf(splitString[0]));
-			prdName.setHorizontalFadingEdgeEnabled(true);
-			row.addView(prdName);
-			llp = (LinearLayout.LayoutParams) prdName.getLayoutParams();
-			llp.setMargins(0, 0, 0, 1);
-			prdName.setLayoutParams(llp);
-			prdName.setPadding(10, 10, 40, 3);
-							
-			// instock
-			TextView inStock = new TextView(this);
-			inStock.setBackgroundColor(color.darker_gray);
-			inStock.setTextColor(Color.BLUE);
-			inStock.setText(String.valueOf(splitString[1]));
-			row.addView(inStock);
-			llp = (LinearLayout.LayoutParams) inStock.getLayoutParams();
-			llp.setMargins(0, 0, 0, 1);
-			inStock.setLayoutParams(llp);
-			inStock.setPadding(10, 10, 40, 3);
-			
-			// orderqty
-			EditText orderQty = new EditText(this);
-			orderQty.setBackgroundColor(Color.YELLOW);
-			orderQty.setTextColor(Color.BLACK);
-			row.addView(orderQty);
-			llp = (LinearLayout.LayoutParams) orderQty.getLayoutParams();
-			llp.setMargins(0, 0, 0, 1);
-			orderQty.setLayoutParams(llp);
-			orderQty.setPadding(10, 10, 40, 3);
-			
-			// amount
-			TextView amount = new TextView(this);
-			amount.setBackgroundColor(color.darker_gray);
-			amount.setTextColor(Color.BLUE);
-			amount.setText(String.valueOf(splitString[2]));
-			row.addView(amount);
-			llp = (LinearLayout.LayoutParams) amount.getLayoutParams();
-			llp.setMargins(0, 0, 0, 1);
-			amount.setLayoutParams(llp);
-			amount.setPadding(10, 10, 40, 3);
-			//calculate
-			//Double Total = Integer.parseInt(String.valueOf(splitString[1])) * Double.parseDouble(String.valueOf(splitString[2]));
-			// netamount
-			TextView netAmount = new TextView(this);
-			netAmount.setBackgroundColor(color.darker_gray);
-			netAmount.setTextColor(Color.BLUE);
-			netAmount.setText("0000");
-			row.addView(netAmount);
-			llp = (LinearLayout.LayoutParams) netAmount.getLayoutParams();
-			llp.setMargins(0, 0, 0, 1);
-			netAmount.setLayoutParams(llp);
-			netAmount.setPadding(10, 10, 40, 3);*/
-			
-		}
-		
-	}
-	
 }
 
-/*private void buildOrderTable(){
-Integer rowCount = JXLReader.getProductRows(FilePath.getExternalPath(), "PRODUCT NAME");
-TableLayout table = (TableLayout)findViewById(R.id.tableLayoutOrder);
-ArrayList<String> arrayProductName = null;
-try {
-	arrayProductName = loadProductName("PRODUCT NAME");
-	Iterator it = arrayProductName.iterator();
-	int i = 1;
-	while (it.hasNext()) {
-		Object element = it.next();
-		TableRow row = new TableRow(this);
-		row.setBackgroundColor(color.darker_gray);
-		table.addView(row);
-		fillRow(String.valueOf(element),row,i);
-		i++;
-	}
-	for(int i=0;i<rowCount;i++){
-		// Below you can choose wich way you want to create your table
-		// Comment on the corresponding part of the code to choose:
-
-		// Create the table from the source code without xml:
-		TableRow row = new TableRow(this);
-		row.setBackgroundColor(color.darker_gray);
-		table.addView(row);
-		fillRow(row,i);
-	}
-} catch (Exception e) {
-	// TODO: handle exception
-	e.printStackTrace();
-}
-
-
-}
-private void fillRow(String element,TableRow row, int noRow){
-//String productName = String.valueOf(spnProductName.getSelectedItem());
-String productName = element;
-final String[] splitString = productName.split("@");
-
-		// number of rows
-		TextView nr = new TextView(this);
-		nr.setBackgroundColor(color.white);
-		nr.setTextColor(Color.BLUE);
-		nr.setText(noRow);
-		row.addView(nr);
-		LinearLayout.LayoutParams llp = (LinearLayout.LayoutParams) nr.getLayoutParams();
-		llp.setMargins(0, 0, 0, 1);
-		nr.setLayoutParams(llp);
-		nr.setPadding(10, 10, 40, 3);
-		
-		// product name
-		TextView prdName = new TextView(this);
-		prdName.setBackgroundColor(Color.WHITE);
-		prdName.setTextColor(Color.BLUE);
-		prdName.setText(String.valueOf(splitString[0]));
-		prdName.setHorizontalFadingEdgeEnabled(true);
-		row.addView(prdName);
-		llp = (LinearLayout.LayoutParams) prdName.getLayoutParams();
-		llp.setMargins(0, 0, 0, 1);
-		prdName.setLayoutParams(llp);
-		prdName.setPadding(10, 10, 40, 3);
-						
-		// instock
-		TextView inStock = new TextView(this);
-		inStock.setBackgroundColor(Color.WHITE);
-		inStock.setTextColor(Color.BLUE);
-		inStock.setText(String.valueOf(splitString[1]));
-		row.addView(inStock);
-		llp = (LinearLayout.LayoutParams) inStock.getLayoutParams();
-		llp.setMargins(0, 0, 0, 1);
-		inStock.setLayoutParams(llp);
-		inStock.setPadding(10, 10, 40, 3);
-		
-		// orderqty
-		EditText orderQty = new EditText(this);
-		orderQty.setBackgroundColor(Color.YELLOW);
-		orderQty.setTextColor(Color.BLACK);
-		row.addView(orderQty);
-		llp = (LinearLayout.LayoutParams) orderQty.getLayoutParams();
-		llp.setMargins(0, 0, 0, 1);
-		orderQty.setLayoutParams(llp);
-		orderQty.setPadding(10, 10, 40, 3);
-		
-		// amount
-		TextView amount = new TextView(this);
-		amount.setBackgroundColor(Color.WHITE);
-		amount.setTextColor(Color.BLUE);
-		amount.setText(String.valueOf(splitString[2]));
-		row.addView(amount);
-		llp = (LinearLayout.LayoutParams) amount.getLayoutParams();
-		llp.setMargins(0, 0, 0, 1);
-		amount.setLayoutParams(llp);
-		amount.setPadding(10, 10, 40, 3);
-		//calculate
-		Double Total = Integer.parseInt(String.valueOf(splitString[1])) * Double.parseDouble(String.valueOf(splitString[2]));
-		// netamount
-		TextView netAmount = new TextView(this);
-		netAmount.setBackgroundColor(Color.WHITE);
-		netAmount.setTextColor(Color.BLUE);
-		netAmount.setText(String.valueOf(Total));
-		row.addView(netAmount);
-		llp = (LinearLayout.LayoutParams) netAmount.getLayoutParams();
-		llp.setMargins(0, 0, 0, 1);
-		netAmount.setLayoutParams(llp);
-		netAmount.setPadding(10, 10, 40, 3);
-		
-
-// number of rows
-TextView nr = new TextView(this);
-nr.setBackgroundColor(color.white);
-nr.setTextColor(Color.BLUE);
-nr.setText(String.valueOf(noRow));
-row.addView(nr);
-LinearLayout.LayoutParams llp = (LinearLayout.LayoutParams) nr.getLayoutParams();
-llp.setMargins(0, 0, 0, 1);
-nr.setLayoutParams(llp);
-nr.setPadding(10, 10, 40, 3);
-
-// first name
-TextView firstN = new TextView(this);
-firstN.setBackgroundColor(Color.WHITE);
-firstN.setTextColor(Color.BLUE);
-//firstN.setText(firstNames[noRow]);
-firstN.setText(String.valueOf(splitString[0]));
-row.addView(firstN);
-llp = (LinearLayout.LayoutParams) firstN.getLayoutParams();
-llp.setMargins(0, 0, 0, 1);
-firstN.setLayoutParams(llp);
-firstN.setPadding(10, 10, 20, 3);
-
-
-// last name
-TextView lastN = new TextView(this);
-lastN.setBackgroundColor(Color.WHITE);
-lastN.setTextColor(Color.BLUE);
-lastN.setText(String.valueOf(splitString[1]));
-row.addView(lastN);
-llp = (LinearLayout.LayoutParams) lastN.getLayoutParams();
-llp.setMargins(0, 0, 0, 1);
-lastN.setLayoutParams(llp);
-lastN.setPadding(10, 10, 20, 3);
-
-}*/
-
-/*private ArrayList<String> loadProductName(String mySheet) throws IOException{
-JXLReader jxlLoadProductName = new JXLReader();
-jxlLoadProductName.setInputFile(FilePath.getExternalPath(), mySheet,null);
-Log.d("loadProductsName function", "Success to loadProductsName");
-return jxlLoadProductName.getProductName();
-}
-private ArrayList<String> loadCustomerName(String mySheet, String customerName) throws IOException{
-JXLReader jxlLoadCustomerName = new JXLReader();
-jxlLoadCustomerName.setInputFile(FilePath.getExternalPath(), mySheet,customerName);
-Log.d("loadShopName function", "Success to loadShopName");
-return jxlLoadCustomerName.getCustomerName();
-}*/
-
-/*
- * 		//spnShopName.setOnItemSelectedListener(listenerLoadCustomerName);
- private OnItemSelectedListener listenerLoadCustomerName = new OnItemSelectedListener() {
-
-	@Override
-	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
-			long arg3) {
-		// TODO Auto-generated method stub
-		Toast.makeText(arg0.getContext(), 
-				"OnItemSelectedListener : " + arg0.getItemAtPosition(arg2).toString(),
-				Toast.LENGTH_SHORT).show();
-		loadCustomerName();
-	}
-
-	@Override
-	public void onNothingSelected(AdapterView<?> arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-};*/
-/**
- * load spinner customer name
- *//*
-private void loadCustomerName(){
-	spnCustomerName = (Spinner)findViewById(R.id.spinnerCutomername);
-	ArrayList<String> arrayCustomerName = null;
-	try {
-		arrayCustomerName = loadCustomerName("CUSTOMER NAME", String.valueOf(spnShopName.getSelectedItem()));
-	} catch (Exception e) {
-		// TODO: handle exception
-		e.printStackTrace();
-	}
-	ArrayAdapter<String> dataAdapterCustomerName = new ArrayAdapter<String>(this,
-			android.R.layout.simple_spinner_item, arrayCustomerName);
-	dataAdapterCustomerName.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-	spnCustomerName.setAdapter(dataAdapterCustomerName);
-	spnCustomerName.setOnItemSelectedListener(listenerCreateFile);
-}
-private OnItemSelectedListener listenerCreateFile = new OnItemSelectedListener() {
-	@Override
-	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
-			long arg3) {
-		// TODO Auto-generated method stub
-		//Toast.makeText(getApplicationContext(), String.valueOf(spnCustomerName.getSelectedItem()), Toast.LENGTH_SHORT).show();
-		Log.d("Get Custname", String.valueOf(spnCustomerName.getSelectedItem()));
-		
-	}
-	@Override
-	public void onNothingSelected(AdapterView<?> arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-};*/
-
-/**
- * load spinner product name
- *//*
-private void loadProductName(){
-	spnProductName = (Spinner)findViewById(R.id.spinnerProductname);
-	ArrayList<String> arrayProductName = null;
-	try {
-		arrayProductName = loadProductName("PRODUCT NAME");
-	} catch (Exception e) {
-		// TODO: handle exception
-		e.printStackTrace();
-	}
-	ArrayAdapter<String> dataAdapterProductName = new ArrayAdapter<String>(this,
-			android.R.layout.simple_spinner_item, arrayProductName);
-	dataAdapterProductName.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-	spnProductName.setAdapter(dataAdapterProductName);
-	spnProductName.setOnItemSelectedListener(listenerLoadProductName);
-}
-
-private OnItemSelectedListener listenerLoadProductName = new OnItemSelectedListener() {
-	
-	@Override
-	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
-			long arg3) {
-		// TODO Auto-generated method stub
-		//Toast.makeText(getApplication(), String.valueOf(spnProductName.getSelectedItem()), Toast.LENGTH_SHORT).show();
-		Log.d("Select ProdcutName", String.valueOf(spnProductName.getSelectedItem()));
-	}
-
-	@Override
-	public void onNothingSelected(AdapterView<?> arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-};*/
