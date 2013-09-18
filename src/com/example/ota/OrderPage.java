@@ -268,28 +268,31 @@ public class OrderPage extends Activity {
 						    Toast.makeText(getApplicationContext(), "value was "+
 						    		tvSno+"/"+tvProductName+"/"+tvInStock+"/"+etOrderQty+"/"+tvAmount+"/"+tvNetAmount, 
 					                Toast.LENGTH_LONG).show();
-						    v.setBackgroundColor(Color.GRAY);
+						    v.setBackgroundColor(color.darker_gray);
 						    //textViewNetAmount.setText((int) (etOrderQty * tvAmount));
 						    editTextOrderQty.addTextChangedListener(new TextWatcher() {
 								
 								@Override
 								public void afterTextChanged(Editable s) {
 									// TODO Auto-generated method stub
-									
+									netAmount.setText(String.valueOf(tvNetAmount));
+									//t.addView(netAmount);
+									Toast.makeText(getApplicationContext(), "afterTextChanged(Editable s) : "+String.valueOf(tvNetAmount), 1).show();
 								};
 
 								@Override
 								public void beforeTextChanged(CharSequence s,
 										int start, int count, int after) {
 									// TODO Auto-generated method stub
-									netAmount.setText(String.valueOf(tvNetAmount));
-									t.addView(netAmount);
+									//Toast.makeText(getApplicationContext(), "beforeTextChanged(CharSequence s,int start, int count, int after)", 1).show();
 								}
 
 								@Override
 								public void onTextChanged(CharSequence s,
 										int start, int before, int count) {
 									// TODO Auto-generated method stub
+									/*netAmount.setText(String.valueOf(tvNetAmount));
+									Toast.makeText(getApplicationContext(), "onTextChanged(CharSequence s,int start, int before, int count)"+String.valueOf(tvNetAmount), 1).show();*/
 									
 								}
 							});
