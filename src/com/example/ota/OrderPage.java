@@ -366,6 +366,7 @@ public class OrderPage extends Activity {
 				}
 				//Toast.makeText(getApplicationContext(), "Total Child Count is "+tblLoadProductList.getChildCount(), Toast.LENGTH_SHORT).show();
 				// getting values from tablelayout and place to excel
+				Double totalOrderQty=0.0, totalNetAmount=0.0;
 				for(int i = 1; i<tblLoadProductList.getChildCount();i++){
 					String iRow,inStock,orderQty,productNames,amount,netAmount;
 					
@@ -384,6 +385,8 @@ public class OrderPage extends Activity {
 					if(netAmount.length()==0){
 						netAmount ="0";
 					}
+					totalOrderQty += Double.valueOf(orderQty);
+					totalNetAmount += Double.valueOf(netAmount);
 					/*if(orderQty.length()>0){
 						netAmount = String.valueOf(Double.parseDouble(orderQty)*Double.parseDouble(amount));
 					}else{
@@ -395,6 +398,7 @@ public class OrderPage extends Activity {
 							Log.d("Main Row value", String.valueOf(i-1));
 							cell = row.createCell((short)0);
 							cell.setCellValue("Order No");
+							// set border to cell
 							cellStyle = workbook.createCellStyle();
 							cellStyle.setBorderTop((short)1);
 							cellStyle.setBorderBottom((short)1);
@@ -404,6 +408,7 @@ public class OrderPage extends Activity {
 							
 							cell = row.createCell((short)1);
 							cell.setCellValue(theDate+"/"+iRow);
+							// set border to cell
 							cellStyle = workbook.createCellStyle();
 							cellStyle.setBorderTop((short)1);
 							cellStyle.setBorderBottom((short)1);
@@ -413,6 +418,7 @@ public class OrderPage extends Activity {
 							
 							cell = row.createCell((short)2);
 							cell.setCellValue("Date");
+							// set border to cell
 							cellStyle = workbook.createCellStyle();
 							cellStyle.setBorderTop((short)1);
 							cellStyle.setBorderBottom((short)1);
@@ -422,6 +428,7 @@ public class OrderPage extends Activity {
 							
 							cell = row.createCell((short)3);
 							cell.setCellValue(theDate);
+							// set border to cell
 							cellStyle = workbook.createCellStyle();
 							cellStyle.setBorderTop((short)1);
 							cellStyle.setBorderBottom((short)1);
@@ -433,6 +440,7 @@ public class OrderPage extends Activity {
 							Log.d("Header Row value", String.valueOf(i+1));
 							cell = row.createCell((short)0);
 							cell.setCellValue("S.No");
+							// set border to cell
 							cellStyle = workbook.createCellStyle();
 							cellStyle.setBorderTop((short)1);
 							cellStyle.setBorderBottom((short)1);
@@ -442,6 +450,7 @@ public class OrderPage extends Activity {
 							
 							cell = row.createCell((short)1);
 							cell.setCellValue("Product Name");
+							// set border to cell
 							cellStyle = workbook.createCellStyle();
 							cellStyle.setBorderTop((short)1);
 							cellStyle.setBorderBottom((short)1);
@@ -451,6 +460,7 @@ public class OrderPage extends Activity {
 							
 							cell = row.createCell((short)2);
 							cell.setCellValue("Stock Qty");
+							// set border to cell
 							cellStyle = workbook.createCellStyle();
 							cellStyle.setBorderTop((short)1);
 							cellStyle.setBorderBottom((short)1);
@@ -460,6 +470,7 @@ public class OrderPage extends Activity {
 							
 							cell = row.createCell((short)3);
 							cell.setCellValue("Ordered Qty");
+							// set border to cell
 							cellStyle = workbook.createCellStyle();
 							cellStyle.setBorderTop((short)1);
 							cellStyle.setBorderBottom((short)1);
@@ -469,6 +480,7 @@ public class OrderPage extends Activity {
 							
 							cell = row.createCell((short)4);
 							cell.setCellValue("Amount");
+							// set border to cell
 							cellStyle = workbook.createCellStyle();
 							cellStyle.setBorderTop((short)1);
 							cellStyle.setBorderBottom((short)1);
@@ -478,6 +490,7 @@ public class OrderPage extends Activity {
 							
 							cell = row.createCell((short)5);
 							cell.setCellValue("Net Amount");
+							// set border to cell
 							cellStyle = workbook.createCellStyle();
 							cellStyle.setBorderTop((short)1);
 							cellStyle.setBorderBottom((short)1);
@@ -490,7 +503,8 @@ public class OrderPage extends Activity {
 						row = sheet.createRow(i+1);
 						Log.d("Details rows", String.valueOf(i+2));
 						cell = row.createCell((short)0);
-						cell.setCellValue(iRow);
+						cell.setCellValue(Integer.valueOf(iRow));
+						// set border to cell
 						cellStyle = workbook.createCellStyle();
 						cellStyle.setBorderTop((short)1);
 						cellStyle.setBorderBottom((short)1);
@@ -500,6 +514,7 @@ public class OrderPage extends Activity {
 												
 						cell = row.createCell((short)1);
 						cell.setCellValue(productNames);
+						// set border to cell
 						cellStyle = workbook.createCellStyle();
 						cellStyle.setBorderTop((short)1);
 						cellStyle.setBorderBottom((short)1);
@@ -508,7 +523,8 @@ public class OrderPage extends Activity {
 						cell.setCellStyle(cellStyle);
 						
 						cell = row.createCell((short)2);
-						cell.setCellValue(inStock);
+						cell.setCellValue(Double.valueOf(inStock));
+						// set border to cell
 						cellStyle = workbook.createCellStyle();
 						cellStyle.setBorderTop((short)1);
 						cellStyle.setBorderBottom((short)1);
@@ -517,7 +533,8 @@ public class OrderPage extends Activity {
 						cell.setCellStyle(cellStyle);
 						
 						cell = row.createCell((short)3);
-						cell.setCellValue(orderQty);
+						cell.setCellValue(Double.valueOf(orderQty));
+						// set border to cell
 						cellStyle = workbook.createCellStyle();
 						cellStyle.setBorderTop((short)1);
 						cellStyle.setBorderBottom((short)1);
@@ -526,7 +543,8 @@ public class OrderPage extends Activity {
 						cell.setCellStyle(cellStyle);
 						
 						cell = row.createCell((short)4);
-						cell.setCellValue(amount);
+						cell.setCellValue(Double.valueOf(amount));
+						// set border to cell
 						cellStyle = workbook.createCellStyle();
 						cellStyle.setBorderTop((short)1);
 						cellStyle.setBorderBottom((short)1);
@@ -537,8 +555,9 @@ public class OrderPage extends Activity {
 						cell = row.createCell((short)5);
 						//formule_NetAmount = "SUM(D"+(i+1)+",E"+(i+1)+")";
 						//cell.setCellType(HSSFCell.CELL_TYPE_FORMULA);
-						cell.setCellValue(netAmount);
+						cell.setCellValue(Double.valueOf(netAmount));
 						//cell.setCellFormula(formule_NetAmount);
+						// set border to cell
 						cellStyle = workbook.createCellStyle();
 						cellStyle.setBorderTop((short)1);
 						cellStyle.setBorderBottom((short)1);
@@ -546,6 +565,67 @@ public class OrderPage extends Activity {
 						cellStyle.setBorderRight((short)1);
 						cell.setCellStyle(cellStyle);
 						
+						
+						// create total qty and netamount row
+						if(i == tblLoadProductList.getChildCount()-1){
+							row = sheet.createRow(i+2);
+							cell = row.createCell((short)0);
+							// set border to cell
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
+													
+							cell = row.createCell((short)1);
+							cell.setCellValue("Total");
+							// set border to cell
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
+							
+							cell = row.createCell((short)2);
+							// set border to cell
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
+							
+							cell = row.createCell((short)3);
+							cell.setCellValue(totalOrderQty);
+							// set border to cell
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
+							
+							cell = row.createCell((short)4);
+							// set border to cell
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
+							
+							cell = row.createCell((short)5);
+							cell.setCellValue(totalNetAmount);
+							// set border to cell
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
+						}
 					
 					//Log.d("tblLoadProductList.getChildAt(i)", String.valueOf(tblLoadProductList.getChildAt(i)));
 					Log.d("List of products"+i, String.valueOf(iRow+"@"+productNames+"@"+inStock+"@"+orderQty+"@"+amount+"@"+netAmount));
