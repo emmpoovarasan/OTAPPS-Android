@@ -17,6 +17,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -24,6 +25,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
+import jxl.format.Border;
 import jxl.read.biff.BiffException;
 import jxl.read.biff.CellValue;
 
@@ -146,17 +148,17 @@ public class OrderPage extends Activity {
 		@Override
 		public void onClick(View v) {
 			Log.d("Click LoadProduct List", "Click LoadProduct List");
-			fngetProducts();
+			fngetProducts("PRODUCT NAME",FilePath.getExternalPath());
 		}
 	};
 
 	// load all products to table layout from excel
-	private void fngetProducts(){
-		File f = new File(FilePath.getExternalPath());
+	private void fngetProducts(String SheetName, String fileFullPath){
+		File f = new File(fileFullPath);
 		Workbook w;
 		try {
 			w = Workbook.getWorkbook(f);
-			Sheet sheet = w.getSheet("PRODUCT NAME");
+			Sheet sheet = w.getSheet(SheetName);
 			
 			tblLoadProductList = (TableLayout)findViewById(R.id.tableLayoutOrder);
 			TableRow row = null;
@@ -233,7 +235,7 @@ public class OrderPage extends Activity {
 					final TextView netAmount = new TextView(this);
 					netAmount.setBackgroundColor(color.darker_gray);
 					netAmount.setTextColor(Color.BLUE);
-					//netAmount.setText("00000.00");
+					netAmount.setText("0.0");
 					row.addView(netAmount);
 					llp = (LinearLayout.LayoutParams) netAmount.getLayoutParams();
 					llp.setMargins(0, 0, 0, 1);
@@ -270,7 +272,8 @@ public class OrderPage extends Activity {
 					                Toast.LENGTH_LONG).show();
 						    v.setBackgroundColor(color.darker_gray);
 						    //textViewNetAmount.setText((int) (etOrderQty * tvAmount));
-						    editTextOrderQty.addTextChangedListener(new TextWatcher() {
+						    netAmount.setText(String.valueOf(tvNetAmount));
+						    /*editTextOrderQty.addTextChangedListener(new TextWatcher() {
 								
 								@Override
 								public void afterTextChanged(Editable s) {
@@ -291,11 +294,11 @@ public class OrderPage extends Activity {
 								public void onTextChanged(CharSequence s,
 										int start, int before, int count) {
 									// TODO Auto-generated method stub
-									/*netAmount.setText(String.valueOf(tvNetAmount));
-									Toast.makeText(getApplicationContext(), "onTextChanged(CharSequence s,int start, int before, int count)"+String.valueOf(tvNetAmount), 1).show();*/
+									netAmount.setText(String.valueOf(tvNetAmount));
+									Toast.makeText(getApplicationContext(), "onTextChanged(CharSequence s,int start, int before, int count)"+String.valueOf(tvNetAmount), 1).show();
 									
 								}
-							});
+							});*/
 						    
 						}
 					});
@@ -319,19 +322,20 @@ public class OrderPage extends Activity {
 		@Override
 		public void onClick(View v) {
 			// call save order list to excel file
-			fnReadTableRowValues();
+			fnReadTableRowValues(FilePath.getExternalPath());
 		}
 	};
 	// Save order list to Excel file
-	private void fnReadTableRowValues(){
+	private void fnReadTableRowValues(String filename){
 		try {
 			HSSFWorkbook workbook = null;
 			HSSFSheet sheet = null;
 			HSSFRow row = null;
 			HSSFCell cell = null;
+			HSSFCellStyle cellStyle = null;
 			String formule_NetAmount = null;
-			String filename = null;
-			filename = FilePath.getExternalPath();
+			//String filename = null;
+			//filename = FilePath.getExternalPath();
 			File fp = new File(filename);
 			FileInputStream is = new FileInputStream(fp);
 			String sheetName = spnShopName.getSelectedItem().toString();
@@ -368,70 +372,179 @@ public class OrderPage extends Activity {
 					iRow=String.valueOf(i);
 					productNames = String.valueOf(((TextView)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(1)).getText());
 					inStock = String.valueOf(((TextView)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(2)).getText());
-					orderQty = String.valueOf(((EditText)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(3)).getText().toString());	
+					orderQty = String.valueOf(((EditText)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(3)).getText().toString());
+					if(orderQty.length()==0){ 
+						orderQty="0";
+					}
 					amount = String.valueOf(((TextView)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(4)).getText());
+					if(amount.length()==0){
+						amount = "0";
+					}
 					netAmount = String.valueOf(((TextView)((TableRow)tblLoadProductList.getChildAt(i)).getChildAt(5)).getText());
-					if(orderQty.length()>0){
+					if(netAmount.length()==0){
+						netAmount ="0";
+					}
+					/*if(orderQty.length()>0){
 						netAmount = String.valueOf(Double.parseDouble(orderQty)*Double.parseDouble(amount));
 					}else{
 						orderQty="0";
 						netAmount = String.valueOf(Double.parseDouble(orderQty)*Double.parseDouble(amount));
-					}
+					}*/
 						if(i==1){
 							row = sheet.createRow(i-1);
 							Log.d("Main Row value", String.valueOf(i-1));
 							cell = row.createCell((short)0);
 							cell.setCellValue("Order No");
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
+							
 							cell = row.createCell((short)1);
 							cell.setCellValue(theDate+"/"+iRow);
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
+							
 							cell = row.createCell((short)2);
 							cell.setCellValue("Date");
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
+							
 							cell = row.createCell((short)3);
 							cell.setCellValue(theDate);
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
 							
 							row = sheet.createRow(i);
 							Log.d("Header Row value", String.valueOf(i+1));
 							cell = row.createCell((short)0);
 							cell.setCellValue("S.No");
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
 							
 							cell = row.createCell((short)1);
 							cell.setCellValue("Product Name");
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
 							
 							cell = row.createCell((short)2);
 							cell.setCellValue("Stock Qty");
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
 							
 							cell = row.createCell((short)3);
 							cell.setCellValue("Ordered Qty");
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
 							
 							cell = row.createCell((short)4);
 							cell.setCellValue("Amount");
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
 							
 							cell = row.createCell((short)5);
 							cell.setCellValue("Net Amount");
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
+							
 						}
 						
 						row = sheet.createRow(i+1);
 						Log.d("Details rows", String.valueOf(i+2));
 						cell = row.createCell((short)0);
 						cell.setCellValue(iRow);
-						
+						cellStyle = workbook.createCellStyle();
+						cellStyle.setBorderTop((short)1);
+						cellStyle.setBorderBottom((short)1);
+						cellStyle.setBorderLeft((short)1);
+						cellStyle.setBorderRight((short)1);
+						cell.setCellStyle(cellStyle);
+												
 						cell = row.createCell((short)1);
 						cell.setCellValue(productNames);
+						cellStyle = workbook.createCellStyle();
+						cellStyle.setBorderTop((short)1);
+						cellStyle.setBorderBottom((short)1);
+						cellStyle.setBorderLeft((short)1);
+						cellStyle.setBorderRight((short)1);
+						cell.setCellStyle(cellStyle);
 						
 						cell = row.createCell((short)2);
 						cell.setCellValue(inStock);
+						cellStyle = workbook.createCellStyle();
+						cellStyle.setBorderTop((short)1);
+						cellStyle.setBorderBottom((short)1);
+						cellStyle.setBorderLeft((short)1);
+						cellStyle.setBorderRight((short)1);
+						cell.setCellStyle(cellStyle);
 						
 						cell = row.createCell((short)3);
 						cell.setCellValue(orderQty);
+						cellStyle = workbook.createCellStyle();
+						cellStyle.setBorderTop((short)1);
+						cellStyle.setBorderBottom((short)1);
+						cellStyle.setBorderLeft((short)1);
+						cellStyle.setBorderRight((short)1);
+						cell.setCellStyle(cellStyle);
 						
 						cell = row.createCell((short)4);
 						cell.setCellValue(amount);
+						cellStyle = workbook.createCellStyle();
+						cellStyle.setBorderTop((short)1);
+						cellStyle.setBorderBottom((short)1);
+						cellStyle.setBorderLeft((short)1);
+						cellStyle.setBorderRight((short)1);
+						cell.setCellStyle(cellStyle);
 						
 						cell = row.createCell((short)5);
 						//formule_NetAmount = "SUM(D"+(i+1)+",E"+(i+1)+")";
 						//cell.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 						cell.setCellValue(netAmount);
 						//cell.setCellFormula(formule_NetAmount);
+						cellStyle = workbook.createCellStyle();
+						cellStyle.setBorderTop((short)1);
+						cellStyle.setBorderBottom((short)1);
+						cellStyle.setBorderLeft((short)1);
+						cellStyle.setBorderRight((short)1);
+						cell.setCellStyle(cellStyle);
 						
 					
 					//Log.d("tblLoadProductList.getChildAt(i)", String.valueOf(tblLoadProductList.getChildAt(i)));
