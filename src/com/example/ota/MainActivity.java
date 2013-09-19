@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			Intent listOfOrdersPage = new Intent(getApplicationContext(), OrderPage.class);
+			Intent listOfOrdersPage = new Intent(getApplicationContext(), ListOfOrders.class);
 			startActivity(listOfOrdersPage);
 		}
 	};

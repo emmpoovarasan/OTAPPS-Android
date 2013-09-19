@@ -10,7 +10,7 @@
     android:background="@android:color/darker_gray" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/tvSno"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -30,7 +30,7 @@
         android:id="@+id/logOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/tvSno"
         android:layout_marginTop="22dp"
         android:layout_toRightOf="@+id/listOfOrders"
         android:text="Logout" />
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/logOut"
         android:layout_alignBottom="@+id/logOut"
-        android:layout_alignRight="@+id/textView1"
+        android:layout_alignRight="@+id/tvSno"
         android:text="List of orders" />
 
 </RelativeLayout>

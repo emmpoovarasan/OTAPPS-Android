@@ -46,7 +46,7 @@
 			         android:stretchColumns="*"
 			         android:saveEnabled="true">
 			         <TableRow
-	                android:id="@+id/tableRow1"
+	                android:id="@+id/trHeader"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content">
 	                <TextView
