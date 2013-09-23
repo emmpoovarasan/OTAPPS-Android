@@ -35,8 +35,13 @@
         </activity>
         <activity
             android:name="com.example.ota.ListOfOrders"
-            android:label="@string/title_activity_list_of_orders" 
-            android:configChanges="orientation|keyboardHidden">
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/title_activity_list_of_orders" >
+        </activity>
+        <activity
+            android:name="com.example.ota.EditOrderList"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/title_activity_edit_order_list" >
         </activity>
     </application>
 

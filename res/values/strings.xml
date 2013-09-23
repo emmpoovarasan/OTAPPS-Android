@@ -27,7 +27,7 @@
     <string name="netamount">Net Amount</string>
     <string name="title_activity_main">Dashboard Page</string>
     <string name="title_activity_list_of_orders">ListOfOrders</string>
-    
+
     <!-- List of Order details activity page -->
     <string name="title_list_order_details">List of orders</string>
     <string name="sno">SNo</string>
@@ -35,5 +35,6 @@
     <string name="OrderNo">Order No</string>
     <string name="OrderedQty">Ordered Qty</string>
     <string name="TotalNetAmount">Total Net Amount</string>
+    <string name="title_activity_edit_order_list">EditOrderList</string>
 
 </resources>
