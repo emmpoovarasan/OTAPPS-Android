@@ -32,7 +32,7 @@ public class ListOfOrders extends Activity {
 	ScrollView svListOfOrders = null;
 	HorizontalScrollView hvListOfOrders = null;
 	HorizontalScrollView hvListOfOrderButton = null;
-	
+	public final static String EXTRA_MESSAGE_SHOPNAME = null; 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -170,6 +170,8 @@ public class ListOfOrders extends Activity {
 							String StringTvShopName = tvShopName.getText().toString();
 							
 							Intent myOrder = new Intent(getApplicationContext(), EditOrderList.class);
+							String messageShopName = tvShopName.getText().toString();
+							myOrder.putExtra(EXTRA_MESSAGE_SHOPNAME, messageShopName);
 							startActivity(myOrder);
 							v.setBackgroundColor(Color.GREEN);
 						}
