@@ -267,9 +267,9 @@ public class OrderPage extends Activity {
 						    Double tvAmount = Double.valueOf(textViewAmount.getText().toString());
 						    final Double tvNetAmount = (etOrderQty * tvAmount);//Double.valueOf(textViewNetAmount.getText().toString());
 						    
-						    Toast.makeText(getApplicationContext(), "value was "+
+						    /*Toast.makeText(getApplicationContext(), "value was "+
 						    		tvSno+"/"+tvProductName+"/"+tvInStock+"/"+etOrderQty+"/"+tvAmount+"/"+tvNetAmount, 
-					                Toast.LENGTH_LONG).show();
+					                Toast.LENGTH_LONG).show();*/
 						    v.setBackgroundColor(color.darker_gray);
 						    //textViewNetAmount.setText((int) (etOrderQty * tvAmount));
 						    netAmount.setText(String.valueOf(tvNetAmount));
