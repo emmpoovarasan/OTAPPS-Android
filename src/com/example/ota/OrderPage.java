@@ -436,6 +436,26 @@ public class OrderPage extends Activity {
 							cellStyle.setBorderRight((short)1);
 							cell.setCellStyle(cellStyle);
 							
+							cell = row.createCell((short)4);
+							cell.setCellValue("Beat Name");
+							// set border to cell
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
+							
+							cell = row.createCell((short)5);
+							cell.setCellValue(spnBeatName.getSelectedItem().toString());
+							// set border to cell
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
+							
 							row = sheet.createRow(i);
 							Log.d("Header Row value", String.valueOf(i+1));
 							cell = row.createCell((short)0);
