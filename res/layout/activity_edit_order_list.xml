@@ -28,27 +28,21 @@
 		                android:layout_width="wrap_content"
 		                android:layout_height="wrap_content">
 				  	    <Button
-						   android:id="@+id/btnEditOrderListSaveOrder"
+						   android:id="@+id/btnEditOrderListUpdateOrder"
 						   android:layout_width="wrap_content"
 						   android:layout_height="wrap_content"
-						   android:text="@string/saveOrder" />
+						   android:text="@string/updateOrder" />
 						
 						<Button
 						    android:id="@+id/btnEditOrderListDashboard"
 						    android:layout_width="wrap_content"
 						    android:layout_height="wrap_content"
-						    android:layout_alignBaseline="@+id/btnEditOrderListSaveOrder"
-						    android:layout_alignBottom="@+id/btnEditOrderListSaveOrder"
-						    android:layout_toRightOf="@+id/btnEditOrderListSaveOrder"
 						    android:text="Go to Dashboard" />
 						
 						<Button
 						    android:id="@+id/btnEditOrderListLogOut"
 						    android:layout_width="wrap_content"
 						    android:layout_height="wrap_content"
-						    android:layout_alignBaseline="@+id/btnEditOrderListDashboard"
-						    android:layout_alignBottom="@+id/btnEditOrderListDashboard"
-						    android:layout_toRightOf="@+id/btnEditOrderListDashboard"
 						    android:text="Logout" />
 		         	</TableRow>
 		         	<TableRow

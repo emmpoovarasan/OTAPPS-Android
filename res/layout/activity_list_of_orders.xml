@@ -23,11 +23,11 @@
 	            android:id="@+id/trButton"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content" >
-				<Button
+				<!-- <Button
 	                android:id="@+id/btnOLshowListOfOrders"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:text="Show List Of Orders" />
+	                android:text="Show List Of Orders" /> -->
 	            <Button
 	                android:id="@+id/btnOLgoToOrder"
 	                android:layout_width="wrap_content"

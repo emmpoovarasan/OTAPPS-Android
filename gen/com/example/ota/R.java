@@ -25,53 +25,52 @@ public final class R {
     }
     public static final class id {
         public static final int LinearLayout1=0x7f08000c;
-        public static final int action_settings=0x7f08002f;
-        public static final int btnDashboard=0x7f08002d;
+        public static final int action_settings=0x7f08002e;
+        public static final int btnDashboard=0x7f08002c;
         public static final int btnEditOrderListDashboard=0x7f080005;
         public static final int btnEditOrderListLogOut=0x7f080006;
-        public static final int btnEditOrderListSaveOrder=0x7f080004;
-        public static final int btnLoadProductList=0x7f080029;
-        public static final int btnLogOut=0x7f08002e;
-        public static final int btnOLdashBoard=0x7f080012;
-        public static final int btnOLgoToOrder=0x7f080011;
-        public static final int btnOLlogOut=0x7f080013;
-        public static final int btnOLshowListOfOrders=0x7f080010;
-        public static final int btnSaveOrder=0x7f08002c;
-        public static final int content=0x7f080026;
-        public static final int content_login=0x7f08001e;
-        public static final int goToOrder=0x7f080022;
-        public static final int horizontalView=0x7f08002a;
+        public static final int btnEditOrderListUpdateOrder=0x7f080004;
+        public static final int btnLoadProductList=0x7f080028;
+        public static final int btnLogOut=0x7f08002d;
+        public static final int btnOLdashBoard=0x7f080011;
+        public static final int btnOLgoToOrder=0x7f080010;
+        public static final int btnOLlogOut=0x7f080012;
+        public static final int btnSaveOrder=0x7f08002b;
+        public static final int content=0x7f080025;
+        public static final int content_login=0x7f08001d;
+        public static final int goToOrder=0x7f080021;
+        public static final int horizontalView=0x7f080029;
         public static final int hvEditOrderList=0x7f080001;
         public static final int hvListOfOrderButton=0x7f08000d;
-        public static final int hvListOfOrdersTable=0x7f080015;
-        public static final int listOfOrders=0x7f080023;
-        public static final int logOut=0x7f080024;
-        public static final int login=0x7f080021;
-        public static final int password=0x7f080020;
-        public static final int scroll_view=0x7f080025;
-        public static final int scroll_view_login=0x7f08001d;
-        public static final int spinnerBeatname=0x7f080027;
-        public static final int spinnerShopname=0x7f080028;
+        public static final int hvListOfOrdersTable=0x7f080014;
+        public static final int listOfOrders=0x7f080022;
+        public static final int logOut=0x7f080023;
+        public static final int login=0x7f080020;
+        public static final int password=0x7f08001f;
+        public static final int scroll_view=0x7f080024;
+        public static final int scroll_view_login=0x7f08001c;
+        public static final int spinnerBeatname=0x7f080026;
+        public static final int spinnerShopname=0x7f080027;
         public static final int svEditOrderList=0x7f080000;
-        public static final int svListOfOrdersTable=0x7f080014;
-        public static final int tableLayoutOrder=0x7f08002b;
+        public static final int svListOfOrdersTable=0x7f080013;
+        public static final int tableLayoutOrder=0x7f08002a;
         public static final int tblEditOrderList=0x7f080002;
-        public static final int tblListOfOrders=0x7f080016;
+        public static final int tblListOfOrders=0x7f080015;
         public static final int tblbtnListOfOrders=0x7f08000e;
         public static final int trButton=0x7f08000f;
         public static final int trEditOrderListHeader=0x7f08000b;
         public static final int trEditOrderListHeaderContent=0x7f080007;
         public static final int trEditOrderListHeaderbtn=0x7f080003;
-        public static final int trHeader=0x7f080017;
-        public static final int tvOrderNo=0x7f08001a;
-        public static final int tvOrderedQty=0x7f08001b;
-        public static final int tvShopName=0x7f080019;
-        public static final int tvSno=0x7f080018;
-        public static final int tvTotalNetAmount=0x7f08001c;
+        public static final int trHeader=0x7f080016;
+        public static final int tvOrderNo=0x7f080019;
+        public static final int tvOrderedQty=0x7f08001a;
+        public static final int tvShopName=0x7f080018;
+        public static final int tvSno=0x7f080017;
+        public static final int tvTotalNetAmount=0x7f08001b;
         public static final int tv_edit_BeatName=0x7f08000a;
         public static final int tv_edit_OrderNo=0x7f080009;
         public static final int tv_edit_ShopName=0x7f080008;
-        public static final int username=0x7f08001f;
+        public static final int username=0x7f08001e;
     }
     public static final class layout {
         public static final int activity_edit_order_list=0x7f030000;
@@ -125,6 +124,7 @@ public final class R {
         /**  order page 
          */
         public static final int title_order_page=0x7f050007;
+        public static final int updateOrder=0x7f05001a;
         public static final int username=0x7f050004;
     }
     public static final class style {

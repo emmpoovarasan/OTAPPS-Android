@@ -26,7 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ListOfOrders extends Activity {
-	Button btnGotoOrder, btnDashBoard, btnLogOut, btnShowListOfOrders;
+	Button btnGotoOrder, btnDashBoard, btnLogOut;//, btnShowListOfOrders;
 	TableLayout tblListOfOrders = null;
 	TableRow tblRow = null;
 	ScrollView svListOfOrders = null;
@@ -39,7 +39,9 @@ public class ListOfOrders extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list_of_orders);
 		
-		btnShowListOfOrders = (Button)findViewById(R.id.btnOLshowListOfOrders);
+		fnLoadOrderList(FilePath.getExternalPath());
+		
+		/*btnShowListOfOrders = (Button)findViewById(R.id.btnOLshowListOfOrders);
 		btnShowListOfOrders.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -47,7 +49,7 @@ public class ListOfOrders extends Activity {
 				// TODO Auto-generated method stub
 				fnLoadOrderList(FilePath.getExternalPath());
 			}
-		});
+		});*/
 		
 		btnGotoOrder = (Button)findViewById(R.id.btnOLgoToOrder);
 		btnGotoOrder.setOnClickListener(new OnClickListener() {
