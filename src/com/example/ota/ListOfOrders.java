@@ -33,6 +33,7 @@ public class ListOfOrders extends Activity {
 	HorizontalScrollView hvListOfOrders = null;
 	HorizontalScrollView hvListOfOrderButton = null;
 	public final static String EXTRA_MESSAGE_SHOPNAME = null; 
+	//public final static String EXTRA_MESSAGE_ORDERNO = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -136,7 +137,7 @@ public class ListOfOrders extends Activity {
 					tvCustomer.setPadding(10, 10, 40, 3);
 					tblRow.addView(tvCustomer);
 					
-					TextView tvOrderNo = new TextView(this);
+					final TextView tvOrderNo = new TextView(this);
 					//tvOrderNo.setText(st.getName());
 					tvOrderNo.setText(getVauesToLoadOrderNoQtyNetAmount(FilePath.getExternalPath(),"ORDERNO",st.getName()));
 					tblRow.addView(tvOrderNo);
@@ -167,11 +168,12 @@ public class ListOfOrders extends Activity {
 							TextView tvShopName = (TextView)t.getChildAt(1);
 							TextView tvOrderedQty = (TextView)t.getChildAt(2);
 							TextView tvNetAmount = (TextView)t.getChildAt(3);
-							String StringTvShopName = tvShopName.getText().toString();
+							/*String StringTvShopName = tvShopName.getText().toString();*/
 							
 							Intent myOrder = new Intent(getApplicationContext(), EditOrderList.class);
-							String messageShopName = tvShopName.getText().toString();
-							myOrder.putExtra(EXTRA_MESSAGE_SHOPNAME, messageShopName);
+							/*String messageShopName = tvShopName.getText().toString();*/
+							myOrder.putExtra(EXTRA_MESSAGE_SHOPNAME, tvShopName.getText().toString());
+							//myOrder.putExtra(EXTRA_MESSAGE_ORDERNO, tvOrderNo.getText().toString());
 							startActivity(myOrder);
 							v.setBackgroundColor(Color.GREEN);
 						}

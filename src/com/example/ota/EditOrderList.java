@@ -29,6 +29,7 @@ ScrollView svEditOL = null;
 HorizontalScrollView hvEditOL = null;
 TableLayout tlEditOL = null;
 TableRow trEditOL = null;
+TextView tvEditShopName = null, tvEditOrderNo = null, tvEditBeatName = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +38,16 @@ TableRow trEditOL = null;
 		// Get the message from the intent
 		Intent getIntentMessage = getIntent();
 		String messageReceivedShopName = getIntentMessage.getStringExtra(ListOfOrders.EXTRA_MESSAGE_SHOPNAME);
+		//String messageReceivedOrderNo = getIntentMessage.getStringExtra(ListOfOrders.EXTRA_MESSAGE_ORDERNO);
 		//Toast.makeText(getApplicationContext(), messageReceivedShopName, 2).show();
 		Log.d("RECEIVED MESSAGE FROM LIST OF ORDER LIST PAGE", messageReceivedShopName);
+		//Log.d("RECEIVED MESSAGE FROM LIST OF ORDER LIST PAGE", messageReceivedOrderNo);
+		tvEditShopName = (TextView)findViewById(R.id.tv_edit_ShopName);
+		tvEditShopName.setText(messageReceivedShopName);
+		
+		/*tvEditOrderNo = (TextView)findViewById(R.id.tv_edit_OrderNo);
+		tvEditOrderNo.setText(messageReceivedOrderNo);*/
+		
 		fngetProducts(messageReceivedShopName, FilePath.getExternalPath());
 	}
 
@@ -60,7 +69,16 @@ TableRow trEditOL = null;
 			tlEditOL = (TableLayout)findViewById(R.id.tblEditOrderList);
 			TableRow row = null;
 			// load values from excel to tablelayout
-			for(int i=1;i<sheet.getRows();i++){
+			for(int i=0;i<sheet.getRows()-1;i++){
+				if(i==0){
+					Cell cellOrderNo = sheet.getCell(1,i);
+					tvEditOrderNo = (TextView)findViewById(R.id.tv_edit_OrderNo);
+					tvEditOrderNo.setText(cellOrderNo.getContents().toString());
+					
+					Cell cellBeatName = sheet.getCell(5,i);
+					tvEditBeatName = (TextView)findViewById(R.id.tv_edit_BeatName);
+					tvEditBeatName.setText(cellBeatName.getContents().toString());
+				}
 				if(i>1 && i<sheet.getRows()-1){
 					Cell cellProductName = sheet.getCell(1, i);
 					Cell cellInStock = sheet.getCell(2, i);

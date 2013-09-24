@@ -19,46 +19,84 @@
 	        android:layout_width="wrap_content"     
 	        android:layout_marginTop="5dip">
 			<TableLayout
-			         android:id="@+id/tblEditOrderList"
-			         android:layout_width="match_parent"
-			         android:layout_height="wrap_content"
-			         android:stretchColumns="*"
-			         android:saveEnabled="true">
-			         <TableRow
-	                android:id="@+id/trEditOrderListHeader"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content">
-	                <TextView
-			            android:layout_width="fill_parent"
-			            android:layout_height="wrap_content"
-			            android:layout_margin="10dp"
-			            android:text="S.No" />
-	                <TextView
-			            android:layout_width="fill_parent"
-			            android:layout_height="wrap_content"
-			            android:layout_margin="10dp"
-			            android:text="Product Name" />
-	                <TextView
-			            android:layout_width="fill_parent"
-			            android:layout_height="wrap_content"
-			            android:layout_margin="10dp"
-			            android:text="In Stock" />
-	                <TextView
-			            android:layout_width="fill_parent"
-			            android:layout_height="wrap_content"
-			            android:layout_margin="10dp"
-			            android:text="Order Qty" />
-	                <TextView
-			            android:layout_width="fill_parent"
-			            android:layout_height="wrap_content"
-			            android:layout_margin="10dp"
-			            android:text="Amount" />
-	                <TextView
-			            android:layout_width="fill_parent"
-			            android:layout_height="wrap_content"
-			            android:layout_margin="10dp"
-			            android:text="Net Amount" />
-	            </TableRow>
+		         android:id="@+id/tblEditOrderList"
+		         android:layout_width="match_parent"
+		         android:layout_height="wrap_content"
+		         android:stretchColumns="*"
+		         android:saveEnabled="true">
+		         	<TableRow
+		                android:id="@+id/trEditOrderListHeaderContent"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content">
+		                <TextView
+				            android:layout_width="fill_parent"
+				            android:layout_height="wrap_content"
+				            android:layout_margin="10dp"
+				            android:text="Shop Name" />
+		                <TextView
+		                    android:id="@+id/tv_edit_ShopName"
+				            android:layout_width="fill_parent"
+				            android:layout_height="wrap_content"
+				            android:layout_margin="10dp"
+				            android:text="" />
+		                <TextView
+				            android:layout_width="fill_parent"
+				            android:layout_height="wrap_content"
+				            android:layout_margin="10dp"
+				            android:text="Order No" />
+		                <TextView
+		                    android:id="@+id/tv_edit_OrderNo"
+				            android:layout_width="fill_parent"
+				            android:layout_height="wrap_content"
+				            android:layout_margin="10dp"
+				            android:text="" />
+		                <TextView
+				            android:layout_width="fill_parent"
+				            android:layout_height="wrap_content"
+				            android:layout_margin="10dp"
+				            android:text="Beat Name" />
+		                <TextView
+		                    android:id="@+id/tv_edit_BeatName"
+				            android:layout_width="fill_parent"
+				            android:layout_height="wrap_content"
+				            android:layout_margin="10dp"
+				            android:text="" />
+	            	</TableRow>
+			        <TableRow
+		                android:id="@+id/trEditOrderListHeader"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content">
+		                <TextView
+				            android:layout_width="fill_parent"
+				            android:layout_height="wrap_content"
+				            android:layout_margin="10dp"
+				            android:text="S.No" />
+		                <TextView
+				            android:layout_width="fill_parent"
+				            android:layout_height="wrap_content"
+				            android:layout_margin="10dp"
+				            android:text="Product Name" />
+		                <TextView
+				            android:layout_width="fill_parent"
+				            android:layout_height="wrap_content"
+				            android:layout_margin="10dp"
+				            android:text="In Stock" />
+		                <TextView
+				            android:layout_width="fill_parent"
+				            android:layout_height="wrap_content"
+				            android:layout_margin="10dp"
+				            android:text="Order Qty" />
+		                <TextView
+				            android:layout_width="fill_parent"
+				            android:layout_height="wrap_content"
+				            android:layout_margin="10dp"
+				            android:text="Amount" />
+		                <TextView
+				            android:layout_width="fill_parent"
+				            android:layout_height="wrap_content"
+				            android:layout_margin="10dp"
+				            android:text="Net Amount" />
+	            	</TableRow>
 		    </TableLayout>
 		</HorizontalScrollView>
 	</ScrollView>
