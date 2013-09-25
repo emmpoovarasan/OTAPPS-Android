@@ -78,16 +78,27 @@ public class OrderPage extends Activity {
 	HorizontalScrollView hsv;
 	TableRow tr1 = null;
 	
+	SessionManagement session;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_order_page);
-
+		
+		// Session class instance
+		session = new SessionManagement(getApplicationContext());
+		//Toast.makeText(getApplicationContext(), "User Login Status: "+ session.isLoggedIn(), Toast.LENGTH_LONG).show();
+		/**
+         * Call this function whenever you want to check user login
+         * This will redirect user to LoginActivity is he is not
+         * logged in
+         * */
+		session.checkLogin();
+		
 		scrollOrderPage = (ScrollView)findViewById(R.id.scroll_view); // assign ScrollView
 		lnrLayContentViewOrderPage = (LinearLayout)findViewById(R.id.content); // assign LinearView
-		
 		fnloadBeatName(); // Load Beat Name
-		
+			
 		fnloadShopName(); // Load Shop Name
 		
 		// code for HorizontalScrolling
@@ -113,45 +124,66 @@ public class OrderPage extends Activity {
 		
 		// load all products from excel file
 		btnLoadProductList = (Button)findViewById(R.id.btnLoadProductList);
-		btnLoadProductList.setOnClickListener(listenerLoadProductList);
+		btnLoadProductList.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if(session.isLoggedIn() == true){
+					Log.d("Click LoadProduct List", "Click LoadProduct List");
+					fngetProducts("PRODUCT NAME",FilePath.getExternalPath());
+				}else{
+					session.checkLogin();
+				}
+				
+			}
+		});
 		Log.d("Loaded", getClass().getSimpleName());
 		// button for save order
 		btnSaveOrder = (Button)findViewById(R.id.btnSaveOrder);
-		btnSaveOrder.setOnClickListener(listenerSaveOrder);
-		// button for dashboard
+		btnSaveOrder.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if(session.isLoggedIn() == true){
+					// call save order list to excel file
+					fnReadTableRowValues(FilePath.getExternalPath());	
+				}else{
+					session.checkLogin();
+				}
+				
+			}
+		});
+		// button for dash board
 		btnDashBoard = (Button)findViewById(R.id.btnDashboard);
-		btnDashBoard.setOnClickListener(listenerDashBoard);
+		btnDashBoard.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if(session.isLoggedIn() == true){
+					Intent myInt = new Intent(getApplicationContext(), MainActivity.class);
+					startActivity(myInt);
+				}else{
+					session.checkLogin();
+				}
+			}
+		});
 		// button for logout
 		btnLogOut = (Button)findViewById(R.id.btnLogOut);
-		btnLogOut.setOnClickListener(listenerLogOut);
+		btnLogOut.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				// Clear the session data
+	            // This will clear all session data and
+	            // redirect user to LoginActivity
+				session.logoutUser();
+			}
+		});
 	}
-	// set OnClickListener for logout
-	private OnClickListener listenerLogOut = new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			Intent myInt = new Intent(getApplicationContext(), LoginActivity.class);
-			startActivity(myInt);
-		}
-	};
-	// set OnClickListener for Dashboard
-	private OnClickListener listenerDashBoard = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			Intent myInt = new Intent(getApplicationContext(), MainActivity.class);
-			startActivity(myInt);
-		}
-	};
-	// set OnClickListener for Load Product List
-	private OnClickListener listenerLoadProductList = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			Log.d("Click LoadProduct List", "Click LoadProduct List");
-			fngetProducts("PRODUCT NAME",FilePath.getExternalPath());
-		}
-	};
-
 	// load all products to table layout from excel
 	private void fngetProducts(String SheetName, String fileFullPath){
 		File f = new File(fileFullPath);
@@ -162,7 +194,7 @@ public class OrderPage extends Activity {
 			
 			tblLoadProductList = (TableLayout)findViewById(R.id.tableLayoutOrder);
 			TableRow row = null;
-			// load values from excel to tablelayout
+			// load values from excel to table layout
 			for(int i=1;i<sheet.getRows();i++){
 				Cell cellProductName = sheet.getCell(1, i);
 				Cell cellInStock = sheet.getCell(2, i);
@@ -197,7 +229,7 @@ public class OrderPage extends Activity {
 					prdName.setLayoutParams(llp);
 					prdName.setPadding(10, 10, 40, 3);
 									
-					// instock
+					// in stock
 					TextView inStock = new TextView(this);
 					inStock.setBackgroundColor(color.darker_gray);
 					inStock.setTextColor(Color.BLUE);
@@ -208,7 +240,7 @@ public class OrderPage extends Activity {
 					inStock.setLayoutParams(llp);
 					inStock.setPadding(10, 10, 40, 3);
 					
-					// orderqty
+					// order qty
 					EditText orderQty = new EditText(this);
 					orderQty.setBackgroundColor(Color.YELLOW);
 					orderQty.setTextColor(Color.BLACK);
@@ -231,7 +263,7 @@ public class OrderPage extends Activity {
 					amount.setPadding(10, 10, 40, 3);
 					//calculate
 					//Double Total = Integer.parseInt(String.valueOf(splitString[1])) * Double.parseDouble(String.valueOf(splitString[2]));
-					// netamount
+					// net amount
 					final TextView netAmount = new TextView(this);
 					netAmount.setBackgroundColor(color.darker_gray);
 					netAmount.setTextColor(Color.BLUE);
@@ -273,32 +305,6 @@ public class OrderPage extends Activity {
 						    v.setBackgroundColor(color.darker_gray);
 						    //textViewNetAmount.setText((int) (etOrderQty * tvAmount));
 						    netAmount.setText(String.valueOf(tvNetAmount));
-						    /*editTextOrderQty.addTextChangedListener(new TextWatcher() {
-								
-								@Override
-								public void afterTextChanged(Editable s) {
-									// TODO Auto-generated method stub
-									netAmount.setText(String.valueOf(tvNetAmount));
-									//t.addView(netAmount);
-									Toast.makeText(getApplicationContext(), "afterTextChanged(Editable s) : "+String.valueOf(tvNetAmount), 1).show();
-								};
-
-								@Override
-								public void beforeTextChanged(CharSequence s,
-										int start, int count, int after) {
-									// TODO Auto-generated method stub
-									//Toast.makeText(getApplicationContext(), "beforeTextChanged(CharSequence s,int start, int count, int after)", 1).show();
-								}
-
-								@Override
-								public void onTextChanged(CharSequence s,
-										int start, int before, int count) {
-									// TODO Auto-generated method stub
-									netAmount.setText(String.valueOf(tvNetAmount));
-									Toast.makeText(getApplicationContext(), "onTextChanged(CharSequence s,int start, int before, int count)"+String.valueOf(tvNetAmount), 1).show();
-									
-								}
-							});*/
 						    
 						}
 					});
@@ -316,15 +322,6 @@ public class OrderPage extends Activity {
 	
 	}
 	
-	// set OnClickListener for Save Order
-	private OnClickListener listenerSaveOrder = new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			// call save order list to excel file
-			fnReadTableRowValues(FilePath.getExternalPath());
-		}
-	};
 	// Save order list to Excel file
 	private void fnReadTableRowValues(String filename){
 		try {
@@ -333,7 +330,6 @@ public class OrderPage extends Activity {
 			HSSFRow row = null;
 			HSSFCell cell = null;
 			HSSFCellStyle cellStyle = null;
-			String formule_NetAmount = null;
 			//String filename = null;
 			//filename = FilePath.getExternalPath();
 			File fp = new File(filename);
@@ -364,7 +360,7 @@ public class OrderPage extends Activity {
 					sheet = workbook.getSheet(sheetName);
 					Log.d("Status of boolean", String.valueOf(status));
 				}
-				//Toast.makeText(getApplicationContext(), "Total Child Count is "+tblLoadProductList.getChildCount(), Toast.LENGTH_SHORT).show();
+				
 				// getting values from tablelayout and place to excel
 				Double totalOrderQty=0.0, totalNetAmount=0.0;
 				for(int i = 1; i<tblLoadProductList.getChildCount();i++){
@@ -387,12 +383,7 @@ public class OrderPage extends Activity {
 					}
 					totalOrderQty += Double.valueOf(orderQty);
 					totalNetAmount += Double.valueOf(netAmount);
-					/*if(orderQty.length()>0){
-						netAmount = String.valueOf(Double.parseDouble(orderQty)*Double.parseDouble(amount));
-					}else{
-						orderQty="0";
-						netAmount = String.valueOf(Double.parseDouble(orderQty)*Double.parseDouble(amount));
-					}*/
+					
 						if(i==1){
 							row = sheet.createRow(i-1);
 							Log.d("Main Row value", String.valueOf(i-1));
@@ -573,10 +564,7 @@ public class OrderPage extends Activity {
 						cell.setCellStyle(cellStyle);
 						
 						cell = row.createCell((short)5);
-						//formule_NetAmount = "SUM(D"+(i+1)+",E"+(i+1)+")";
-						//cell.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 						cell.setCellValue(Double.valueOf(netAmount));
-						//cell.setCellFormula(formule_NetAmount);
 						// set border to cell
 						cellStyle = workbook.createCellStyle();
 						cellStyle.setBorderTop((short)1);
@@ -647,7 +635,6 @@ public class OrderPage extends Activity {
 							cell.setCellStyle(cellStyle);
 						}
 					
-					//Log.d("tblLoadProductList.getChildAt(i)", String.valueOf(tblLoadProductList.getChildAt(i)));
 					Log.d("List of products"+i, String.valueOf(iRow+"@"+productNames+"@"+inStock+"@"+orderQty+"@"+amount+"@"+netAmount));
 				}
 				
@@ -704,7 +691,12 @@ public class OrderPage extends Activity {
 		ArrayAdapter<String> dataAdapterBeatName = new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_item, arrayBeatName);
 		dataAdapterBeatName.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			spnBeatName.setAdapter(dataAdapterBeatName);
+			if(session.isLoggedIn() == true){
+				spnBeatName.setAdapter(dataAdapterBeatName);
+			}else{
+				session.checkLogin();
+			}
+			
 			spnBeatName.setOnItemSelectedListener(listenerLoadShopName);
 	}
 	private OnItemSelectedListener listenerLoadShopName = new OnItemSelectedListener() {
@@ -712,7 +704,12 @@ public class OrderPage extends Activity {
 		@Override
 		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
-			fnloadShopName();
+			if(session.isLoggedIn() == true){
+				fnloadShopName();
+			}else{
+				session.checkLogin();
+			}
+			
 		}
 
 		@Override
@@ -740,8 +737,5 @@ public class OrderPage extends Activity {
 		dataAdapterShopName.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spnShopName.setAdapter(dataAdapterShopName);
 	}
-
-	
 	
 }
-

@@ -34,10 +34,22 @@ public class ListOfOrders extends Activity {
 	HorizontalScrollView hvListOfOrderButton = null;
 	public final static String EXTRA_MESSAGE_SHOPNAME = null; 
 	//public final static String EXTRA_MESSAGE_ORDERNO = null;
+	
+	SessionManagement session;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list_of_orders);
+		// Session class instance
+		session = new SessionManagement(getApplicationContext());
+		//Toast.makeText(getApplicationContext(), "User Login Status: "+ session.isLoggedIn(), Toast.LENGTH_LONG).show();
+		/**
+         * Call this function whenever you want to check user login
+         * This will redirect user to LoginActivity is he is not
+         * logged in
+         * */
+		session.checkLogin();
 		
 		fnLoadOrderList(FilePath.getExternalPath());
 		
@@ -57,8 +69,12 @@ public class ListOfOrders extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent myPage = new Intent(getApplicationContext(), OrderPage.class);
-				startActivity(myPage);
+				if(session.isLoggedIn() == true){
+					Intent myPage = new Intent(getApplicationContext(), OrderPage.class);
+					startActivity(myPage);
+				}else{
+					session.checkLogin();
+				}
 			}
 		});
 		
@@ -68,8 +84,12 @@ public class ListOfOrders extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent myPage = new Intent(getApplicationContext(), MainActivity.class);
-				startActivity(myPage);
+				if(session.isLoggedIn() == true){
+					Intent myPage = new Intent(getApplicationContext(), MainActivity.class);
+					startActivity(myPage);
+				}else{
+					session.checkLogin();
+				}
 			}
 		});
 		// button for logout
@@ -79,8 +99,10 @@ public class ListOfOrders extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent myPage = new Intent(getApplicationContext(), LoginActivity.class);
-				startActivity(myPage);
+				// Clear the session data
+	            // This will clear all session data and
+	            // redirect user to LoginActivity
+				session.logoutUser();
 			}
 		});
 		
@@ -117,73 +139,76 @@ public class ListOfOrders extends Activity {
 	}
 	private void fnLoadOrderList(String pathName){
 		try {
-			File fp = new File(pathName);
-			Workbook wb;
-			wb = Workbook.getWorkbook(fp);
-			Sheet st = null;
-			tblListOfOrders = (TableLayout)findViewById(R.id.tblListOfOrders);
-			
-			for(int i = 0; i<wb.getNumberOfSheets();i++){
-				st = wb.getSheet(i);
-				if(i>3){
-					tblRow = new TableRow(this);	
-					tblListOfOrders.addView(tblRow);
-					
-					TextView tvSno = new TextView(this);
-					//tvSno.setText(st.getName());
-					tvSno.setText(String.valueOf(i-3));
-					tblRow.addView(tvSno);
-					
-					TextView tvCustomer = new TextView(this);
-					tvCustomer.setText(st.getName());
-					tvCustomer.setPadding(10, 10, 40, 3);
-					tblRow.addView(tvCustomer);
-					
-					final TextView tvOrderNo = new TextView(this);
-					//tvOrderNo.setText(st.getName());
-					tvOrderNo.setText(getVauesToLoadOrderNoQtyNetAmount(FilePath.getExternalPath(),"ORDERNO",st.getName()));
-					tblRow.addView(tvOrderNo);
-					tvOrderNo.setPadding(10, 10, 40, 3);
-					
-					TextView tvOrderedQty = new TextView(this);
-					//tvOrderedQty.setText(st.getName());
-					tvOrderedQty.setText(getVauesToLoadOrderNoQtyNetAmount(FilePath.getExternalPath(),"ORDEREDQTY", st.getName()));
-					tblRow.addView(tvOrderedQty);
-					tvOrderedQty.setPadding(10, 10, 40, 3);
-					
-					TextView tvTotalNetAmount = new TextView(this);
-					//tvTotalNetAmount.setText(st.getName());
-					tvTotalNetAmount.setText(getVauesToLoadOrderNoQtyNetAmount(FilePath.getExternalPath(),"NETAMOUNT", st.getName()));
-					tblRow.addView(tvTotalNetAmount);
-					tvTotalNetAmount.setPadding(10, 10, 40, 3);
-					//Toast.makeText(getApplicationContext(), i+"-"+st.getName(), Toast.LENGTH_SHORT).show();
-					//Toast.makeText(getApplicationContext(), pathName, Toast.LENGTH_SHORT).show();
-					
-					tblRow.setOnClickListener(new OnClickListener() {
+			if(session.isLoggedIn() == true){
+				File fp = new File(pathName);
+				Workbook wb;
+				wb = Workbook.getWorkbook(fp);
+				Sheet st = null;
+				tblListOfOrders = (TableLayout)findViewById(R.id.tblListOfOrders);
+				
+				for(int i = 0; i<wb.getNumberOfSheets();i++){
+					st = wb.getSheet(i);
+					if(i>3){
+						tblRow = new TableRow(this);	
+						tblListOfOrders.addView(tblRow);
 						
-						@Override
-						public void onClick(View v) {
-							// TODO Auto-generated method stub
-							v.setBackgroundColor(Color.YELLOW);
-							final TableRow t = (TableRow)v;
-							TextView tvSno = (TextView)t.getChildAt(0);
-							TextView tvShopName = (TextView)t.getChildAt(1);
-							TextView tvOrderedQty = (TextView)t.getChildAt(2);
-							TextView tvNetAmount = (TextView)t.getChildAt(3);
-							/*String StringTvShopName = tvShopName.getText().toString();*/
+						TextView tvSno = new TextView(this);
+						//tvSno.setText(st.getName());
+						tvSno.setText(String.valueOf(i-3));
+						tblRow.addView(tvSno);
+						
+						TextView tvCustomer = new TextView(this);
+						tvCustomer.setText(st.getName());
+						tvCustomer.setPadding(10, 10, 40, 3);
+						tblRow.addView(tvCustomer);
+						
+						final TextView tvOrderNo = new TextView(this);
+						//tvOrderNo.setText(st.getName());
+						tvOrderNo.setText(getVauesToLoadOrderNoQtyNetAmount(FilePath.getExternalPath(),"ORDERNO",st.getName()));
+						tblRow.addView(tvOrderNo);
+						tvOrderNo.setPadding(10, 10, 40, 3);
+						
+						TextView tvOrderedQty = new TextView(this);
+						//tvOrderedQty.setText(st.getName());
+						tvOrderedQty.setText(getVauesToLoadOrderNoQtyNetAmount(FilePath.getExternalPath(),"ORDEREDQTY", st.getName()));
+						tblRow.addView(tvOrderedQty);
+						tvOrderedQty.setPadding(10, 10, 40, 3);
+						
+						TextView tvTotalNetAmount = new TextView(this);
+						//tvTotalNetAmount.setText(st.getName());
+						tvTotalNetAmount.setText(getVauesToLoadOrderNoQtyNetAmount(FilePath.getExternalPath(),"NETAMOUNT", st.getName()));
+						tblRow.addView(tvTotalNetAmount);
+						tvTotalNetAmount.setPadding(10, 10, 40, 3);
+						//Toast.makeText(getApplicationContext(), i+"-"+st.getName(), Toast.LENGTH_SHORT).show();
+						//Toast.makeText(getApplicationContext(), pathName, Toast.LENGTH_SHORT).show();
+						
+						tblRow.setOnClickListener(new OnClickListener() {
 							
-							Intent myOrder = new Intent(getApplicationContext(), EditOrderList.class);
-							/*String messageShopName = tvShopName.getText().toString();*/
-							myOrder.putExtra(EXTRA_MESSAGE_SHOPNAME, tvShopName.getText().toString());
-							//myOrder.putExtra(EXTRA_MESSAGE_ORDERNO, tvOrderNo.getText().toString());
-							startActivity(myOrder);
-							v.setBackgroundColor(Color.GREEN);
-						}
-					});
+							@Override
+							public void onClick(View v) {
+								// TODO Auto-generated method stub
+								v.setBackgroundColor(Color.YELLOW);
+								final TableRow t = (TableRow)v;
+								TextView tvSno = (TextView)t.getChildAt(0);
+								TextView tvShopName = (TextView)t.getChildAt(1);
+								TextView tvOrderedQty = (TextView)t.getChildAt(2);
+								TextView tvNetAmount = (TextView)t.getChildAt(3);
+								/*String StringTvShopName = tvShopName.getText().toString();*/
+								
+								Intent myOrder = new Intent(getApplicationContext(), EditOrderList.class);
+								/*String messageShopName = tvShopName.getText().toString();*/
+								myOrder.putExtra(EXTRA_MESSAGE_SHOPNAME, tvShopName.getText().toString());
+								//myOrder.putExtra(EXTRA_MESSAGE_ORDERNO, tvOrderNo.getText().toString());
+								startActivity(myOrder);
+								v.setBackgroundColor(Color.GREEN);
+							}
+						});
+					}
 				}
+			
+			}else{
+				session.checkLogin();
 			}
-			
-			
 		} catch (Exception e) {
 			// TODO: handle exception
 			Log.d("Exception", e.getMessage());

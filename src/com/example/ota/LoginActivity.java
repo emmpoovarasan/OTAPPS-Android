@@ -19,16 +19,22 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity {
-	String userName, passWord;
+	//String userName, passWord;
 	EditText username, password;
 	Button login;
 	ScrollView scrollLoginPage;
 	LinearLayout lnrLayContentViewLoginPage;
 	
+	SessionManagement session;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		// session management
+		session = new SessionManagement(getApplicationContext());
+		//Toast.makeText(getApplicationContext(), "User Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
+		
 		// added this line to scroll the page
 		//Setting scroll view & content view
 		scrollLoginPage = (ScrollView)findViewById(R.id.scroll_view_login);
@@ -55,8 +61,15 @@ public class LoginActivity extends Activity {
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			try {
+				// Check if username, password is filled
+				if(username.getText().length() > 0 && password.getText().length() > 0){
+					
 					Log.d("Login status", String.valueOf(checkLoginStatus()));
 					if(checkLoginStatus() == true){
+						// Creating user login session
+                        // For testing i am storing name
+                        // Use user real data
+						session.createLoginSession(username.getText().toString());
 						// responding to the User inputs
 						Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_LONG).show();
 						// to navigate other page
@@ -65,6 +78,13 @@ public class LoginActivity extends Activity {
 					}else{
 						Toast.makeText(getApplicationContext(), "Login not successfully", Toast.LENGTH_LONG).show();
 					}
+				}
+				else{
+                    // user didn't entered username or password
+                    // Show alert asking him to enter the details
+                    //alert.showAlertDialog(LoginActivity.this, "Login failed..", "Please enter username and password", false);
+					Toast.makeText(getApplicationContext(), "Login failed.. Please enter username and password", 2).show();
+                }
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
