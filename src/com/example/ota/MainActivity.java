@@ -56,7 +56,7 @@ public class MainActivity extends Activity {
 					// TODO Auto-generated method stub
 					if(session.isLoggedIn()==true){
 						Intent listOfOrdersPage = new Intent(getApplicationContext(), ListOfOrders.class);
-						startActivity(listOfOrdersPage);	
+						startActivity(listOfOrdersPage);
 					}else{
 						session.checkLogin();
 					}

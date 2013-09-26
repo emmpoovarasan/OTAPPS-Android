@@ -33,6 +33,12 @@
 		        android:layout_height="wrap_content"
 		        android:layout_margin="10dp"
 		        android:text="@string/loadProductList" />
+	        <TextView
+		        android:id="@+id/lblTotalNetAmount"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:singleLine="true"
+		        android:layout_margin="10dip"/>
 <HorizontalScrollView 
         android:id="@+id/horizontalView" 
         android:layout_height="wrap_content"     

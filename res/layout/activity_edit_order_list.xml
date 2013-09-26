@@ -1,124 +1,137 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".EditOrderList" >
-	<ScrollView android:id="@+id/svEditOrderList" 
-	    	android:layout_height="wrap_content"     
-	        android:scrollbars="horizontal|vertical" 
-	        android:layout_width="wrap_content"     
-	        android:layout_marginTop="5dip">
-		<HorizontalScrollView 
-	        android:id="@+id/hvEditOrderList" 
-	        android:layout_height="wrap_content"     
-	        android:scrollbars="horizontal|vertical" 
-	        android:layout_width="wrap_content"     
-	        android:layout_marginTop="5dip">
-			<TableLayout
-		         android:id="@+id/tblEditOrderList"
-		         android:layout_width="match_parent"
-		         android:layout_height="wrap_content"
-		         android:stretchColumns="*"
-		         android:saveEnabled="true">
-		         	<TableRow android:id="@+id/trEditOrderListHeaderbtn"
-		                android:layout_width="wrap_content"
-		                android:layout_height="wrap_content">
-				  	    <Button
-						   android:id="@+id/btnEditOrderListUpdateOrder"
-						   android:layout_width="wrap_content"
-						   android:layout_height="wrap_content"
-						   android:text="@string/updateOrder" />
-						
-						<Button
-						    android:id="@+id/btnEditOrderListDashboard"
-						    android:layout_width="wrap_content"
-						    android:layout_height="wrap_content"
-						    android:text="Go to Dashboard" />
-						
-						<Button
-						    android:id="@+id/btnEditOrderListLogOut"
-						    android:layout_width="wrap_content"
-						    android:layout_height="wrap_content"
-						    android:text="Logout" />
-		         	</TableRow>
-		         	<TableRow
-		                android:id="@+id/trEditOrderListHeaderContent"
-		                android:layout_width="wrap_content"
-		                android:layout_height="wrap_content">
-		                <TextView
-				            android:layout_width="fill_parent"
-				            android:layout_height="wrap_content"
-				            android:layout_margin="10dp"
-				            android:text="Shop Name" />
-		                <TextView
-		                    android:id="@+id/tv_edit_ShopName"
-				            android:layout_width="fill_parent"
-				            android:layout_height="wrap_content"
-				            android:layout_margin="10dp"
-				            android:text="" />
-		                <TextView
-				            android:layout_width="fill_parent"
-				            android:layout_height="wrap_content"
-				            android:layout_margin="10dp"
-				            android:text="Order No" />
-		                <TextView
-		                    android:id="@+id/tv_edit_OrderNo"
-				            android:layout_width="fill_parent"
-				            android:layout_height="wrap_content"
-				            android:layout_margin="10dp"
-				            android:text="" />
-		                <TextView
-				            android:layout_width="fill_parent"
-				            android:layout_height="wrap_content"
-				            android:layout_margin="10dp"
-				            android:text="Beat Name" />
-		                <TextView
-		                    android:id="@+id/tv_edit_BeatName"
-				            android:layout_width="fill_parent"
-				            android:layout_height="wrap_content"
-				            android:layout_margin="10dp"
-				            android:text="" />
-	            	</TableRow>
-			        <TableRow
-		                android:id="@+id/trEditOrderListHeader"
-		                android:layout_width="wrap_content"
-		                android:layout_height="wrap_content">
-		                <TextView
-				            android:layout_width="fill_parent"
-				            android:layout_height="wrap_content"
-				            android:layout_margin="10dp"
-				            android:text="S.No" />
-		                <TextView
-				            android:layout_width="fill_parent"
-				            android:layout_height="wrap_content"
-				            android:layout_margin="10dp"
-				            android:text="Product Name" />
-		                <TextView
-				            android:layout_width="fill_parent"
-				            android:layout_height="wrap_content"
-				            android:layout_margin="10dp"
-				            android:text="In Stock" />
-		                <TextView
-				            android:layout_width="fill_parent"
-				            android:layout_height="wrap_content"
-				            android:layout_margin="10dp"
-				            android:text="Order Qty" />
-		                <TextView
-				            android:layout_width="fill_parent"
-				            android:layout_height="wrap_content"
-				            android:layout_margin="10dp"
-				            android:text="Amount" />
-		                <TextView
-				            android:layout_width="fill_parent"
-				            android:layout_height="wrap_content"
-				            android:layout_margin="10dp"
-				            android:text="Net Amount" />
-	            	</TableRow>
-		    </TableLayout>
-		</HorizontalScrollView>
-	</ScrollView>
-</LinearLayout>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools" 
+    android:id="@+id/svEditOrderList" 
+	android:layout_height="wrap_content"     
+    android:scrollbars="horizontal|vertical" 
+    android:layout_width="wrap_content"     
+    android:layout_marginTop="5dip"
+    tools:context=".EditOrderList">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+		    <LinearLayout android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+		    android:orientation="horizontal">
+		        <TextView
+			        android:id="@+id/lblEditTotalNetAmount"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:singleLine="true" />
+		    </LinearLayout>
+		    <LinearLayout  android:layout_width="match_parent"
+		    android:layout_height="match_parent" 
+		    android:orientation="horizontal">
+			    <HorizontalScrollView 
+			        android:id="@+id/hvEditOrderList" 
+			        android:layout_height="wrap_content"     
+			        android:scrollbars="horizontal|vertical" 
+			        android:layout_width="wrap_content"     
+			        android:layout_marginTop="5dip">
+					<TableLayout
+				         android:id="@+id/tblEditOrderList"
+				         android:layout_width="match_parent"
+				         android:layout_height="wrap_content"
+				         android:stretchColumns="*"
+				         android:saveEnabled="true">
+				         	<TableRow android:id="@+id/trEditOrderListHeaderbtn"
+				                android:layout_width="wrap_content"
+				                android:layout_height="wrap_content">
+						  	    <Button
+								   android:id="@+id/btnEditOrderListUpdateOrder"
+								   android:layout_width="wrap_content"
+								   android:layout_height="wrap_content"
+								   android:text="@string/updateOrder" />
+								
+								<Button
+								    android:id="@+id/btnEditOrderListDashboard"
+								    android:layout_width="wrap_content"
+								    android:layout_height="wrap_content"
+								    android:text="Go to Dashboard" />
+								
+								<Button
+								    android:id="@+id/btnEditOrderListLogOut"
+								    android:layout_width="wrap_content"
+								    android:layout_height="wrap_content"
+								    android:text="Logout" />
+				         	</TableRow>
+				         	<TableRow
+				                android:id="@+id/trEditOrderListHeaderContent"
+				                android:layout_width="wrap_content"
+				                android:layout_height="wrap_content">
+				                <TextView
+						            android:layout_width="fill_parent"
+						            android:layout_height="wrap_content"
+						            android:layout_margin="10dp"
+						            android:text="Shop Name" />
+				                <TextView
+				                    android:id="@+id/tv_edit_ShopName"
+						            android:layout_width="fill_parent"
+						            android:layout_height="wrap_content"
+						            android:layout_margin="10dp"
+						            android:text="" />
+				                <TextView
+						            android:layout_width="fill_parent"
+						            android:layout_height="wrap_content"
+						            android:layout_margin="10dp"
+						            android:text="Order No" />
+				                <TextView
+				                    android:id="@+id/tv_edit_OrderNo"
+						            android:layout_width="fill_parent"
+						            android:layout_height="wrap_content"
+						            android:layout_margin="10dp"
+						            android:text="" />
+				                <TextView
+						            android:layout_width="fill_parent"
+						            android:layout_height="wrap_content"
+						            android:layout_margin="10dp"
+						            android:text="Beat Name" />
+				                <TextView
+				                    android:id="@+id/tv_edit_BeatName"
+						            android:layout_width="fill_parent"
+						            android:layout_height="wrap_content"
+						            android:layout_margin="10dp"
+						            android:text="" />
+			            	</TableRow>
+					        <TableRow
+				                android:id="@+id/trEditOrderListHeader"
+				                android:layout_width="wrap_content"
+				                android:layout_height="wrap_content">
+				                <TextView
+						            android:layout_width="fill_parent"
+						            android:layout_height="wrap_content"
+						            android:layout_margin="10dp"
+						            android:text="S.No" />
+				                <TextView
+						            android:layout_width="fill_parent"
+						            android:layout_height="wrap_content"
+						            android:layout_margin="10dp"
+						            android:text="Product Name" />
+				                <TextView
+						            android:layout_width="fill_parent"
+						            android:layout_height="wrap_content"
+						            android:layout_margin="10dp"
+						            android:text="In Stock" />
+				                <TextView
+						            android:layout_width="fill_parent"
+						            android:layout_height="wrap_content"
+						            android:layout_margin="10dp"
+						            android:text="Order Qty" />
+				                <TextView
+						            android:layout_width="fill_parent"
+						            android:layout_height="wrap_content"
+						            android:layout_margin="10dp"
+						            android:text="Amount" />
+				                <TextView
+						            android:layout_width="fill_parent"
+						            android:layout_height="wrap_content"
+						            android:layout_margin="10dp"
+						            android:text="Net Amount" />
+			            	</TableRow>
+				    </TableLayout>
+				</HorizontalScrollView>
+			</LinearLayout>
+	</LinearLayout>
+</ScrollView>

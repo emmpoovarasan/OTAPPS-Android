@@ -85,11 +85,11 @@
 		                android:layout_height="wrap_content"
 		                android:text="@string/OrderNo" />
 		
-		            <TextView
+		            <!-- <TextView
 		                android:id="@+id/tvOrderedQty"
 		                android:layout_width="wrap_content"
 		                android:layout_height="wrap_content"
-		                android:text="@string/OrderedQty" />
+		                android:text="@string/OrderedQty" /> -->
 		
 		            <TextView
 		                android:id="@+id/tvTotalNetAmount"

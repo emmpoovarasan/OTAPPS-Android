@@ -168,11 +168,11 @@ public class ListOfOrders extends Activity {
 						tblRow.addView(tvOrderNo);
 						tvOrderNo.setPadding(10, 10, 40, 3);
 						
-						TextView tvOrderedQty = new TextView(this);
+						/*TextView tvOrderedQty = new TextView(this);
 						//tvOrderedQty.setText(st.getName());
 						tvOrderedQty.setText(getVauesToLoadOrderNoQtyNetAmount(FilePath.getExternalPath(),"ORDEREDQTY", st.getName()));
 						tblRow.addView(tvOrderedQty);
-						tvOrderedQty.setPadding(10, 10, 40, 3);
+						tvOrderedQty.setPadding(10, 10, 40, 3);*/
 						
 						TextView tvTotalNetAmount = new TextView(this);
 						//tvTotalNetAmount.setText(st.getName());
@@ -191,8 +191,8 @@ public class ListOfOrders extends Activity {
 								final TableRow t = (TableRow)v;
 								TextView tvSno = (TextView)t.getChildAt(0);
 								TextView tvShopName = (TextView)t.getChildAt(1);
-								TextView tvOrderedQty = (TextView)t.getChildAt(2);
-								TextView tvNetAmount = (TextView)t.getChildAt(3);
+								/*TextView tvOrderedQty = (TextView)t.getChildAt(2);*/
+								TextView tvNetAmount = (TextView)t.getChildAt(2);
 								/*String StringTvShopName = tvShopName.getText().toString();*/
 								
 								Intent myOrder = new Intent(getApplicationContext(), EditOrderList.class);
@@ -201,6 +201,7 @@ public class ListOfOrders extends Activity {
 								//myOrder.putExtra(EXTRA_MESSAGE_ORDERNO, tvOrderNo.getText().toString());
 								startActivity(myOrder);
 								v.setBackgroundColor(Color.GREEN);
+								finish();
 							}
 						});
 					}
@@ -235,12 +236,12 @@ public class ListOfOrders extends Activity {
 				//Toast.makeText(getApplicationContext(), returnType+"/"+MyReturn, 2).show();
 				Log.d("ORDERNO", returnType+"/"+MyReturn);
 			}
-			if(returnType == "ORDEREDQTY"){
+			/*if(returnType == "ORDEREDQTY"){
 				CalcOrderedQty += Double.valueOf(cellOrderedQty.getContents().toString());
 				 MyReturn = String.valueOf(CalcOrderedQty);
 				 //Toast.makeText(getApplicationContext(), returnType+"/"+MyReturn, 2).show();
 				 Log.d("ORDEREDQTY", returnType+"/"+MyReturn);
-			}
+			}*/
 			if(returnType == "NETAMOUNT"){
 				CalcNetAmount += Double.valueOf(cellNetAmount.getContents().toString());
 				MyReturn = String.valueOf(CalcNetAmount);

@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,10 +25,15 @@ import android.R.color;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v4.view.MotionEventCompat;
+import android.text.Editable;
+import android.text.Html;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
@@ -45,9 +51,9 @@ public class EditOrderList extends Activity {
 	TableRow trEditOL = null;
 	TextView tvEditShopName = null, tvEditOrderNo = null, tvEditBeatName = null;
 	Button btnEditUpdateOrder = null, btnEditGoToDashBoard =  null, btnEditLogout = null;
-
+	TextView lbl_TotalNetAmount = null;
 	SessionManagement session;
-
+	final DecimalFormat dcf = new DecimalFormat("0.00");
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -140,6 +146,7 @@ public class EditOrderList extends Activity {
 		if(session.isLoggedIn() == true){
 			File f = new File(fileFullPath);
 			Workbook w;
+			Double TotalNetAmountCalc = 0.0;
 				try {
 					w = Workbook.getWorkbook(f);
 					Sheet sheet = w.getSheet(SheetName);
@@ -205,7 +212,7 @@ public class EditOrderList extends Activity {
 								inStock.setPadding(10, 10, 40, 3);
 								
 								// orderqty
-								EditText orderQty = new EditText(this);
+								final EditText orderQty = new EditText(this);
 								orderQty.setBackgroundColor(Color.YELLOW);
 								orderQty.setTextColor(Color.BLACK);
 								orderQty.setText(String.valueOf(cellOrderedQty.getContents().toString()));
@@ -216,7 +223,7 @@ public class EditOrderList extends Activity {
 								orderQty.setPadding(10, 10, 40, 3);
 								
 								// amount
-								TextView amount = new TextView(this);
+								final TextView amount = new TextView(this);
 								amount.setBackgroundColor(color.darker_gray);
 								amount.setTextColor(Color.BLUE);
 								amount.setText(String.valueOf(cellAmount.getContents().toString()));
@@ -238,7 +245,44 @@ public class EditOrderList extends Activity {
 								netAmount.setLayoutParams(llp);
 								netAmount.setPadding(10, 10, 40, 3);
 								
-								row.setOnClickListener(new View.OnClickListener() {
+								orderQty.addTextChangedListener(new TextWatcher() {
+									
+									@Override
+									public void onTextChanged(CharSequence s, int start, int before, int count) {
+										// TODO Auto-generated method stub
+										
+									}
+									
+									@Override
+									public void beforeTextChanged(CharSequence s, int start, int count,
+											int after) {
+										// TODO Auto-generated method stub
+										
+									}
+									
+									@Override
+									public void afterTextChanged(Editable s) {
+										// TODO Auto-generated method stub
+										//v.setBackgroundColor(Color.DKGRAY);
+										Double etOrderQty=0.0;
+										if(orderQty.getText().length() > 0){
+									    	etOrderQty = Double.valueOf(orderQty.getText().toString());
+									    }
+									    Double tvAmount = Double.valueOf(amount.getText().toString());
+									    final Double tvNetAmount = (etOrderQty * tvAmount);
+									    
+									    //v.setBackgroundColor(color.darker_gray);
+									    netAmount.setText(String.valueOf(dcf.format(tvNetAmount)));
+									    lbl_TotalNetAmount = (TextView)findViewById(R.id.lblEditTotalNetAmount);
+									    lbl_TotalNetAmount.setText(Html.fromHtml("<b>Total Net Amount : "+ dcf.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));
+									}
+								});
+								if(netAmount.getText().length()>0){
+									TotalNetAmountCalc += Double.valueOf(netAmount.getText().toString());
+									lbl_TotalNetAmount = (TextView)findViewById(R.id.lblEditTotalNetAmount);
+									lbl_TotalNetAmount.setText(Html.fromHtml("<b>Total Net Amount : "+ dcf.format(TotalNetAmountCalc) +"</b>"));
+								}
+								/*row.setOnClickListener(new View.OnClickListener() {
 									
 									@Override
 									public void onClick(View v) {
@@ -268,7 +312,7 @@ public class EditOrderList extends Activity {
 									   
 									    
 									}
-								});
+								});*/
 								
 							} // end of if statement
 						} // end of i>1 if statement
@@ -533,7 +577,7 @@ public class EditOrderList extends Activity {
 						cell = row.createCell((short)5);
 						//formule_NetAmount = "SUM(D"+(i+1)+",E"+(i+1)+")";
 						//cell.setCellType(HSSFCell.CELL_TYPE_FORMULA);
-						cell.setCellValue(Double.valueOf(netAmount));
+						cell.setCellValue(Double.valueOf(dcf.format(netAmount)));
 						//cell.setCellFormula(formule_NetAmount);
 						// set border to cell
 						cellStyle = workbook.createCellStyle();
@@ -598,7 +642,7 @@ public class EditOrderList extends Activity {
 							cell.setCellStyle(cellStyle);
 							
 							cell = row.createCell((short)5);
-							cell.setCellValue(totalNetAmount);
+							cell.setCellValue(dcf.format(totalNetAmount));
 							// set border to cell
 							cellStyle = workbook.createCellStyle();
 							cellStyle.setBorderTop((short)1);
@@ -627,5 +671,21 @@ public class EditOrderList extends Activity {
 			Log.d("IO Exception", e.getMessage());
 		}
 		
+	}
+	
+	private Double getTotalNetAmountAfterChangedOrder(){
+		Double Calc_TotalNetAmount = 0.0;
+		String strNetAmount = null;
+			tlEditOL = (TableLayout)findViewById(R.id.tblEditOrderList);
+			for(int i = 0;i<tlEditOL.getChildCount();i++){
+				if(i>=2 &&  i < tlEditOL.getChildCount()-1){
+					strNetAmount = String.valueOf(((TextView)((TableRow)tlEditOL.getChildAt(i+1)).getChildAt(5)).getText());
+					if(strNetAmount.length()==0){
+						strNetAmount ="0";
+					}
+					Calc_TotalNetAmount += Double.valueOf(strNetAmount);
+				}
+			}
+		return Calc_TotalNetAmount;
 	}
 }
