@@ -577,7 +577,7 @@ public class EditOrderList extends Activity {
 						cell = row.createCell((short)5);
 						//formule_NetAmount = "SUM(D"+(i+1)+",E"+(i+1)+")";
 						//cell.setCellType(HSSFCell.CELL_TYPE_FORMULA);
-						cell.setCellValue(Double.valueOf(dcf.format(netAmount)));
+						cell.setCellValue(dcf.format(Double.valueOf(netAmount)));
 						//cell.setCellFormula(formule_NetAmount);
 						// set border to cell
 						cellStyle = workbook.createCellStyle();
