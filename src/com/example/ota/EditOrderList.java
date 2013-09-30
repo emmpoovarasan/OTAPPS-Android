@@ -28,6 +28,7 @@ import android.graphics.Color;
 import android.support.v4.view.MotionEventCompat;
 import android.text.Editable;
 import android.text.Html;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
@@ -91,7 +92,15 @@ public class EditOrderList extends Activity {
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 					if(session.isLoggedIn() == true){
-						fnUpdateTableRowValues(FilePath.getExternalPath(), messageReceivedShopName);
+						TableLayout tblEdit_O_L = (TableLayout)findViewById(R.id.tblEditOrderList);
+						Log.d("Table Row Counts" , String.valueOf(tblEdit_O_L.getChildCount()));
+						if(tblEdit_O_L.getChildCount()>1){
+							fnUpdateTableRowValues(FilePath.getExternalPath(), messageReceivedShopName);
+						}else{
+							//Log.d("Order Table : "+tblLoadProductList.getChildCount(), "No Records added into the Table");
+							Toast.makeText(getApplicationContext(), "No Records added in the Table, Minimum ONE Record should be present...",  Toast.LENGTH_LONG).show();
+						}
+						
 					}else{
 						session.checkLogin();
 					}
@@ -215,6 +224,7 @@ public class EditOrderList extends Activity {
 								final EditText orderQty = new EditText(this);
 								orderQty.setBackgroundColor(Color.YELLOW);
 								orderQty.setTextColor(Color.BLACK);
+								orderQty.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
 								orderQty.setText(String.valueOf(cellOrderedQty.getContents().toString()));
 								row.addView(orderQty);
 								llp = (LinearLayout.LayoutParams) orderQty.getLayoutParams();
@@ -265,16 +275,31 @@ public class EditOrderList extends Activity {
 										// TODO Auto-generated method stub
 										//v.setBackgroundColor(Color.DKGRAY);
 										Double etOrderQty=0.0;
-										if(orderQty.getText().length() > 0){
-									    	etOrderQty = Double.valueOf(orderQty.getText().toString());
-									    }
-									    Double tvAmount = Double.valueOf(amount.getText().toString());
-									    final Double tvNetAmount = (etOrderQty * tvAmount);
-									    
-									    //v.setBackgroundColor(color.darker_gray);
-									    netAmount.setText(String.valueOf(dcf.format(tvNetAmount)));
-									    lbl_TotalNetAmount = (TextView)findViewById(R.id.lblEditTotalNetAmount);
-									    lbl_TotalNetAmount.setText(Html.fromHtml("<b>Total Net Amount : "+ dcf.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));
+										try {
+											Double.parseDouble(orderQty.getText().toString());
+											if(orderQty.getText().length() > 0){
+										    	etOrderQty = Double.valueOf(orderQty.getText().toString());
+										    }
+										    Double tvAmount = Double.valueOf(amount.getText().toString());
+										    final Double tvNetAmount = (etOrderQty * tvAmount);
+										    
+										    //v.setBackgroundColor(color.darker_gray);
+										    netAmount.setText(String.valueOf(dcf.format(tvNetAmount)));
+										    lbl_TotalNetAmount = (TextView)findViewById(R.id.lblEditTotalNetAmount);
+										    lbl_TotalNetAmount.setText(Html.fromHtml("<b>Total Net Amount : "+ dcf.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));	
+										} catch (NumberFormatException ne) {
+											// TODO: handle exception
+											Log.d("NumberFormat Exception", ne.getMessage());
+											if(orderQty.getText().toString().length() >0){
+												Toast.makeText(getApplicationContext(), "Please enter valid number format.. you entered as "+ne.getMessage(), Toast.LENGTH_LONG).show();
+												//orderQty.setText("0");
+											}else{
+												netAmount.setText("0.0");
+												lbl_TotalNetAmount = (TextView)findViewById(R.id.lblEditTotalNetAmount);
+											    lbl_TotalNetAmount.setText(Html.fromHtml("<b>Total Net Amount : "+ dcf.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));
+											}
+										}
+										
 									}
 								});
 								if(netAmount.getText().length()>0){

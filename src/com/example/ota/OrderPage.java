@@ -42,6 +42,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.Editable;
 import android.text.Html;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
@@ -152,7 +153,15 @@ public class OrderPage extends Activity {
 				// TODO Auto-generated method stub
 				if(session.isLoggedIn() == true){
 					// call save order list to excel file
-					fnReadTableRowValues(FilePath.getExternalPath());	
+					TableLayout tbllayout = (TableLayout) findViewById(R.id.tableLayoutOrder);
+					Log.d("Table Row Counts" , String.valueOf(tbllayout.getChildCount()));
+					if(tbllayout.getChildCount() > 1 ){
+						fnReadTableRowValues(FilePath.getExternalPath());
+					}else{
+						//Log.d("Order Table : "+tblLoadProductList.getChildCount(), "No Records added into the Table");
+						Toast.makeText(getApplicationContext(), "No Records added in the Table, Minimum ONE Record should be present...",  Toast.LENGTH_LONG).show();
+					}
+						
 				}else{
 					session.checkLogin();
 				}
@@ -250,6 +259,7 @@ public class OrderPage extends Activity {
 					final EditText orderQty = new EditText(this);
 					orderQty.setBackgroundColor(Color.YELLOW);
 					orderQty.setTextColor(Color.BLACK);
+					orderQty.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
 					//orderQty.setText(String.valueOf("12345"));
 					row.addView(orderQty);
 					llp = (LinearLayout.LayoutParams) orderQty.getLayoutParams();
@@ -299,14 +309,30 @@ public class OrderPage extends Activity {
 						public void afterTextChanged(Editable s) {
 							// TODO Auto-generated method stub
 							Double etOrderQty=0.0;
-							if(orderQty.getText().length() > 0){
-						    	etOrderQty = Double.valueOf(orderQty.getText().toString());
-						    }
-						    Double tvAmount = Double.valueOf(amount.getText().toString());
-						    final Double tvNetAmount = (etOrderQty * tvAmount);
-						    netAmount.setText(String.valueOf(df.format(tvNetAmount)));
-						    lbl_TotalNetAmount = (TextView)findViewById(R.id.lblTotalNetAmount);
-						    lbl_TotalNetAmount.setText(Html.fromHtml("<b>Total Net Amount : "+ df.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));
+							try {
+								Double.parseDouble(orderQty.getText().toString());
+								if(orderQty.getText().length() > 0){
+							    	etOrderQty = Double.valueOf(orderQty.getText().toString());
+							    }
+							    Double tvAmount = Double.valueOf(amount.getText().toString());
+							    final Double tvNetAmount = (etOrderQty * tvAmount);
+							    netAmount.setText(String.valueOf(df.format(tvNetAmount)));
+							    lbl_TotalNetAmount = (TextView)findViewById(R.id.lblTotalNetAmount);
+							    lbl_TotalNetAmount.setText(Html.fromHtml("<b>Total Net Amount : "+ df.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));	
+							} catch (NumberFormatException ne) {
+								// TODO: handle exception
+								Log.d("NumberFormat Exception", ne.getMessage());
+								if(orderQty.getText().toString().length() >0){
+									Toast.makeText(getApplicationContext(), "Please enter valid number format.. you entered as "+ne.getMessage(), Toast.LENGTH_LONG).show();
+								}else{
+									//orderQty.setText("0");
+									netAmount.setText("0.0");
+									lbl_TotalNetAmount = (TextView)findViewById(R.id.lblTotalNetAmount);
+								    lbl_TotalNetAmount.setText(Html.fromHtml("<b>Total Net Amount : "+ df.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));
+								}
+								//orderQty.clearFocus();
+							}
+							
 						}
 					});
 					if(netAmount.getText().length()>0){
