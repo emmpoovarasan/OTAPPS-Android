@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="@string/title_activity_main" />
+        android:text="@string/title_activity_main"
+        android:textSize="15dp" />
 
     <Button
         android:id="@+id/goToOrder"

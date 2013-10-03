@@ -1,6 +1,7 @@
 package com.example.ota;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.zip.Inflater;
 
 import jxl.Cell;
@@ -11,7 +12,9 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.text.Html;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,8 +35,12 @@ public class ListOfOrders extends Activity {
 	ScrollView svListOfOrders = null;
 	HorizontalScrollView hvListOfOrders = null;
 	HorizontalScrollView hvListOfOrderButton = null;
+	
+	TextView lbl_ListOfTotalNetAmount = null;
+	
 	public final static String EXTRA_MESSAGE_SHOPNAME = null; 
 	//public final static String EXTRA_MESSAGE_ORDERNO = null;
+	final DecimalFormat dcf = new DecimalFormat("0.00");
 	
 	SessionManagement session;
 	
@@ -52,6 +59,11 @@ public class ListOfOrders extends Activity {
 		session.checkLogin();
 		
 		fnLoadOrderList(FilePath.getExternalPath());
+		
+		Log.d("Start Execute Total Amount Calc", "Starts --------");
+		lbl_ListOfTotalNetAmount = (TextView)findViewById(R.id.tvListOfTotalNetAmount);
+		lbl_ListOfTotalNetAmount.setText(Html.fromHtml("<b>Total Net Amount : "+ dcf.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));
+		Log.d("End Executed Total Amount Calc", "Ends --------");
 		
 		/*btnShowListOfOrders = (Button)findViewById(R.id.btnOLshowListOfOrders);
 		btnShowListOfOrders.setOnClickListener(new OnClickListener() {
@@ -106,6 +118,16 @@ public class ListOfOrders extends Activity {
 			}
 		});
 		
+		/*tblListOfOrders = (TableLayout)findViewById(R.id.tblListOfOrders);
+		tblListOfOrders.post(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				tblListOfOrders.scrollTo(tblListOfOrders.getMeasuredWidth(), tblListOfOrders.getMeasuredHeight());
+			}
+		});*/
+		
 		svListOfOrders = (ScrollView)findViewById(R.id.svListOfOrdersTable);
 		svListOfOrders.post(new Runnable() {
 			
@@ -155,6 +177,7 @@ public class ListOfOrders extends Activity {
 						TextView tvSno = new TextView(this);
 						//tvSno.setText(st.getName());
 						tvSno.setText(String.valueOf(i-3));
+						tvSno.setGravity(Gravity.RIGHT);
 						tblRow.addView(tvSno);
 						
 						TextView tvCustomer = new TextView(this);
@@ -165,6 +188,7 @@ public class ListOfOrders extends Activity {
 						final TextView tvOrderNo = new TextView(this);
 						//tvOrderNo.setText(st.getName());
 						tvOrderNo.setText(getVauesToLoadOrderNoQtyNetAmount(FilePath.getExternalPath(),"ORDERNO",st.getName()));
+						tvOrderNo.setGravity(Gravity.RIGHT);
 						tblRow.addView(tvOrderNo);
 						tvOrderNo.setPadding(10, 10, 40, 3);
 						
@@ -177,6 +201,7 @@ public class ListOfOrders extends Activity {
 						TextView tvTotalNetAmount = new TextView(this);
 						//tvTotalNetAmount.setText(st.getName());
 						tvTotalNetAmount.setText(getVauesToLoadOrderNoQtyNetAmount(FilePath.getExternalPath(),"NETAMOUNT", st.getName()));
+						tvTotalNetAmount.setGravity(Gravity.RIGHT);
 						tblRow.addView(tvTotalNetAmount);
 						tvTotalNetAmount.setPadding(10, 10, 40, 3);
 						//Toast.makeText(getApplicationContext(), i+"-"+st.getName(), Toast.LENGTH_SHORT).show();
@@ -206,7 +231,7 @@ public class ListOfOrders extends Activity {
 						});
 					}
 				}
-			
+				
 			}else{
 				session.checkLogin();
 			}
@@ -263,4 +288,19 @@ public class ListOfOrders extends Activity {
 		return true;
 	}
 
+	private Double getTotalNetAmountAfterChangedOrder(){
+		Double Calc_TotalNetAmount = 0.0;
+		String strNetAmount = null;
+		//tblListOfOrders = (TableLayout)findViewById(R.id.tableLayoutOrder);
+			for(int i = 0;i<tblListOfOrders.getChildCount();i++){
+				if(i>0 &&  i < tblListOfOrders.getChildCount()){
+					strNetAmount = String.valueOf(((TextView)((TableRow)tblListOfOrders.getChildAt(i)).getChildAt(3)).getText());
+					if(strNetAmount.length()==0){
+						strNetAmount ="0";
+					}
+					Calc_TotalNetAmount += Double.valueOf(strNetAmount);
+				}
+			}
+		return Calc_TotalNetAmount;
+	}
 }

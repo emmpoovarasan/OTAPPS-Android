@@ -34,7 +34,7 @@
     <!-- <string name="ShopName">Shop Name</string> -->
     <string name="OrderNo">Order No</string>
     <string name="OrderedQty">Ordered Qty</string>
-    <string name="TotalNetAmount">Total Net Amount</string>
+    <string name="TotalNetAmount">Net Amount</string>
     <string name="title_activity_edit_order_list">EditOrderList</string>
     
     <string name="updateOrder">Update Order</string>

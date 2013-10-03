@@ -39,6 +39,8 @@ import android.os.Environment;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint.Align;
+import android.graphics.Paint.Style;
 import android.graphics.Typeface;
 import android.text.Editable;
 import android.text.Html;
@@ -81,7 +83,7 @@ public class OrderPage extends Activity {
 	TableLayout tblLoadProductList;
 	HorizontalScrollView hsv;
 	TableRow tr1 = null;
-	TextView lbl_TotalNetAmount = null;
+	TextView lbl_TotalNetAmount = null, lbl_TotalNetAmount1 = null;
 	
 	SessionManagement session;
 	
@@ -225,6 +227,7 @@ public class OrderPage extends Activity {
 					nr.setBackgroundColor(color.darker_gray);
 					nr.setTextColor(Color.BLUE);
 					nr.setText(String.valueOf(i));
+					nr.setGravity(Gravity.RIGHT);
 					row.addView(nr);
 					LinearLayout.LayoutParams llp = (LinearLayout.LayoutParams) nr.getLayoutParams();
 					llp.setMargins(0, 0, 0, 1);
@@ -238,6 +241,7 @@ public class OrderPage extends Activity {
 					prdName.setTextColor(Color.BLUE);
 					prdName.setText(String.valueOf(cellProductName.getContents().toString()));
 					prdName.setHorizontalFadingEdgeEnabled(true);
+					prdName.setGravity(Gravity.LEFT);
 					row.addView(prdName);
 					llp = (LinearLayout.LayoutParams) prdName.getLayoutParams();
 					llp.setMargins(0, 0, 0, 1);
@@ -249,6 +253,7 @@ public class OrderPage extends Activity {
 					inStock.setBackgroundColor(color.darker_gray);
 					inStock.setTextColor(Color.BLUE);
 					inStock.setText(String.valueOf(cellInStock.getContents().toString()));
+					inStock.setGravity(Gravity.RIGHT);
 					row.addView(inStock);
 					llp = (LinearLayout.LayoutParams) inStock.getLayoutParams();
 					llp.setMargins(0, 0, 0, 1);
@@ -260,6 +265,7 @@ public class OrderPage extends Activity {
 					orderQty.setBackgroundColor(Color.YELLOW);
 					orderQty.setTextColor(Color.BLACK);
 					orderQty.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
+					orderQty.setGravity(Gravity.RIGHT);
 					//orderQty.setText(String.valueOf("12345"));
 					row.addView(orderQty);
 					llp = (LinearLayout.LayoutParams) orderQty.getLayoutParams();
@@ -272,6 +278,7 @@ public class OrderPage extends Activity {
 					amount.setBackgroundColor(color.darker_gray);
 					amount.setTextColor(Color.BLUE);
 					amount.setText(String.valueOf(cellAmount.getContents().toString()));
+					amount.setGravity(Gravity.RIGHT);
 					row.addView(amount);
 					llp = (LinearLayout.LayoutParams) amount.getLayoutParams();
 					llp.setMargins(0, 0, 0, 1);
@@ -284,6 +291,7 @@ public class OrderPage extends Activity {
 					netAmount.setBackgroundColor(color.darker_gray);
 					netAmount.setTextColor(Color.BLUE);
 					netAmount.setText("0.0");
+					netAmount.setGravity(Gravity.RIGHT);
 					row.addView(netAmount);
 					llp = (LinearLayout.LayoutParams) netAmount.getLayoutParams();
 					llp.setMargins(0, 0, 0, 1);
@@ -317,8 +325,13 @@ public class OrderPage extends Activity {
 							    Double tvAmount = Double.valueOf(amount.getText().toString());
 							    final Double tvNetAmount = (etOrderQty * tvAmount);
 							    netAmount.setText(String.valueOf(df.format(tvNetAmount)));
+							    netAmount.setGravity(Gravity.RIGHT);
 							    lbl_TotalNetAmount = (TextView)findViewById(R.id.lblTotalNetAmount);
 							    lbl_TotalNetAmount.setText(Html.fromHtml("<b>Total Net Amount : "+ df.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));	
+							    
+							    lbl_TotalNetAmount1 = (TextView)findViewById(R.id.tvOrderPageTotalNetAmount);
+							    lbl_TotalNetAmount1.setText(Html.fromHtml("<b>Total Net Amount : "+ df.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));
+							    
 							} catch (NumberFormatException ne) {
 								// TODO: handle exception
 								Log.d("NumberFormat Exception", ne.getMessage());
@@ -327,8 +340,12 @@ public class OrderPage extends Activity {
 								}else{
 									//orderQty.setText("0");
 									netAmount.setText("0.0");
+									netAmount.setGravity(Gravity.RIGHT);
 									lbl_TotalNetAmount = (TextView)findViewById(R.id.lblTotalNetAmount);
 								    lbl_TotalNetAmount.setText(Html.fromHtml("<b>Total Net Amount : "+ df.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));
+								    
+								    lbl_TotalNetAmount1 = (TextView)findViewById(R.id.tvOrderPageTotalNetAmount);
+								    lbl_TotalNetAmount1.setText(Html.fromHtml("<b>Total Net Amount : "+ df.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));
 								}
 								//orderQty.clearFocus();
 							}
@@ -339,6 +356,9 @@ public class OrderPage extends Activity {
 						TotalNetAmountCalc += Double.valueOf(netAmount.getText().toString());
 						lbl_TotalNetAmount = (TextView)findViewById(R.id.lblTotalNetAmount);
 						lbl_TotalNetAmount.setText(Html.fromHtml("<b>Total Net Amount : "+ df.format(TotalNetAmountCalc) +"</b>"));
+						
+						lbl_TotalNetAmount1 = (TextView)findViewById(R.id.tvOrderPageTotalNetAmount);
+						lbl_TotalNetAmount1.setText(Html.fromHtml("<b>Total Net Amount : "+ df.format(TotalNetAmountCalc) +"</b>"));
 					}
 					
 					/*row.setOnClickListener(new View.OnClickListener() {
@@ -404,8 +424,10 @@ public class OrderPage extends Activity {
 			String sheetName = spnShopName.getSelectedItem().toString();
 			// generate current time
 			Date now = Calendar.getInstance().getTime();
-			SimpleDateFormat df = new SimpleDateFormat("MMddyyyy");
+			SimpleDateFormat df = new SimpleDateFormat("ddMMyyyy");
 			String theDate = df.format(now);
+			SimpleDateFormat dft = new SimpleDateFormat("dd/MM/yyyy");
+			String theDate1 = dft.format(now);
 			DecimalFormat df1 = new DecimalFormat("0.00");
 			
 			if(fp.exists() == true){
@@ -466,7 +488,7 @@ public class OrderPage extends Activity {
 							cell.setCellStyle(cellStyle);
 							
 							cell = row.createCell((short)1);
-							cell.setCellValue(theDate+"/"+iRow);
+							cell.setCellValue(theDate+"/"+iRow+"/"+workbook.getSheetIndex(sheetName));
 							// set border to cell
 							cellStyle = workbook.createCellStyle();
 							cellStyle.setBorderTop((short)1);
@@ -486,7 +508,7 @@ public class OrderPage extends Activity {
 							cell.setCellStyle(cellStyle);
 							
 							cell = row.createCell((short)3);
-							cell.setCellValue(theDate);
+							cell.setCellValue(theDate1);
 							// set border to cell
 							cellStyle = workbook.createCellStyle();
 							cellStyle.setBorderTop((short)1);
@@ -514,6 +536,27 @@ public class OrderPage extends Activity {
 							cellStyle.setBorderLeft((short)1);
 							cellStyle.setBorderRight((short)1);
 							cell.setCellStyle(cellStyle);
+							
+							cell = row.createCell((short)6);
+							cell.setCellValue("Rep Name");
+							// set border to cell
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
+							
+							cell = row.createCell((short)7);
+							cell.setCellValue(session.getUserDetails().get("name").toString());
+							// set border to cell
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
+							
 							
 							row = sheet.createRow(i);
 							Log.d("Header Row value", String.valueOf(i+1));
@@ -589,6 +632,7 @@ public class OrderPage extends Activity {
 						cellStyle.setBorderBottom((short)1);
 						cellStyle.setBorderLeft((short)1);
 						cellStyle.setBorderRight((short)1);
+						cellStyle.setAlignment(cellStyle.ALIGN_RIGHT);
 						cell.setCellStyle(cellStyle);
 												
 						cell = row.createCell((short)1);
@@ -609,6 +653,7 @@ public class OrderPage extends Activity {
 						cellStyle.setBorderBottom((short)1);
 						cellStyle.setBorderLeft((short)1);
 						cellStyle.setBorderRight((short)1);
+						cellStyle.setAlignment(cellStyle.ALIGN_RIGHT);
 						cell.setCellStyle(cellStyle);
 						
 						cell = row.createCell((short)3);
@@ -619,16 +664,18 @@ public class OrderPage extends Activity {
 						cellStyle.setBorderBottom((short)1);
 						cellStyle.setBorderLeft((short)1);
 						cellStyle.setBorderRight((short)1);
+						cellStyle.setAlignment(cellStyle.ALIGN_RIGHT);
 						cell.setCellStyle(cellStyle);
 						
 						cell = row.createCell((short)4);
-						cell.setCellValue(Double.valueOf(amount));
+						cell.setCellValue(df1.format(Double.valueOf(amount)));
 						// set border to cell
 						cellStyle = workbook.createCellStyle();
 						cellStyle.setBorderTop((short)1);
 						cellStyle.setBorderBottom((short)1);
 						cellStyle.setBorderLeft((short)1);
 						cellStyle.setBorderRight((short)1);
+						cellStyle.setAlignment(cellStyle.ALIGN_RIGHT);
 						cell.setCellStyle(cellStyle);
 						
 						cell = row.createCell((short)5);
@@ -639,6 +686,7 @@ public class OrderPage extends Activity {
 						cellStyle.setBorderBottom((short)1);
 						cellStyle.setBorderLeft((short)1);
 						cellStyle.setBorderRight((short)1);
+						cellStyle.setAlignment(cellStyle.ALIGN_RIGHT);
 						cell.setCellStyle(cellStyle);
 						
 						
@@ -681,6 +729,7 @@ public class OrderPage extends Activity {
 							cellStyle.setBorderBottom((short)1);
 							cellStyle.setBorderLeft((short)1);
 							cellStyle.setBorderRight((short)1);
+							cellStyle.setAlignment(cellStyle.ALIGN_RIGHT);
 							cell.setCellStyle(cellStyle);
 							
 							cell = row.createCell((short)4);
@@ -700,6 +749,7 @@ public class OrderPage extends Activity {
 							cellStyle.setBorderBottom((short)1);
 							cellStyle.setBorderLeft((short)1);
 							cellStyle.setBorderRight((short)1);
+							cellStyle.setAlignment(cellStyle.ALIGN_RIGHT);
 							cell.setCellStyle(cellStyle);
 						}
 					

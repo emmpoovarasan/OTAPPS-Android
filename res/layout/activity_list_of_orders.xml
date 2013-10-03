@@ -1,6 +1,6 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/LinearLayout1"
+    android:id="@+id/svListOfOrdersTable"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -8,96 +8,108 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ListOfOrders" >
-    <HorizontalScrollView android:id="@+id/hvListOfOrderButton" 
-		android:layout_height="wrap_content"     
-       	android:scrollbars="horizontal|vertical" 
-       	android:layout_width="wrap_content"     
-       	android:layout_marginTop="5dip">
-   	    <TableLayout 
-		    android:id="@+id/tblbtnListOfOrders"
-		    android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:scrollbars="horizontal">
-		    <TableRow
-	            android:id="@+id/trButton"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content" >
-				<!-- <Button
-	                android:id="@+id/btnOLshowListOfOrders"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:text="Show List Of Orders" /> -->
-	            <Button
-	                android:id="@+id/btnOLgoToOrder"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:text="Go to order" />
-				<Button
-	                android:id="@+id/btnOLdashBoard"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:text="Dashboard" />
-	            <Button
-	                android:id="@+id/btnOLlogOut"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:text="Logout" />
-	        </TableRow>
-		</TableLayout>
-	</HorizontalScrollView>
-	<ScrollView android:id="@+id/svListOfOrdersTable"
-       	android:layout_width="fill_parent"
-   		android:layout_height="fill_parent">
-		<HorizontalScrollView android:id="@+id/hvListOfOrdersTable"
-           	android:layout_height="wrap_content"     
-       		android:scrollbars="horizontal|vertical" 
-       		android:layout_width="wrap_content"     
-       		android:layout_marginTop="5dip">
-		    <TableLayout
-		        android:id="@+id/tblListOfOrders"
-		        android:layout_width="wrap_content"
+    tools:context=".ListOfOrders">
+
+	<LinearLayout android:id="@+id/LinearLayout1"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical">
+	    <HorizontalScrollView android:id="@+id/hvListOfOrderButton" 
+			android:layout_height="wrap_content"     
+	       	android:scrollbars="horizontal|vertical" 
+	       	android:layout_width="wrap_content"     
+	       	android:layout_marginTop="5dip">
+	   	    <TableLayout 
+			    android:id="@+id/tblbtnListOfOrders"
+			    android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:scrollbars="horizontal|vertical"
-		        android:stretchColumns="*"
-			    android:saveEnabled="true" >
-		
-		        	<TableRow
-		            android:id="@+id/trHeader"
+		        android:scrollbars="horizontal">
+			    <TableRow
+		            android:id="@+id/trButton"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content" >
-		
-		            <TextView
-		                android:id="@+id/tvSno"
+					<!-- <Button
+		                android:id="@+id/btnOLshowListOfOrders"
 		                android:layout_width="wrap_content"
 		                android:layout_height="wrap_content"
-		                android:text="@string/sno" />
-		
-		            <TextView
-		                android:id="@+id/tvShopName"
+		                android:text="Show List Of Orders" /> -->
+		            <Button
+		                android:id="@+id/btnOLgoToOrder"
 		                android:layout_width="wrap_content"
 		                android:layout_height="wrap_content"
-		                android:text="@string/shopname" />
-		
-		            <TextView
-		                android:id="@+id/tvOrderNo"
+		                android:text="Go to order" />
+					<Button
+		                android:id="@+id/btnOLdashBoard"
 		                android:layout_width="wrap_content"
 		                android:layout_height="wrap_content"
-		                android:text="@string/OrderNo" />
-		
-		            <!-- <TextView
-		                android:id="@+id/tvOrderedQty"
+		                android:text="Dashboard" />
+		            <Button
+		                android:id="@+id/btnOLlogOut"
 		                android:layout_width="wrap_content"
 		                android:layout_height="wrap_content"
-		                android:text="@string/OrderedQty" /> -->
-		
-		            <TextView
-		                android:id="@+id/tvTotalNetAmount"
-		                android:layout_width="wrap_content"
-		                android:layout_height="wrap_content"
-		                android:text="@string/TotalNetAmount" />
+		                android:text="Logout" />
 		        </TableRow>
-		    </TableLayout>
-    	</HorizontalScrollView>
-	</ScrollView>
-</LinearLayout>
+			</TableLayout>
+		</HorizontalScrollView>
+		<HorizontalScrollView android:id="@+id/hvListOfOrdersTable"
+	           	android:layout_height="wrap_content"     
+	       		android:scrollbars="horizontal|vertical" 
+	       		android:layout_width="wrap_content"     
+	       		android:layout_marginTop="5dip">
+			    <TableLayout
+			        android:id="@+id/tblListOfOrders"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:scrollbars="horizontal|vertical"
+			        android:stretchColumns="*"
+				    android:saveEnabled="true" >
+			
+			        	<TableRow
+			            android:id="@+id/trHeader"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content" >
+			
+			            <TextView
+			                android:id="@+id/tvSno"
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:text="@string/sno" />
+			
+			            <TextView
+			                android:id="@+id/tvShopName"
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:text="@string/shopname" />
+			
+			            <TextView
+			                android:id="@+id/tvOrderNo"
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:text="@string/OrderNo" />
+			
+			            <!-- <TextView
+			                android:id="@+id/tvOrderedQty"
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:text="@string/OrderedQty" /> -->
+			
+			            <TextView
+			                android:id="@+id/tvTotalNetAmount"
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:text="@string/TotalNetAmount" />
+			        </TableRow>
+			    </TableLayout>
+	    </HorizontalScrollView>
+	    
+		<TextView
+		    android:id="@+id/tvListOfTotalNetAmount"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center_horizontal"
+		    android:textSize="18dp" />
+
+"
+		
+	</LinearLayout>
+</ScrollView>

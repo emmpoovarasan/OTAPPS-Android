@@ -31,6 +31,7 @@ import android.text.Html;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -52,7 +53,7 @@ public class EditOrderList extends Activity {
 	TableRow trEditOL = null;
 	TextView tvEditShopName = null, tvEditOrderNo = null, tvEditBeatName = null;
 	Button btnEditUpdateOrder = null, btnEditGoToDashBoard =  null, btnEditLogout = null;
-	TextView lbl_TotalNetAmount = null;
+	TextView lbl_TotalNetAmount = null, lbl_TotalNetAmount1 = null;
 	SessionManagement session;
 	final DecimalFormat dcf = new DecimalFormat("0.00");
 	@Override
@@ -190,6 +191,7 @@ public class EditOrderList extends Activity {
 								nr.setBackgroundColor(color.darker_gray);
 								nr.setTextColor(Color.BLUE);
 								nr.setText(String.valueOf(i-1));
+								nr.setGravity(Gravity.RIGHT);
 								row.addView(nr);
 								LinearLayout.LayoutParams llp = (LinearLayout.LayoutParams) nr.getLayoutParams();
 								llp.setMargins(0, 0, 0, 1);
@@ -214,6 +216,7 @@ public class EditOrderList extends Activity {
 								inStock.setBackgroundColor(color.darker_gray);
 								inStock.setTextColor(Color.BLUE);
 								inStock.setText(String.valueOf(cellInStock.getContents().toString()));
+								inStock.setGravity(Gravity.RIGHT);
 								row.addView(inStock);
 								llp = (LinearLayout.LayoutParams) inStock.getLayoutParams();
 								llp.setMargins(0, 0, 0, 1);
@@ -226,6 +229,7 @@ public class EditOrderList extends Activity {
 								orderQty.setTextColor(Color.BLACK);
 								orderQty.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
 								orderQty.setText(String.valueOf(cellOrderedQty.getContents().toString()));
+								orderQty.setGravity(Gravity.RIGHT);
 								row.addView(orderQty);
 								llp = (LinearLayout.LayoutParams) orderQty.getLayoutParams();
 								llp.setMargins(0, 0, 0, 1);
@@ -237,6 +241,7 @@ public class EditOrderList extends Activity {
 								amount.setBackgroundColor(color.darker_gray);
 								amount.setTextColor(Color.BLUE);
 								amount.setText(String.valueOf(cellAmount.getContents().toString()));
+								amount.setGravity(Gravity.RIGHT);
 								row.addView(amount);
 								llp = (LinearLayout.LayoutParams) amount.getLayoutParams();
 								llp.setMargins(0, 0, 0, 1);
@@ -249,6 +254,7 @@ public class EditOrderList extends Activity {
 								netAmount.setBackgroundColor(color.darker_gray);
 								netAmount.setTextColor(Color.BLUE);
 								netAmount.setText(String.valueOf(cellNetAmount.getContents().toString()));
+								netAmount.setGravity(Gravity.RIGHT);
 								row.addView(netAmount);
 								llp = (LinearLayout.LayoutParams) netAmount.getLayoutParams();
 								llp.setMargins(0, 0, 0, 1);
@@ -285,8 +291,13 @@ public class EditOrderList extends Activity {
 										    
 										    //v.setBackgroundColor(color.darker_gray);
 										    netAmount.setText(String.valueOf(dcf.format(tvNetAmount)));
+										    netAmount.setGravity(Gravity.RIGHT);
 										    lbl_TotalNetAmount = (TextView)findViewById(R.id.lblEditTotalNetAmount);
-										    lbl_TotalNetAmount.setText(Html.fromHtml("<b>Total Net Amount : "+ dcf.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));	
+										    lbl_TotalNetAmount.setText(Html.fromHtml("<b>Total Net Amount : "+ dcf.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));
+										    
+										    lbl_TotalNetAmount1 = (TextView)findViewById(R.id.lblEditTotalNetAmount1);
+										    lbl_TotalNetAmount1.setText(Html.fromHtml("<b>Total Net Amount : "+ dcf.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));
+										    
 										} catch (NumberFormatException ne) {
 											// TODO: handle exception
 											Log.d("NumberFormat Exception", ne.getMessage());
@@ -295,8 +306,12 @@ public class EditOrderList extends Activity {
 												//orderQty.setText("0");
 											}else{
 												netAmount.setText("0.0");
+												netAmount.setGravity(Gravity.RIGHT);
 												lbl_TotalNetAmount = (TextView)findViewById(R.id.lblEditTotalNetAmount);
 											    lbl_TotalNetAmount.setText(Html.fromHtml("<b>Total Net Amount : "+ dcf.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));
+											    
+											    lbl_TotalNetAmount1 = (TextView)findViewById(R.id.lblEditTotalNetAmount1);
+											    lbl_TotalNetAmount1.setText(Html.fromHtml("<b>Total Net Amount : "+ dcf.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));
 											}
 										}
 										
@@ -306,6 +321,10 @@ public class EditOrderList extends Activity {
 									TotalNetAmountCalc += Double.valueOf(netAmount.getText().toString());
 									lbl_TotalNetAmount = (TextView)findViewById(R.id.lblEditTotalNetAmount);
 									lbl_TotalNetAmount.setText(Html.fromHtml("<b>Total Net Amount : "+ dcf.format(TotalNetAmountCalc) +"</b>"));
+									
+									lbl_TotalNetAmount1 = (TextView)findViewById(R.id.lblEditTotalNetAmount1);
+									lbl_TotalNetAmount1.setText(Html.fromHtml("<b>Total Net Amount : "+ dcf.format(TotalNetAmountCalc) +"</b>"));
+									
 								}
 								/*row.setOnClickListener(new View.OnClickListener() {
 									
@@ -370,8 +389,12 @@ public class EditOrderList extends Activity {
 			//String sheetName = spnShopName.getSelectedItem().toString();
 			// generate current time
 			Date now = Calendar.getInstance().getTime();
-			SimpleDateFormat df = new SimpleDateFormat("MMddyyyy");
+			SimpleDateFormat df = new SimpleDateFormat("ddMMyyyy");
 			String theDate = df.format(now);
+			
+			SimpleDateFormat dft = new SimpleDateFormat("dd/MM/yyyy");
+			String theDate1 = dft.format(now);
+			
 			
 			if(fp.exists() == true){
 				workbook = new HSSFWorkbook(is);
@@ -433,7 +456,7 @@ public class EditOrderList extends Activity {
 							cell.setCellStyle(cellStyle);
 							
 							cell = row.createCell((short)3);
-							cell.setCellValue(theDate);
+							cell.setCellValue(theDate1);
 							// set border to cell
 							cellStyle = workbook.createCellStyle();
 							cellStyle.setBorderTop((short)1);
@@ -461,6 +484,27 @@ public class EditOrderList extends Activity {
 							cellStyle.setBorderLeft((short)1);
 							cellStyle.setBorderRight((short)1);
 							cell.setCellStyle(cellStyle);
+							
+							cell = row.createCell((short)6);
+							cell.setCellValue("Rep Name");
+							// set border to cell
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
+							
+							cell = row.createCell((short)7);
+							cell.setCellValue(session.getUserDetails().get("name").toString());
+							// set border to cell
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
+							
 					}
 					if(i==1){
 							row = sheet.createRow(i);
@@ -557,6 +601,7 @@ public class EditOrderList extends Activity {
 						cellStyle.setBorderBottom((short)1);
 						cellStyle.setBorderLeft((short)1);
 						cellStyle.setBorderRight((short)1);
+						cellStyle.setAlignment(cellStyle.ALIGN_RIGHT);
 						cell.setCellStyle(cellStyle);
 												
 						cell = row.createCell((short)1);
@@ -577,6 +622,7 @@ public class EditOrderList extends Activity {
 						cellStyle.setBorderBottom((short)1);
 						cellStyle.setBorderLeft((short)1);
 						cellStyle.setBorderRight((short)1);
+						cellStyle.setAlignment(cellStyle.ALIGN_RIGHT);
 						cell.setCellStyle(cellStyle);
 						
 						cell = row.createCell((short)3);
@@ -587,16 +633,18 @@ public class EditOrderList extends Activity {
 						cellStyle.setBorderBottom((short)1);
 						cellStyle.setBorderLeft((short)1);
 						cellStyle.setBorderRight((short)1);
+						cellStyle.setAlignment(cellStyle.ALIGN_RIGHT);
 						cell.setCellStyle(cellStyle);
 						
 						cell = row.createCell((short)4);
-						cell.setCellValue(Double.valueOf(amount));
+						cell.setCellValue(dcf.format(Double.valueOf(amount)));
 						// set border to cell
 						cellStyle = workbook.createCellStyle();
 						cellStyle.setBorderTop((short)1);
 						cellStyle.setBorderBottom((short)1);
 						cellStyle.setBorderLeft((short)1);
 						cellStyle.setBorderRight((short)1);
+						cellStyle.setAlignment(cellStyle.ALIGN_RIGHT);
 						cell.setCellStyle(cellStyle);
 						
 						cell = row.createCell((short)5);
@@ -610,6 +658,7 @@ public class EditOrderList extends Activity {
 						cellStyle.setBorderBottom((short)1);
 						cellStyle.setBorderLeft((short)1);
 						cellStyle.setBorderRight((short)1);
+						cellStyle.setAlignment(cellStyle.ALIGN_RIGHT);
 						cell.setCellStyle(cellStyle);
 					
 						Log.d("List of products"+iRow, String.valueOf(iRow+"@"+productNames+"@"+inStock+"@"+orderQty+"@"+amount+"@"+netAmount));
@@ -655,6 +704,7 @@ public class EditOrderList extends Activity {
 							cellStyle.setBorderBottom((short)1);
 							cellStyle.setBorderLeft((short)1);
 							cellStyle.setBorderRight((short)1);
+							cellStyle.setAlignment(cellStyle.ALIGN_RIGHT);
 							cell.setCellStyle(cellStyle);
 							
 							cell = row.createCell((short)4);
@@ -674,6 +724,7 @@ public class EditOrderList extends Activity {
 							cellStyle.setBorderBottom((short)1);
 							cellStyle.setBorderLeft((short)1);
 							cellStyle.setBorderRight((short)1);
+							cellStyle.setAlignment(cellStyle.ALIGN_RIGHT);
 							cell.setCellStyle(cellStyle);
 							Log.d("Total ordered qty & net amount", String.valueOf(totalOrderQty)+"/"+String.valueOf(totalNetAmount));
 						}
