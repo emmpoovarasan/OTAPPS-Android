@@ -49,6 +49,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.ContextMenu;
+import android.view.FocusFinder;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -76,7 +77,7 @@ import android.widget.Toast;
 
 public class OrderPage extends Activity {
 	// create variables for Button, Spinner, ScrollView, LinearLayout, TableLayout & HorizontalScrollView
-	Button btnLoadProductList, btnSaveOrder, btnDashBoard, btnLogOut;
+	Button btnSaveOrder, btnDashBoard, btnLogOut;//btnLoadProductList, 
 	Spinner spnBeatName, spnShopName;//, spnCustomerName, spnProductName;
 	ScrollView scrollOrderPage;
 	LinearLayout lnrLayContentViewOrderPage;
@@ -129,7 +130,7 @@ public class OrderPage extends Activity {
 			}
 		});
 		
-		// load all products from excel file
+		/*// load all products from excel file
 		btnLoadProductList = (Button)findViewById(R.id.btnLoadProductList);
 		btnLoadProductList.setOnClickListener(new OnClickListener() {
 			
@@ -138,13 +139,24 @@ public class OrderPage extends Activity {
 				// TODO Auto-generated method stub
 				if(session.isLoggedIn() == true){
 					Log.d("Click LoadProduct List", "Click LoadProduct List");
-					fngetProducts("PRODUCT NAME",FilePath.getExternalPath());
+					tblLoadProductList = (TableLayout)findViewById(R.id.tableLayoutOrder);
+					if(tblLoadProductList.getChildCount()<2){
+						Log.d("Table Rows Count", String.valueOf(tblLoadProductList.getChildCount()));
+						fngetProducts("PRODUCT NAME",FilePath.getExternalPath());
+					}else{
+						Log.d("Else - Table Rows Count", String.valueOf(tblLoadProductList.getChildCount()));
+						tblLoadProductList.removeViews(1, tblLoadProductList.getChildCount()-1);
+						Log.d("Table Rows Count", String.valueOf(tblLoadProductList.getChildCount()));
+						fngetProducts("PRODUCT NAME",FilePath.getExternalPath());
+					}
+					
 				}else{
 					session.checkLogin();
 				}
 				
 			}
-		});
+		});*/
+		
 		Log.d("Loaded", getClass().getSimpleName());
 		// button for save order
 		btnSaveOrder = (Button)findViewById(R.id.btnSaveOrder);
@@ -199,7 +211,133 @@ public class OrderPage extends Activity {
 			}
 		});
 	}
-	// load all products to table layout from excel
+	/**
+	 * 
+	 * @param mySheet - is selected sheet name to fetch records for Beat names
+	 * @return  - return beatnames in ascending orderse
+	 * @throws IOException - manage IOExceptions
+	 */
+	private ArrayList<String> loadAreaName(String mySheet) throws IOException{ 
+		JXLReader test = new JXLReader();
+	    test.setInputFile(FilePath.getExternalPath(), mySheet,null);
+	    Log.d("test.setInputFile(actualPathName, mySheet)"," test.setInputFile(actualPathName, mySheet)");
+	    return test.getAreaName();
+	}
+	/**
+	 * 
+	 * @param mySheet  - is selected sheet name to fetch records for shop names
+	 * @param areaName - input for selected beatname
+	 * @return  - return shopname in ascending orders
+	 * @throws IOException - manage IOExceptions
+	 */
+	private ArrayList<String> loadShopName(String mySheet, String areaName) throws IOException{
+		JXLReader jxlLoadShopName = new JXLReader();
+		jxlLoadShopName.setInputFile(FilePath.getExternalPath(), mySheet,areaName);
+		Log.d("loadShopName function", "Success to loadShopName");
+		return jxlLoadShopName.getShopName();
+	}
+	/**
+	 * this function handles for load beatname
+	 */
+	private void fnloadBeatName(){
+		/**
+		 * load spinnerBeatName
+		 */
+		spnBeatName = (Spinner)findViewById(R.id.spinnerBeatname);
+		ArrayList<String> arrayBeatName = null;
+		try {
+			arrayBeatName = loadAreaName("AREA NAME");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		ArrayAdapter<String> dataAdapterBeatName = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, arrayBeatName);
+		dataAdapterBeatName.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			if(session.isLoggedIn() == true){
+				spnBeatName.setAdapter(dataAdapterBeatName);
+			}else{
+				session.checkLogin();
+			}
+			
+			spnBeatName.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+				@Override
+				public void onItemSelected(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
+					// TODO Auto-generated method stub
+					if(session.isLoggedIn() == true){
+						fnloadShopName();
+					}else{
+						session.checkLogin();
+					}
+					
+				}
+
+				@Override
+				public void onNothingSelected(AdapterView<?> arg0) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
+	}
+	/**
+	 * this function handle for load spinnerShopname
+	 */
+	private void fnloadShopName(){
+		
+		Log.d("Displayed Shopname", (String)spnBeatName.getSelectedItem());
+		Log.d("Displayed Shopname+1", String.valueOf(spnBeatName.getSelectedItem()));
+		spnShopName = (Spinner)findViewById(R.id.spinnerShopname);
+		ArrayList<String> arrayShopName = null;
+		try {
+			arrayShopName = loadShopName("CUSTOMER NAME", String.valueOf(spnBeatName.getSelectedItem()));
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		ArrayAdapter<String> dataAdapterShopName = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, arrayShopName);
+		dataAdapterShopName.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spnShopName.setAdapter(dataAdapterShopName);
+		spnShopName.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				if(session.isLoggedIn() == true){
+					Log.d("Click LoadProduct List", "Click LoadProduct List");
+					tblLoadProductList = (TableLayout)findViewById(R.id.tableLayoutOrder);
+					if(tblLoadProductList.getChildCount()<2){
+						Log.d("Table Rows Count", String.valueOf(tblLoadProductList.getChildCount()));
+						fngetProducts("PRODUCT NAME",FilePath.getExternalPath());
+					}else{
+						Log.d("Else - Table Rows Count", String.valueOf(tblLoadProductList.getChildCount()));
+						tblLoadProductList.removeViews(1, tblLoadProductList.getChildCount()-1);
+						Log.d("Table Rows Count", String.valueOf(tblLoadProductList.getChildCount()));
+						fngetProducts("PRODUCT NAME",FilePath.getExternalPath());
+					}
+					
+				}else{
+					session.checkLogin();
+				}
+				
+			}
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+	/**
+	 * 
+	 * @param SheetName - load all the products from this selected sheet
+	 * @param fileFullPath - excel file location on the extenal memory drive
+	 * load all products to table layout from excel 
+	 */
+	
 	private void fngetProducts(String SheetName, String fileFullPath){
 		File f = new File(fileFullPath);
 		Workbook w;
@@ -360,7 +498,17 @@ public class OrderPage extends Activity {
 						lbl_TotalNetAmount1 = (TextView)findViewById(R.id.tvOrderPageTotalNetAmount);
 						lbl_TotalNetAmount1.setText(Html.fromHtml("<b>Total Net Amount : "+ df.format(TotalNetAmountCalc) +"</b>"));
 					}
-					
+					row.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View v) {
+							// TODO Auto-generated method stub
+							// setting for focus on order edit text box
+							orderQty.requestFocus();
+							//Toast.makeText(getApplicationContext(), "Test", 2).show();
+							
+						}
+					});
 					/*row.setOnClickListener(new View.OnClickListener() {
 						
 						@Override
@@ -408,8 +556,12 @@ public class OrderPage extends Activity {
 		}
 	
 	}
+	/**
+	 * 
+	 * @param filename - file name with path to store orders
+	 * Save order list to Excel file
+	 */
 	
-	// Save order list to Excel file
 	private void fnReadTableRowValues(String filename){
 		try {
 			HSSFWorkbook workbook = null;
@@ -763,6 +915,10 @@ public class OrderPage extends Activity {
 			out.close();
 			
 			Toast.makeText(getApplicationContext(), sheetName+" is successfully saved", Toast.LENGTH_SHORT).show();
+			// after saved successfully clear the table contents
+			tblLoadProductList.removeViews(1, tblLoadProductList.getChildCount()-1);
+			lbl_TotalNetAmount.setText("");
+			lbl_TotalNetAmount1.setText("");
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -781,80 +937,11 @@ public class OrderPage extends Activity {
 		return true;
 	}
 	
-	private ArrayList<String> loadAreaName(String mySheet) throws IOException{ 
-		JXLReader test = new JXLReader();
-	    test.setInputFile(FilePath.getExternalPath(), mySheet,null);
-	    Log.d("test.setInputFile(actualPathName, mySheet)"," test.setInputFile(actualPathName, mySheet)");
-	    return test.getAreaName();
-	}
-	private ArrayList<String> loadShopName(String mySheet, String areaName) throws IOException{
-		JXLReader jxlLoadShopName = new JXLReader();
-		jxlLoadShopName.setInputFile(FilePath.getExternalPath(), mySheet,areaName);
-		Log.d("loadShopName function", "Success to loadShopName");
-		return jxlLoadShopName.getShopName();
-	}
-	
-	private void fnloadBeatName(){
-		/**
-		 * load spinnerBeatName
-		 */
-		spnBeatName = (Spinner)findViewById(R.id.spinnerBeatname);
-		ArrayList<String> arrayBeatName = null;
-		try {
-			arrayBeatName = loadAreaName("AREA NAME");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		ArrayAdapter<String> dataAdapterBeatName = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, arrayBeatName);
-		dataAdapterBeatName.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			if(session.isLoggedIn() == true){
-				spnBeatName.setAdapter(dataAdapterBeatName);
-			}else{
-				session.checkLogin();
-			}
-			
-			spnBeatName.setOnItemSelectedListener(listenerLoadShopName);
-	}
-	private OnItemSelectedListener listenerLoadShopName = new OnItemSelectedListener() {
-
-		@Override
-		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
-				long arg3) {
-			if(session.isLoggedIn() == true){
-				fnloadShopName();
-			}else{
-				session.checkLogin();
-			}
-			
-		}
-
-		@Override
-		public void onNothingSelected(AdapterView<?> arg0) {
-		}
-		
-	};
 	/**
-	 * load spinnerShopname
+	 * 
+	 * @return - total net amount of this order
+	 * calculate total netamount by added each ordered qty
 	 */
-	private void fnloadShopName(){
-		
-		Log.d("Displayed Shopname", (String)spnBeatName.getSelectedItem());
-		Log.d("Displayed Shopname+1", String.valueOf(spnBeatName.getSelectedItem()));
-		spnShopName = (Spinner)findViewById(R.id.spinnerShopname);
-		ArrayList<String> arrayShopName = null;
-		try {
-			arrayShopName = loadShopName("CUSTOMER NAME", String.valueOf(spnBeatName.getSelectedItem()));
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		ArrayAdapter<String> dataAdapterShopName = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, arrayShopName);
-		dataAdapterShopName.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spnShopName.setAdapter(dataAdapterShopName);
-	}
 	
 	private Double getTotalNetAmountAfterChangedOrder(){
 		Double Calc_TotalNetAmount = 0.0;

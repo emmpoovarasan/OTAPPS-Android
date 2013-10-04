@@ -31,11 +31,11 @@
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
 	            />
-	        <Button
+	       <!--  <Button
 		        android:id="@+id/btnLoadProductList"
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
-		        android:text="@string/loadProductList" />
+		        android:text="@string/loadProductList" /> -->
 
 	        <TextView
 	            android:id="@+id/lblTotalNetAmount"

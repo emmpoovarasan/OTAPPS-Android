@@ -60,10 +60,10 @@ public class ListOfOrders extends Activity {
 		
 		fnLoadOrderList(FilePath.getExternalPath());
 		
-		Log.d("Start Execute Total Amount Calc", "Starts --------");
+		//Log.d("Start Execute Total Amount Calc", "Starts --------");
 		lbl_ListOfTotalNetAmount = (TextView)findViewById(R.id.tvListOfTotalNetAmount);
 		lbl_ListOfTotalNetAmount.setText(Html.fromHtml("<b>Total Net Amount : "+ dcf.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));
-		Log.d("End Executed Total Amount Calc", "Ends --------");
+		//Log.d("End Executed Total Amount Calc", "Ends --------");
 		
 		/*btnShowListOfOrders = (Button)findViewById(R.id.btnOLshowListOfOrders);
 		btnShowListOfOrders.setOnClickListener(new OnClickListener() {
@@ -177,7 +177,6 @@ public class ListOfOrders extends Activity {
 						TextView tvSno = new TextView(this);
 						//tvSno.setText(st.getName());
 						tvSno.setText(String.valueOf(i-3));
-						tvSno.setGravity(Gravity.RIGHT);
 						tblRow.addView(tvSno);
 						
 						TextView tvCustomer = new TextView(this);
@@ -188,7 +187,6 @@ public class ListOfOrders extends Activity {
 						final TextView tvOrderNo = new TextView(this);
 						//tvOrderNo.setText(st.getName());
 						tvOrderNo.setText(getVauesToLoadOrderNoQtyNetAmount(FilePath.getExternalPath(),"ORDERNO",st.getName()));
-						tvOrderNo.setGravity(Gravity.RIGHT);
 						tblRow.addView(tvOrderNo);
 						tvOrderNo.setPadding(10, 10, 40, 3);
 						

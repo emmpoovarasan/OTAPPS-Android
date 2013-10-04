@@ -180,7 +180,7 @@ public class EditOrderList extends Activity {
 							Cell cellOrderedQty = sheet.getCell(3, i);
 							Cell cellAmount = sheet.getCell(4, i);
 							Cell cellNetAmount = sheet.getCell(5,i);
-							Log.d("Values of Products in loading tables"+i, cellProductName.getContents() +"@"+ cellInStock.getContents()+"@"+cellAmount.getContents());
+							//Log.d("Values of Products in loading tables"+i, cellProductName.getContents() +"@"+ cellInStock.getContents()+"@"+cellAmount.getContents());
 							if(cellProductName.getContents().toString() != ""){
 								// Create the table from the source code without xml:
 								row = new TableRow(this);
@@ -191,7 +191,6 @@ public class EditOrderList extends Activity {
 								nr.setBackgroundColor(color.darker_gray);
 								nr.setTextColor(Color.BLUE);
 								nr.setText(String.valueOf(i-1));
-								nr.setGravity(Gravity.RIGHT);
 								row.addView(nr);
 								LinearLayout.LayoutParams llp = (LinearLayout.LayoutParams) nr.getLayoutParams();
 								llp.setMargins(0, 0, 0, 1);
@@ -228,7 +227,14 @@ public class EditOrderList extends Activity {
 								orderQty.setBackgroundColor(Color.YELLOW);
 								orderQty.setTextColor(Color.BLACK);
 								orderQty.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
-								orderQty.setText(String.valueOf(cellOrderedQty.getContents().toString()));
+								if("0".equals(cellOrderedQty.getContents().toString())){
+									//Log.d("OrderQty = 0", cellOrderedQty.getContents().toString());
+									orderQty.setText(String.valueOf(""));
+								}else{
+									orderQty.setText(String.valueOf(cellOrderedQty.getContents().toString()));
+									//Log.d("OrderQty != 0", cellOrderedQty.getContents().toString());
+								}
+								
 								orderQty.setGravity(Gravity.RIGHT);
 								row.addView(orderQty);
 								llp = (LinearLayout.LayoutParams) orderQty.getLayoutParams();
@@ -326,6 +332,14 @@ public class EditOrderList extends Activity {
 									lbl_TotalNetAmount1.setText(Html.fromHtml("<b>Total Net Amount : "+ dcf.format(TotalNetAmountCalc) +"</b>"));
 									
 								}
+								row.setOnClickListener(new OnClickListener() {
+									
+									@Override
+									public void onClick(View v) {
+										// TODO Auto-generated method stub
+										orderQty.requestFocus();	
+									}
+								});
 								/*row.setOnClickListener(new View.OnClickListener() {
 									
 									@Override

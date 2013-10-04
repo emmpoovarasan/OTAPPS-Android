@@ -40,7 +40,7 @@ public class JXLReader {
 			Cell cellProductName = sheet.getCell(1, i);
 			Cell cellInStock = sheet.getCell(2, i);
 			Cell cellAmount = sheet.getCell(4, i);
-			Log.d("Values of Products", cellProductName.getContents() +"@"+ cellInStock.getContents()+"@"+cellAmount.getContents());
+			//Log.d("Values of Products", cellProductName.getContents() +"@"+ cellInStock.getContents()+"@"+cellAmount.getContents());
 			if(!"".equals(cellProductName.getContents())){
 					//treeSetProductName.add(cellProductName.getContents()+"@"+cellInStock.getContents()+"@"+cellAmount.getContents());	
 				arrayProductName.add(cellProductName.getContents()+"@"+cellInStock.getContents()+"@"+cellAmount.getContents());
@@ -63,10 +63,10 @@ public class JXLReader {
 		Sheet sheet = w.getSheet(sheetName);
 		for(int i = 1; i<sheet.getRows();i++){
 			Cell cellCustomer = sheet.getCell(1, i);
-			Log.d("Values of arrayListCustomerName", cellCustomer.getContents());
+			//Log.d("Values of arrayListCustomerName", cellCustomer.getContents());
 			if(areaName.equals(cellCustomer.getContents())){
 				treeSetCustomerName.add(cellCustomer.getContents());
-				Log.d("I got customername ", cellCustomer.getContents());
+				//Log.d("I got customername ", cellCustomer.getContents());
 			}
 		}
 		arrayListCustomerName.addAll(treeSetCustomerName);
@@ -88,10 +88,10 @@ public class JXLReader {
 		for(int i = 1; i<sheet.getRows();i++){
 			Cell cellArea = sheet.getCell(2, i);
 			Cell cellShop = sheet.getCell(1, i);
-			Log.d("Values of AreaNames", areaName +"/"+ cellArea.getContents() +"/"+ cellShop.getContents());
+			//Log.d("Values of AreaNames", areaName +"/"+ cellArea.getContents() +"/"+ cellShop.getContents());
 			if(areaName.equals(cellArea.getContents())){
 				treeSetShopName.add(cellShop.getContents());
-				Log.d("I got shopname ", cellShop.getContents());
+				//Log.d("I got shopname ", cellShop.getContents());
 			}
 		}
 		arrayListShopName.addAll(treeSetShopName);
@@ -115,7 +115,7 @@ public class JXLReader {
         for (int i = 1; i < sheet.getRows(); i++) {
           Cell cell = sheet.getCell(1, i);
           treeSetAreaName.add(cell.getContents());
-          Log.d("I got AreaName ", cell.getContents());
+          //Log.d("I got AreaName ", cell.getContents());
           /*CellType type = cell.getType();
           if (type == CellType.LABEL) {
             //System.out.println("I got a label " + cell.getContents());
@@ -151,7 +151,7 @@ public class JXLReader {
 		for(int i = 1; i<sheet.getRows();i++){
 			Cell cellRepName = sheet.getCell(1, i);
 			Cell cellRepPwd = sheet.getCell(2, i);
-			Log.d("Values of repName&repPwd", cellRepName.getContents() +"/"+ cellRepPwd.getContents());
+			//Log.d("Values of repName&repPwd", cellRepName.getContents() +"/"+ cellRepPwd.getContents());
 			if(repName.equals(cellRepName.getContents().toUpperCase()) && repPwd.equals(cellRepPwd.getContents().toUpperCase())){
 				arrayListRepName.add(cellRepName.getContents()+"/"+cellRepPwd.getContents());
 				Log.d("RepName & RepPwd is matched ", cellRepName.getContents()+"/"+cellRepPwd.getContents());
