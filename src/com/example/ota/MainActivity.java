@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,7 +14,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-	Button goToOrders, listOfOrders, logOut;
+	Button goToOrders, listOfOrders, logOut, exportOrders;
 	SessionManagement session;
 	
 	@Override
@@ -78,6 +79,27 @@ public class MainActivity extends Activity {
 					session.logoutUser();
 					/*Intent logOutPage = new Intent(getApplicationContext(), LoginActivity.class);
 					startActivity(logOutPage);*/
+				}
+			});
+			
+			/**
+			 * Export Orders button click
+			 * 
+			 */
+			
+			exportOrders = (Button)findViewById(R.id.ExportOrders);
+			exportOrders.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+				if(session.isLoggedIn() == true){	
+					Log.d("Output result", ExportOrders.Connections());
+					//Toast.makeText(getApplicationContext(), ExportOrders.Connections(), Toast.LENGTH_SHORT);
+				}else{
+					session.checkLogin();
+				}
+				
 				}
 			});
 		}

@@ -1,0 +1,114 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  Internal Error (classFileParser.cpp:3494), pid=4604, tid=5132
+#  Error: ShouldNotReachHere()
+#
+# JRE version: 6.0_26-b03
+# Java VM: Java HotSpot(TM) Client VM (20.1-b02 mixed mode windows-x86 )
+# If you would like to submit a bug report, please visit:
+#   http://java.sun.com/webapps/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0180b000):  JavaThread "Unknown thread" [_thread_in_vm, id=5132, stack(0x00270000,0x002c0000)]
+
+Stack: [0x00270000,0x002c0000],  sp=0x002bf86c,  free space=318k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x13379a]
+V  [jvm.dll+0x12e6fb]
+V  [jvm.dll+0x163fe]
+V  [jvm.dll+0x17c1f]
+V  [jvm.dll+0x26cc5]
+V  [jvm.dll+0x27506]
+V  [jvm.dll+0x278b5]
+V  [jvm.dll+0x27949]
+V  [jvm.dll+0x27a0c]
+V  [jvm.dll+0x27a8a]
+V  [jvm.dll+0x27b6d]
+V  [jvm.dll+0x27e39]
+V  [jvm.dll+0x6c523]
+V  [jvm.dll+0x6c8fc]
+V  [jvm.dll+0xf9d5c]
+V  [jvm.dll+0x11864b]
+V  [jvm.dll+0x9ec30]
+C  [javaw.exe+0x1657]
+C  [javaw.exe+0x1e2c]
+C  [javaw.exe+0x8644]
+C  [kernel32.dll+0x4ed5c]  BaseThreadInitThunk+0x12
+C  [ntdll.dll+0x637eb]  RtlInitializeExceptionChain+0xef
+C  [ntdll.dll+0x637be]  RtlInitializeExceptionChain+0xc2
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+
+Other Threads:
+
+=>0x0180b000 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=5132, stack(0x00270000,0x002c0000)]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Dynamic libraries:
+0x00400000 - 0x00424000 	C:\Program Files\Java\jre6\bin\javaw.exe
+0x77990000 - 0x77acc000 	C:\Windows\SYSTEM32\ntdll.dll
+0x763a0000 - 0x76474000 	C:\Windows\system32\kernel32.dll
+0x75ad0000 - 0x75b1b000 	C:\Windows\system32\KERNELBASE.dll
+0x76480000 - 0x76520000 	C:\Windows\system32\ADVAPI32.dll
+0x77710000 - 0x777bc000 	C:\Windows\system32\msvcrt.dll
+0x766f0000 - 0x76709000 	C:\Windows\SYSTEM32\sechost.dll
+0x765c0000 - 0x76662000 	C:\Windows\system32\RPCRT4.dll
+0x774e0000 - 0x775a9000 	C:\Windows\system32\USER32.dll
+0x77360000 - 0x773ae000 	C:\Windows\system32\GDI32.dll
+0x77b20000 - 0x77b2a000 	C:\Windows\system32\LPK.dll
+0x76520000 - 0x765bd000 	C:\Windows\system32\USP10.dll
+0x77af0000 - 0x77b0f000 	C:\Windows\system32\IMM32.DLL
+0x76080000 - 0x7614c000 	C:\Windows\system32\MSCTF.dll
+0x7c340000 - 0x7c396000 	C:\Program Files\Java\jre6\bin\msvcr71.dll
+0x6d7f0000 - 0x6da9f000 	C:\Program Files\Java\jre6\bin\client\jvm.dll
+0x73d80000 - 0x73db2000 	C:\Windows\system32\WINMM.dll
+0x758d0000 - 0x7591c000 	C:\Windows\system32\apphelp.dll
+0x6d7a0000 - 0x6d7ac000 	C:\Program Files\Java\jre6\bin\verify.dll
+0x6d320000 - 0x6d33f000 	C:\Program Files\Java\jre6\bin\java.dll
+0x77b10000 - 0x77b15000 	C:\Windows\system32\PSAPI.DLL
+0x10000000 - 0x1001f000 	C:\Windows\system32\jvmhook.dll
+0x775b0000 - 0x7770c000 	C:\Windows\system32\ole32.dll
+0x77b30000 - 0x77bbf000 	C:\Windows\system32\OLEAUT32.dll
+0x6e8d0000 - 0x6e8eb000 	C:\Windows\WinSxS\x86_microsoft.vc80.atl_1fc8b3b9a1e18e3b_8.0.50727.6195_none_d1cb102c435421de\ATL80.DLL
+0x71c30000 - 0x71cb7000 	C:\Windows\WinSxS\x86_microsoft.vc80.crt_1fc8b3b9a1e18e3b_8.0.50727.6195_none_d09154e044272b9a\MSVCP80.dll
+0x71b90000 - 0x71c2b000 	C:\Windows\WinSxS\x86_microsoft.vc80.crt_1fc8b3b9a1e18e3b_8.0.50727.6195_none_d09154e044272b9a\MSVCR80.dll
+0x6d7e0000 - 0x6d7ef000 	C:\Program Files\Java\jre6\bin\zip.dll
+
+VM Arguments:
+jvm_args: -agentlib:jvmhook -Dfile.encoding=Cp1252 -Xbootclasspath:E:\EMM_Projects\Mobile_Simulators\android-eclispe-windows\android-sdk-windows\platforms\android-8\android.jar -Xrunjvmhook -Xbootclasspath/a:C:\PROGRA~1\HP\QUICKT~1\bin\JAVA_S~1\classes;C:\PROGRA~1\HP\QUICKT~1\bin\JAVA_S~1\classes\jasmine.jar 
+java_command: com.example.ota.ImportOrders
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=C:\Program Files\Java\jdk1.6.0_26
+JAVA_TOOL_OPTIONS=-agentlib:jvmhook
+_JAVA_OPTIONS=-Xrunjvmhook -Xbootclasspath/a:C:\PROGRA~1\HP\QUICKT~1\bin\JAVA_S~1\classes;C:\PROGRA~1\HP\QUICKT~1\bin\JAVA_S~1\classes\jasmine.jar
+PATH=C:/Program Files/Java/jre6/bin/client;C:/Program Files/Java/jre6/bin;C:/Program Files/Java/jre6/lib/i386;C:\Program Files\PC Connectivity Solution\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;E:\EMM_Projects\Mobile_Simulators\apache-ant-1.8.3\bin;C:\Program Files\TortoiseSVN\bin;E:\EMM_Projects\Mobile_Simulators\android-eclispe-windows\android-sdk-windows\platform-tools;E:\EMM_Projects\Mobile_Simulators\android-eclispe-windows\android-sdk-windows\tools;C:\Program Files\Java\jdk1.6.0_26\bin;C:\Program Files\Java\jre1.7.0_45\bin;E:\eclipse_juno;;C:\Program Files\HP\QuickTest Professional\bin
+USERNAME=POO
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=x86 Family 6 Model 23 Stepping 10, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 7 Build 7601 Service Pack 1
+
+CPU:total 2 (2 cores per cpu, 1 threads per core) family 6 model 23 stepping 10, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3
+
+Memory: 4k page, physical 3109880k(953860k free), swap 7204128k(4561392k free)
+
+vm_info: Java HotSpot(TM) Client VM (20.1-b02) for windows-x86 JRE (1.6.0_26-b03), built on May  4 2011 00:50:59 by "java_re" with MS VC++ 7.1 (VS2003)
+
+time: Thu Nov 28 17:43:47 2013
+elapsed time: 0 seconds
+

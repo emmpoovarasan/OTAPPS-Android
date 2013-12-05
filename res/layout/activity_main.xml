@@ -44,4 +44,13 @@
         android:layout_alignRight="@+id/tvSno"
         android:text="List of orders" />
 
+    <Button
+        android:id="@+id/ExportOrders"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/goToOrder"
+        android:layout_below="@+id/goToOrder"
+        android:layout_marginTop="29dp"
+        android:text="Export Orders" />
+
 </RelativeLayout>

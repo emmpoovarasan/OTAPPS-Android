@@ -41,9 +41,9 @@ public class LoginActivity extends Activity {
 		lnrLayContentViewLoginPage = (LinearLayout)findViewById(R.id.content_login);
 		
 		username = (EditText)findViewById(R.id.username);
-		//username.setText("RAJESH");
+		username.setText("RAJESH");
 		password = (EditText)findViewById(R.id.password);
-		//password.setText("123");
+		password.setText("123");
 		login = (Button)findViewById(R.id.login);
 		login.setOnClickListener(loginListener);
 		
