@@ -24,7 +24,7 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int ExportOrders=0x7f080026;
+        public static final int ExportOrders=0x7f080025;
         public static final int LinearLayout1=0x7f08000f;
         public static final int action_settings=0x7f080032;
         public static final int btnDashboard=0x7f080030;
@@ -47,7 +47,7 @@ public final class R {
         public static final int lblEditTotalNetAmount1=0x7f08000d;
         public static final int lblTotalNetAmount=0x7f08002b;
         public static final int listOfOrders=0x7f080024;
-        public static final int logOut=0x7f080025;
+        public static final int logOut=0x7f080026;
         public static final int login=0x7f080022;
         public static final int password=0x7f080021;
         public static final int scroll_view=0x7f080027;

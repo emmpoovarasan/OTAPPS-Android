@@ -7,7 +7,7 @@ import android.util.Log;
 public class ExportOrders {
 
 	public static String Connections(){
-		String outPuts=null;
+		String outPuts= new String();
 		Connection conn;
 		Statement stmt;
 		ResultSet reset;

@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity" >
 
     <TextView
         android:id="@+id/tvSno"
@@ -17,40 +17,40 @@
         android:text="@string/title_activity_main"
         android:textSize="15dp" />
 
-    <Button
-        android:id="@+id/goToOrder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/listOfOrders"
-        android:layout_alignBottom="@+id/listOfOrders"
-        android:layout_toLeftOf="@+id/listOfOrders"
-        android:text="Go to order" />
+    	<Button
+    	    android:id="@+id/goToOrder"
+    	    android:layout_width="match_parent"
+    	    android:layout_height="wrap_content"
+    	    android:layout_alignLeft="@+id/listOfOrders"
+    	    android:layout_below="@+id/tvSno"
+    	    android:layout_marginTop="14dp"
+    	    android:text="Go to order" />
 
-    <Button
-        android:id="@+id/logOut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvSno"
-        android:layout_marginTop="22dp"
-        android:layout_toRightOf="@+id/listOfOrders"
-        android:text="Logout" />
+    	<Button
+    	    android:id="@+id/listOfOrders"
+    	    android:layout_width="match_parent"
+    	    android:layout_height="wrap_content"
+    	    android:layout_below="@+id/goToOrder"
+    	    android:layout_centerHorizontal="true"
+    	    android:layout_marginTop="22dp"
+    	    android:text="List of orders" />
 
-    <Button
-        android:id="@+id/listOfOrders"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/logOut"
-        android:layout_alignBottom="@+id/logOut"
-        android:layout_alignRight="@+id/tvSno"
-        android:text="List of orders" />
+    	<Button
+    	    android:id="@+id/ExportOrders"
+    	    android:layout_width="match_parent"
+    	    android:layout_height="wrap_content"
+    	    android:layout_alignLeft="@+id/listOfOrders"
+    	    android:layout_below="@+id/listOfOrders"
+    	    android:layout_marginTop="28dp"
+    	    android:text="Export Orders" />
 
-    <Button
-        android:id="@+id/ExportOrders"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/goToOrder"
-        android:layout_below="@+id/goToOrder"
-        android:layout_marginTop="29dp"
-        android:text="Export Orders" />
+    	<Button
+    	    android:id="@+id/logOut"
+    	    android:layout_width="match_parent"
+    	    android:layout_height="wrap_content"
+    	    android:layout_alignLeft="@+id/ExportOrders"
+    	    android:layout_below="@+id/ExportOrders"
+    	    android:layout_marginTop="25dp"
+    	    android:text="Logout" />
 
 </RelativeLayout>
