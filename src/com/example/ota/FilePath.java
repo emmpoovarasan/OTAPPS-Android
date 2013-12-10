@@ -27,7 +27,10 @@ public class FilePath {
 				for (int i = 0; i < fl.length; i++) {
 					Log.d("Files", "File Name : " + fl[i].getName());
 					Log.d("Files", "AbsFile Path : " + fl[i].getAbsolutePath());
-					actualPathName = fl[i].getAbsolutePath();
+					if("ORDER APPS.xls".equalsIgnoreCase(fl[i].getName())){
+						actualPathName = fl[i].getAbsolutePath();
+					}
+					
 				}
 
 			} else {
