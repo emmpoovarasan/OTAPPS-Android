@@ -95,7 +95,7 @@ public class MainActivity extends Activity {
 					// TODO Auto-generated method stub
 				if(session.isLoggedIn() == true){	
 					Log.d("Output result", ExportOrders.Connections());
-					//Toast.makeText(getApplicationContext(), ExportOrders.Connections(), Toast.LENGTH_SHORT);
+					Toast.makeText(getApplicationContext(), ExportOrders.Connections(), Toast.LENGTH_LONG).show();
 				}else{
 					session.checkLogin();
 				}
