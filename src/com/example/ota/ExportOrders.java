@@ -16,7 +16,7 @@ import android.util.Log;
 
 public class ExportOrders {
 
-	public static String Connections(){
+	public static String Connections(String dataBaseDriver,String URL,String userName,String userPassword){
 		String outPuts= new String();
 		Connection conn;
 		
@@ -26,15 +26,18 @@ public class ExportOrders {
 		Date now = Calendar.getInstance().getTime();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		String theDate = df.format(now);
-		
+		outPuts = "No orders exports, Please check the excel file";
 		try {
 			
-			String dataBaseDriver = "net.sourceforge.jtds.jdbc.Driver";
+			//dataBaseDriver = "net.sourceforge.jtds.jdbc.Driver";
+			
 			Class.forName(dataBaseDriver);
 			Log.d("AFTER CLASS FORNAME ", "SUCCESS");
-			String URL = "jdbc:jtds:sqlserver://192.168.1.80:1433/ota;user=sa;password=flower";
+			//URL = "jdbc:jtds:sqlserver://192.168.1.80:1433/ota;user=sa;password=flower";
 			
-			conn = DriverManager.getConnection(URL, "sa", "flower");
+			
+			//conn = DriverManager.getConnection(URL, "sa", "flower");
+			conn = DriverManager.getConnection(URL, userName, userPassword);
 			
 			Log.d("CONNECTION IS OPENED", "SUCCESS");
 			
@@ -43,7 +46,8 @@ public class ExportOrders {
 			Log.d("STATEMENT IS CREATED", "SUCCESS");
 			
 			/*String insertQry;
-			insertQry = "INSERT INTO TblMstExportOrders VALUES('customer_name','order_no','2013-12-10','beat_name','rep_name'," +
+			insertQry = "INSERT INTO TblMstExportOrders VALUES('customer_name','order_no','2013-12-10',
+			'beat_name','rep_name'," +
 					"18,1800,'entered_by',2013-12-10)";
 			
 			stmt.executeUpdate(insertQry);
@@ -76,7 +80,7 @@ public class ExportOrders {
 					String tblDtlString = new String();
 					String suffixSymbol = "','";
 					String customerName, orderNo = null, orderDate = null,beatName,repName = null,slno,productName;
-					String stockQty,orderQty, orderdAmount, ord_Qty,qty_Rate,tot_ord_Rate;
+					String stockQty,orderQty, orderdAmount, ord_Qty,qty_Rate,qty_Free,tradeDis,cashDis,tot_ord_Rate;
 					
 					
 					customerName = wb.getSheet(i).getName();
@@ -114,21 +118,29 @@ public class ExportOrders {
 							stockQty = st.getCell(2, j).getContents();
 							ord_Qty = st.getCell(3, j).getContents();
 							qty_Rate = st.getCell(4, j).getContents();
-							tot_ord_Rate = st.getCell(5, j).getContents();
+							qty_Free = st.getCell(5, j).getContents();
+							tradeDis = st.getCell(6, j).getContents();
+							cashDis = st.getCell(7, j).getContents();
+							tot_ord_Rate = st.getCell(8, j).getContents();
 							
 							/*if(j==2){
-								tblDtlString = tblDtlString+"('"+customerName + suffixSymbol + orderNo + suffixSymbol + slno + suffixSymbol
-										+  productName +  "'," + stockQty + ","+ ord_Qty +","+qty_Rate+","+ tot_ord_Rate
-										+ ",'" + repName + suffixSymbol + theDate+"')";
+								tblDtlString = tblDtlString+"('"+customerName + suffixSymbol + orderNo + suffixSymbol 
+								+ slno + suffixSymbol
+										+  productName +  "'," + stockQty + ","+ ord_Qty +","+qty_Rate+","
+										+ tot_ord_Rate + ",'" + repName + suffixSymbol + theDate+"')";
 								//Log.d("last row"+j, productName);
 							}else{
-								tblDtlString = tblDtlString+",('"+customerName + suffixSymbol + orderNo + suffixSymbol + slno + suffixSymbol
-										+  productName +  "'," + stockQty + ","+ ord_Qty +","+qty_Rate+","+ tot_ord_Rate
-										+ ",'" + repName + suffixSymbol + theDate+"')";	
+								tblDtlString = tblDtlString+",('"+customerName + suffixSymbol + orderNo 
+								+ suffixSymbol + slno + suffixSymbol +  productName +  "'," + stockQty + ","
+								+ ord_Qty +","+qty_Rate+","+ tot_ord_Rate + ",'" 
+								+ repName + suffixSymbol + theDate+"')";	
 							}*/
 							
-							tblDtlString = tblDtlString+"('"+customerName + suffixSymbol + orderNo + suffixSymbol + slno + suffixSymbol
-									+  productName +  "'," + stockQty + ","+ ord_Qty +","+qty_Rate+","+ tot_ord_Rate
+							tblDtlString = tblDtlString+"('"+customerName + suffixSymbol + orderNo + suffixSymbol
+									+ slno + suffixSymbol
+									+  productName +  "'," + stockQty + ","+ ord_Qty +","+qty_Rate+","
+									+ qty_Free +","
+									+ tradeDis +"," + cashDis +"," + tot_ord_Rate
 									+ ",'" + repName + suffixSymbol + theDate+"')";
 							
 							//Log.d("Details table", tblDtlString);
@@ -148,7 +160,7 @@ public class ExportOrders {
 									+" - "+st.getCell(6, j).getContents()+" - "+st.getCell(7, j).getContents());*/
 							
 							orderQty = st.getCell(3, j).getContents();
-							orderdAmount = st.getCell(5, j).getContents();
+							orderdAmount = st.getCell(8, j).getContents();
 							
 							tblMstString = tblMstString + orderQty + ","
 									+ orderdAmount +",'" + repName + suffixSymbol + theDate+"')";
@@ -176,13 +188,13 @@ public class ExportOrders {
 				
 			} catch (BiffException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.d("BiffException", e.getMessage());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.d("IO Exception", e.getMessage());
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.d("ParseException", e.getMessage());
 			}
 			
 			

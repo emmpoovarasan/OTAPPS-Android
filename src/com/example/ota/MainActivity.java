@@ -93,9 +93,22 @@ public class MainActivity extends Activity {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-				if(session.isLoggedIn() == true){	
-					Log.d("Output result", ExportOrders.Connections());
-					Toast.makeText(getApplicationContext(), ExportOrders.Connections(), Toast.LENGTH_LONG).show();
+				if(session.isLoggedIn() == true){
+					String Result="";
+					/*String dataBaseDriver, URL, userName, userPassword;
+					dataBaseDriver = "net.sourceforge.jtds.jdbc.Driver";
+					URL = "jdbc:jtds:sqlserver://192.168.1.80:1433/ota;user=sa;password=flower";
+					userName = "sa";
+					userPassword = "flower";*/
+					//ExportOrders.Connections(dataBaseDriver, URL, userName, userPassword);
+					//Result = ExportOrders.Connections(dataBaseDriver, URL, userName, userPassword);
+					Result = ExportOrders.Connections(AccessPropertyFile.getAccessPropertyValue("dataBaseDriver"),
+							AccessPropertyFile.getAccessPropertyValue("URL"),
+							AccessPropertyFile.getAccessPropertyValue("userName"),
+							AccessPropertyFile.getAccessPropertyValue("userPassword"));
+					Log.d("Output result", Result);
+					Toast.makeText(getApplicationContext(), Result, Toast.LENGTH_LONG).show();
+					Result = "";
 				}else{
 					session.checkLogin();
 				}

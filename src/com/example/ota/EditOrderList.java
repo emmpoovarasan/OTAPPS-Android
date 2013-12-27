@@ -178,9 +178,12 @@ public class EditOrderList extends Activity {
 							Cell cellProductName = sheet.getCell(1, i);
 							Cell cellInStock = sheet.getCell(2, i);
 							Cell cellOrderedQty = sheet.getCell(3, i);
-							Cell cellAmount = sheet.getCell(4, i);
-							Cell cellNetAmount = sheet.getCell(5,i);
-							//Log.d("Values of Products in loading tables"+i, cellProductName.getContents() +"@"+ cellInStock.getContents()+"@"+cellAmount.getContents());
+							Cell cellRate = sheet.getCell(4, i);
+							Cell cellFree = sheet.getCell(5,i);
+							Cell cellTradeDis = sheet.getCell(6,i);
+							Cell cellCashDis = sheet.getCell(7,i);
+							Cell cellAmount = sheet.getCell(8,i);
+							//Log.d("Values of Products in loading tables"+i, cellProductName.getContents() +"@"+ cellInStock.getContents()+"@"+cellRate.getContents());
 							if(cellProductName.getContents().toString() != ""){
 								// Create the table from the source code without xml:
 								row = new TableRow(this);
@@ -227,12 +230,10 @@ public class EditOrderList extends Activity {
 								orderQty.setBackgroundColor(Color.YELLOW);
 								orderQty.setTextColor(Color.BLACK);
 								orderQty.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
-								if("0".equals(cellOrderedQty.getContents().toString())){
-									//Log.d("OrderQty = 0", cellOrderedQty.getContents().toString());
-									orderQty.setText(String.valueOf(""));
-								}else{
+								if(Double.valueOf(cellOrderedQty.getContents().toString()) > 0){
 									orderQty.setText(String.valueOf(cellOrderedQty.getContents().toString()));
-									//Log.d("OrderQty != 0", cellOrderedQty.getContents().toString());
+								}else{
+									orderQty.setText(String.valueOf(""));
 								}
 								
 								orderQty.setGravity(Gravity.RIGHT);
@@ -242,6 +243,71 @@ public class EditOrderList extends Activity {
 								orderQty.setLayoutParams(llp);
 								orderQty.setPadding(10, 10, 40, 3);
 								
+								// rate
+								final TextView rate = new TextView(this);
+								rate.setBackgroundColor(color.darker_gray);
+								rate.setTextColor(Color.BLUE);
+								rate.setText(String.valueOf(cellRate.getContents().toString()));
+								rate.setGravity(Gravity.RIGHT);
+								row.addView(rate);
+								llp = (LinearLayout.LayoutParams) rate.getLayoutParams();
+								llp.setMargins(0, 0, 0, 1);
+								rate.setLayoutParams(llp);
+								rate.setPadding(10, 10, 40, 3);
+								
+								// Free
+								final EditText freeQty = new EditText(this);
+								freeQty.setBackgroundColor(Color.GREEN);
+								freeQty.setTextColor(Color.BLACK);
+								freeQty.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
+								if(Double.valueOf(cellFree.getContents().toString()) > 0 ){
+									freeQty.setText(String.valueOf(cellFree.getContents().toString()));
+								}else{
+									freeQty.setText(String.valueOf(""));
+								}
+								freeQty.setGravity(Gravity.RIGHT);
+								row.addView(freeQty);
+								llp = (LinearLayout.LayoutParams) freeQty.getLayoutParams();
+								llp.setMargins(0, 0, 0, 1);
+								freeQty.setLayoutParams(llp);
+								freeQty.setPadding(10, 10, 40, 3);
+								
+								// Trade Dis
+								final EditText tradeDis = new EditText(this);
+								tradeDis.setBackgroundColor(Color.YELLOW);
+								tradeDis.setTextColor(Color.BLACK);
+								tradeDis.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
+								if(Double.valueOf(cellTradeDis.getContents().toString()) > 0){
+									tradeDis.setText(String.valueOf(cellTradeDis.getContents().toString()));
+								}else{
+									tradeDis.setText(String.valueOf(""));
+								}
+								tradeDis.setGravity(Gravity.RIGHT);
+								row.addView(tradeDis);
+								llp = (LinearLayout.LayoutParams) tradeDis.getLayoutParams();
+								llp.setMargins(0, 0, 0, 1);
+								tradeDis.setLayoutParams(llp);
+								tradeDis.setPadding(10, 10, 40, 3);
+								
+								// Cash Dis
+								final EditText cashDis = new EditText(this);
+								cashDis.setBackgroundColor(Color.RED);
+								cashDis.setTextColor(Color.BLACK);
+								cashDis.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
+								if(Double.valueOf(cellCashDis.getContents().toString()) > 0){
+									cashDis.setText(String.valueOf(cellCashDis.getContents().toString()));
+								}else{
+									cashDis.setText(String.valueOf(""));
+								}
+								cashDis.setGravity(Gravity.RIGHT);
+								row.addView(cashDis);
+								llp = (LinearLayout.LayoutParams) cashDis.getLayoutParams();
+								llp.setMargins(0, 0, 0, 1);
+								cashDis.setLayoutParams(llp);
+								cashDis.setPadding(10, 10, 40, 3);
+								
+								//calculate
+			
 								// amount
 								final TextView amount = new TextView(this);
 								amount.setBackgroundColor(color.darker_gray);
@@ -253,38 +319,14 @@ public class EditOrderList extends Activity {
 								llp.setMargins(0, 0, 0, 1);
 								amount.setLayoutParams(llp);
 								amount.setPadding(10, 10, 40, 3);
-								//calculate
-			
-								// netamount
-								final TextView netAmount = new TextView(this);
-								netAmount.setBackgroundColor(color.darker_gray);
-								netAmount.setTextColor(Color.BLUE);
-								netAmount.setText(String.valueOf(cellNetAmount.getContents().toString()));
-								netAmount.setGravity(Gravity.RIGHT);
-								row.addView(netAmount);
-								llp = (LinearLayout.LayoutParams) netAmount.getLayoutParams();
-								llp.setMargins(0, 0, 0, 1);
-								netAmount.setLayoutParams(llp);
-								netAmount.setPadding(10, 10, 40, 3);
 								
 								orderQty.addTextChangedListener(new TextWatcher() {
-									
 									@Override
-									public void onTextChanged(CharSequence s, int start, int before, int count) {
-										// TODO Auto-generated method stub
-										
-									}
-									
+									public void onTextChanged(CharSequence s, int start, int before, int count) {}
 									@Override
-									public void beforeTextChanged(CharSequence s, int start, int count,
-											int after) {
-										// TODO Auto-generated method stub
-										
-									}
-									
+									public void beforeTextChanged(CharSequence s, int start, int count,int after) {}
 									@Override
 									public void afterTextChanged(Editable s) {
-										// TODO Auto-generated method stub
 										//v.setBackgroundColor(Color.DKGRAY);
 										Double etOrderQty=0.0;
 										try {
@@ -292,12 +334,12 @@ public class EditOrderList extends Activity {
 											if(orderQty.getText().length() > 0){
 										    	etOrderQty = Double.valueOf(orderQty.getText().toString());
 										    }
-										    Double tvAmount = Double.valueOf(amount.getText().toString());
-										    final Double tvNetAmount = (etOrderQty * tvAmount);
+										    Double tvRate = Double.valueOf(rate.getText().toString());
+										    final Double tvAmount = (etOrderQty * tvRate);
 										    
 										    //v.setBackgroundColor(color.darker_gray);
-										    netAmount.setText(String.valueOf(dcf.format(tvNetAmount)));
-										    netAmount.setGravity(Gravity.RIGHT);
+										    amount.setText(String.valueOf(dcf.format(tvAmount)));
+										    amount.setGravity(Gravity.RIGHT);
 										    lbl_TotalNetAmount = (TextView)findViewById(R.id.lblEditTotalNetAmount);
 										    lbl_TotalNetAmount.setText(Html.fromHtml("<b>Total Net Amount : "+ dcf.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));
 										    
@@ -311,8 +353,8 @@ public class EditOrderList extends Activity {
 												Toast.makeText(getApplicationContext(), "Please enter valid number format.. you entered as "+ne.getMessage(), Toast.LENGTH_LONG).show();
 												//orderQty.setText("0");
 											}else{
-												netAmount.setText("0.0");
-												netAmount.setGravity(Gravity.RIGHT);
+												amount.setText("0.0");
+												amount.setGravity(Gravity.RIGHT);
 												lbl_TotalNetAmount = (TextView)findViewById(R.id.lblEditTotalNetAmount);
 											    lbl_TotalNetAmount.setText(Html.fromHtml("<b>Total Net Amount : "+ dcf.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));
 											    
@@ -323,65 +365,127 @@ public class EditOrderList extends Activity {
 										
 									}
 								});
-								if(netAmount.getText().length()>0){
-									TotalNetAmountCalc += Double.valueOf(netAmount.getText().toString());
+								
+								tradeDis.addTextChangedListener(new TextWatcher() {
+									@Override
+									public void onTextChanged(CharSequence s, int start, int before, int count) {}
+									@Override
+									public void beforeTextChanged(CharSequence s, int start, int count,int after) {}
+									@Override
+									public void afterTextChanged(Editable s) {
+										Double etCashDis = 0.0;
+										Double etTradeDis = 0.0;
+										Double preAmount = 0.0;
+										Double preFinalEtTradeDis = 0.0;
+										Double preFinalEtCashDis = 0.0;
+										Double chkOrderQty, chkRate;
+										try {
+											
+											chkOrderQty = Double.valueOf(orderQty.getText().toString());
+											chkRate = Double.valueOf(rate.getText().toString());
+											if(chkOrderQty > 0){
+												if(cashDis.getText().length()>0){
+													etCashDis = Double.valueOf(cashDis.getText().toString());
+												}
+												if(tradeDis.getText().length()>0){
+													etTradeDis = Double.valueOf(tradeDis.getText().toString());
+												}
+												preAmount = (chkOrderQty * chkRate);
+												preFinalEtTradeDis = preAmount - ((preAmount*etTradeDis)/100);
+												preFinalEtCashDis = preFinalEtTradeDis - ((preFinalEtTradeDis * etCashDis)/100);
+												
+												final Double tvAmount = preFinalEtCashDis;
+											    amount.setText(String.valueOf(dcf.format(tvAmount)));
+											    amount.setGravity(Gravity.RIGHT);
+											    
+											    lbl_TotalNetAmount = (TextView)findViewById(R.id.lblEditTotalNetAmount);
+											    lbl_TotalNetAmount.setText(Html.fromHtml("<b>Total Net Amount : "
+											    + dcf.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));	
+											    
+											    lbl_TotalNetAmount1 = (TextView)findViewById(R.id.lblEditTotalNetAmount1);
+											    lbl_TotalNetAmount1.setText(Html.fromHtml("<b>Total Net Amount : "
+											    + dcf.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));
+											}
+										} catch (Exception e) {
+											Log.d("Exception", e.getMessage());
+											Toast.makeText(getApplicationContext(), 
+													"Please enter valid order quantity.", Toast.LENGTH_LONG).show();
+										}
+										
+									}
+								});
+								
+								cashDis.addTextChangedListener(new TextWatcher() {
+									@Override
+									public void onTextChanged(CharSequence s, int start, int before, int count) {}
+									@Override
+									public void beforeTextChanged(CharSequence s, int start, int count,int after) {}
+									@Override
+									public void afterTextChanged(Editable s) {
+										Double etCashDis = 0.0;
+										Double etTradeDis = 0.0;
+										Double preAmount = 0.0;
+										Double preFinalEtTradeDis = 0.0;
+										Double preFinalEtCashDis = 0.0;
+										Double chkOrderQty, chkRate;
+										try {
+											
+											chkOrderQty = Double.valueOf(orderQty.getText().toString());
+											chkRate = Double.valueOf(rate.getText().toString());
+											if(chkOrderQty > 0){
+												if(cashDis.getText().length()>0){
+													etCashDis = Double.valueOf(cashDis.getText().toString());
+												}
+												if(tradeDis.getText().length()>0){
+													etTradeDis = Double.valueOf(tradeDis.getText().toString());
+												}
+												preAmount = (chkOrderQty * chkRate);
+												preFinalEtTradeDis = preAmount - ((preAmount*etTradeDis)/100);
+												preFinalEtCashDis = preFinalEtTradeDis - ((preFinalEtTradeDis * etCashDis)/100);
+												
+												final Double tvAmount = preFinalEtCashDis;
+											    amount.setText(String.valueOf(dcf.format(tvAmount)));
+											    amount.setGravity(Gravity.RIGHT);
+											    
+											    lbl_TotalNetAmount = (TextView)findViewById(R.id.lblEditTotalNetAmount);
+											    lbl_TotalNetAmount.setText(Html.fromHtml("<b>Total Net Amount : "
+											    + dcf.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));	
+											    
+											    lbl_TotalNetAmount1 = (TextView)findViewById(R.id.lblEditTotalNetAmount1);
+											    lbl_TotalNetAmount1.setText(Html.fromHtml("<b>Total Net Amount : "
+											    + dcf.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));
+											}
+										} catch (Exception e) {
+											Log.d("Exception", e.getMessage());
+											Toast.makeText(getApplicationContext(), 
+													"Please enter valid order quantity.", Toast.LENGTH_LONG).show();
+										}
+									}
+								});
+								
+								if(amount.getText().length()>0){
+									TotalNetAmountCalc += Double.valueOf(amount.getText().toString());
 									lbl_TotalNetAmount = (TextView)findViewById(R.id.lblEditTotalNetAmount);
 									lbl_TotalNetAmount.setText(Html.fromHtml("<b>Total Net Amount : "+ dcf.format(TotalNetAmountCalc) +"</b>"));
 									
 									lbl_TotalNetAmount1 = (TextView)findViewById(R.id.lblEditTotalNetAmount1);
 									lbl_TotalNetAmount1.setText(Html.fromHtml("<b>Total Net Amount : "+ dcf.format(TotalNetAmountCalc) +"</b>"));
-									
 								}
 								row.setOnClickListener(new OnClickListener() {
-									
 									@Override
 									public void onClick(View v) {
-										// TODO Auto-generated method stub
 										orderQty.requestFocus();	
 									}
 								});
-								/*row.setOnClickListener(new View.OnClickListener() {
-									
-									@Override
-									public void onClick(View v) {
-										
-										v.setBackgroundColor(Color.DKGRAY);
-										
-										final TableRow t = (TableRow) v;
-									    TextView textViewSno = (TextView) t.getChildAt(0);
-									    TextView textViewProductName = (TextView) t.getChildAt(1);
-									    TextView textViewInStock = (TextView) t.getChildAt(2);
-									    EditText editTextOrderQty = (EditText) t.getChildAt(3);
-									    TextView textViewAmount = (TextView) t.getChildAt(4);
-									    TextView textViewNetAmount = (TextView) t.getChildAt(5);
-									    
-									    String tvSno = textViewSno.getText().toString();
-									    String tvProductName = textViewProductName.getText().toString();
-									    Double tvInStock = Double.valueOf(textViewInStock.getText().toString());
-									    Double etOrderQty = 0.0;
-									    if(editTextOrderQty.getText().length() > 0){
-									    	etOrderQty = Double.valueOf(editTextOrderQty.getText().toString());
-									    }
-									    Double tvAmount = Double.valueOf(textViewAmount.getText().toString());
-									    final Double tvNetAmount = (etOrderQty * tvAmount);
-									    
-									    v.setBackgroundColor(color.darker_gray);
-									    netAmount.setText(String.valueOf(tvNetAmount));
-									   
-									    
-									}
-								});*/
 								
 							} // end of if statement
 						} // end of i>1 if statement
 					} // end of for loop
 					
 				} catch (BiffException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Log.d("BiffException", e.getMessage());
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Log.d("IOException", e.getMessage());
 				}
 		
 		}else{
@@ -434,7 +538,7 @@ public class EditOrderList extends Activity {
 				// getting values from tablelayout and place to excel
 				Double totalOrderQty=0.0, totalNetAmount=0.0;
 				for(int i = 0; i<tlEditOL.getChildCount();i++){
-					String iRow,inStock,orderQty,productNames,amount,netAmount;
+					String iRow,inStock,orderQty,productNames,rate,freeQty,tradeDis,cashDis,amount;
 					if(i==0){
 							row = sheet.createRow(i);
 							Log.d("Orderno, BeatName row values", String.valueOf(i));
@@ -564,7 +668,7 @@ public class EditOrderList extends Activity {
 							cell.setCellStyle(cellStyle);
 							
 							cell = row.createCell((short)4);
-							cell.setCellValue("Amount");
+							cell.setCellValue("Rate");
 							// set border to cell
 							cellStyle = workbook.createCellStyle();
 							cellStyle.setBorderTop((short)1);
@@ -574,7 +678,37 @@ public class EditOrderList extends Activity {
 							cell.setCellStyle(cellStyle);
 							
 							cell = row.createCell((short)5);
-							cell.setCellValue("Net Amount");
+							cell.setCellValue("Free");
+							// set border to cell
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
+							
+							cell = row.createCell((short)6);
+							cell.setCellValue("Trade Dis%");
+							// set border to cell
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
+							
+							cell = row.createCell((short)7);
+							cell.setCellValue("Cash Dis%");
+							// set border to cell
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
+							
+							cell = row.createCell((short)8);
+							cell.setCellValue("Amount");
 							// set border to cell
 							cellStyle = workbook.createCellStyle();
 							cellStyle.setBorderTop((short)1);
@@ -595,16 +729,28 @@ public class EditOrderList extends Activity {
 						if(orderQty.length()==0){ 
 							orderQty="0";
 						}
-						amount = String.valueOf(((TextView)((TableRow)tlEditOL.getChildAt(i+1)).getChildAt(4)).getText());
-						if(amount.length()==0){
-							amount = "0";
+						rate = String.valueOf(((TextView)((TableRow)tlEditOL.getChildAt(i+1)).getChildAt(4)).getText());
+						if(rate.length()==0){
+							rate = "0";
 						}
-						netAmount = String.valueOf(((TextView)((TableRow)tlEditOL.getChildAt(i+1)).getChildAt(5)).getText());
-						if(netAmount.length()==0){
-							netAmount ="0";
+						freeQty = String.valueOf(((EditText)((TableRow)tlEditOL.getChildAt(i+1)).getChildAt(5)).getText());
+						if(freeQty.length()==0){
+							freeQty = "0";
+						}
+						tradeDis = String.valueOf(((EditText)((TableRow)tlEditOL.getChildAt(i+1)).getChildAt(6)).getText());
+						if(tradeDis.length()==0){
+							tradeDis = "0";
+						}
+						cashDis = String.valueOf(((EditText)((TableRow)tlEditOL.getChildAt(i+1)).getChildAt(7)).getText());
+						if(cashDis.length()==0){
+							cashDis = "0";
+						}
+						amount = String.valueOf(((TextView)((TableRow)tlEditOL.getChildAt(i+1)).getChildAt(8)).getText());
+						if(amount.length()==0){
+							amount ="0";
 						}
 						totalOrderQty += Double.valueOf(orderQty);
-						totalNetAmount += Double.valueOf(netAmount);
+						totalNetAmount += Double.valueOf(amount);
 						row = sheet.createRow(i);
 						Log.d("Details rows", String.valueOf(i));
 						cell = row.createCell((short)0);
@@ -651,7 +797,7 @@ public class EditOrderList extends Activity {
 						cell.setCellStyle(cellStyle);
 						
 						cell = row.createCell((short)4);
-						cell.setCellValue(dcf.format(Double.valueOf(amount)));
+						cell.setCellValue(dcf.format(Double.valueOf(rate)));
 						// set border to cell
 						cellStyle = workbook.createCellStyle();
 						cellStyle.setBorderTop((short)1);
@@ -662,9 +808,42 @@ public class EditOrderList extends Activity {
 						cell.setCellStyle(cellStyle);
 						
 						cell = row.createCell((short)5);
+						cell.setCellValue(dcf.format(Double.valueOf(freeQty)));
+						// set border to cell
+						cellStyle = workbook.createCellStyle();
+						cellStyle.setBorderTop((short)1);
+						cellStyle.setBorderBottom((short)1);
+						cellStyle.setBorderLeft((short)1);
+						cellStyle.setBorderRight((short)1);
+						cellStyle.setAlignment(cellStyle.ALIGN_RIGHT);
+						cell.setCellStyle(cellStyle);
+						
+						cell = row.createCell((short)6);
+						cell.setCellValue(dcf.format(Double.valueOf(tradeDis)));
+						// set border to cell
+						cellStyle = workbook.createCellStyle();
+						cellStyle.setBorderTop((short)1);
+						cellStyle.setBorderBottom((short)1);
+						cellStyle.setBorderLeft((short)1);
+						cellStyle.setBorderRight((short)1);
+						cellStyle.setAlignment(cellStyle.ALIGN_RIGHT);
+						cell.setCellStyle(cellStyle);
+						
+						cell = row.createCell((short)7);
+						cell.setCellValue(dcf.format(Double.valueOf(cashDis)));
+						// set border to cell
+						cellStyle = workbook.createCellStyle();
+						cellStyle.setBorderTop((short)1);
+						cellStyle.setBorderBottom((short)1);
+						cellStyle.setBorderLeft((short)1);
+						cellStyle.setBorderRight((short)1);
+						cellStyle.setAlignment(cellStyle.ALIGN_RIGHT);
+						cell.setCellStyle(cellStyle);
+						
+						cell = row.createCell((short)8);
 						//formule_NetAmount = "SUM(D"+(i+1)+",E"+(i+1)+")";
 						//cell.setCellType(HSSFCell.CELL_TYPE_FORMULA);
-						cell.setCellValue(dcf.format(Double.valueOf(netAmount)));
+						cell.setCellValue(dcf.format(Double.valueOf(amount)));
 						//cell.setCellFormula(formule_NetAmount);
 						// set border to cell
 						cellStyle = workbook.createCellStyle();
@@ -675,7 +854,7 @@ public class EditOrderList extends Activity {
 						cellStyle.setAlignment(cellStyle.ALIGN_RIGHT);
 						cell.setCellStyle(cellStyle);
 					
-						Log.d("List of products"+iRow, String.valueOf(iRow+"@"+productNames+"@"+inStock+"@"+orderQty+"@"+amount+"@"+netAmount));
+						Log.d("List of products"+iRow, String.valueOf(iRow+"@"+productNames+"@"+inStock+"@"+orderQty+"@"+rate+"@"+freeQty+"@"+tradeDis+"@"+cashDis+"@"+amount));
 					}
 						
 						// create total qty and netamount row
@@ -731,6 +910,33 @@ public class EditOrderList extends Activity {
 							cell.setCellStyle(cellStyle);
 							
 							cell = row.createCell((short)5);
+							// set border to cell
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
+							
+							cell = row.createCell((short)6);
+							// set border to cell
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
+							
+							cell = row.createCell((short)7);
+							// set border to cell
+							cellStyle = workbook.createCellStyle();
+							cellStyle.setBorderTop((short)1);
+							cellStyle.setBorderBottom((short)1);
+							cellStyle.setBorderLeft((short)1);
+							cellStyle.setBorderRight((short)1);
+							cell.setCellStyle(cellStyle);
+							
+							cell = row.createCell((short)8);
 							cell.setCellValue(dcf.format(totalNetAmount));
 							// set border to cell
 							cellStyle = workbook.createCellStyle();
@@ -769,7 +975,7 @@ public class EditOrderList extends Activity {
 			tlEditOL = (TableLayout)findViewById(R.id.tblEditOrderList);
 			for(int i = 0;i<tlEditOL.getChildCount();i++){
 				if(i>=2 &&  i < tlEditOL.getChildCount()-1){
-					strNetAmount = String.valueOf(((TextView)((TableRow)tlEditOL.getChildAt(i+1)).getChildAt(5)).getText());
+					strNetAmount = String.valueOf(((TextView)((TableRow)tlEditOL.getChildAt(i+1)).getChildAt(8)).getText());
 					if(strNetAmount.length()==0){
 						strNetAmount ="0";
 					}

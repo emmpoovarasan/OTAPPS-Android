@@ -252,7 +252,7 @@ public class ListOfOrders extends Activity {
 			Log.d("SELECTED SHEET NAME", SelectedSheetName);
 			Cell cellOrderNo = st.getCell(1, 0);
 			Cell cellOrderedQty = st.getCell(3, st.getRows()-1);
-			Cell cellNetAmount = st.getCell(5, st.getRows()-1);
+			Cell cellNetAmount = st.getCell(8, st.getRows()-1);
 			Log.d("GetRowsCount", String.valueOf(st.getRows()-1));
 			if(returnType == "ORDERNO"){
 				MyReturn = String.valueOf(cellOrderNo.getContents().toString());

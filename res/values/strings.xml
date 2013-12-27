@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Order Taken Application</string>
+    <string name="app_name">Order Taken App</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <!-- login screen details -->
@@ -11,7 +11,7 @@
     <string name="login">Login</string>
 
     <!-- order page -->
-    <string name="title_order_page">Add an order details</string>
+    <string name="title_order_page">Add an Order Page</string>
     <string name="beatname">Beat name</string>
     <string name="shopname">Shop name</string>
     <!-- <string name="cutomername">Customer name</string> -->
@@ -26,7 +26,7 @@
     <string name="amount">Amount</string>
     <string name="netamount">Net Amount</string>
     <string name="title_activity_main">Dashboard Page</string>
-    <string name="title_activity_list_of_orders">ListOfOrders</string>
+    <string name="title_activity_list_of_orders">List Of Orders</string>
 
     <!-- List of Order details activity page -->
     <string name="title_list_order_details">List of orders</string>
@@ -35,7 +35,7 @@
     <string name="OrderNo">Order No</string>
     <string name="OrderedQty">Ordered Qty</string>
     <string name="TotalNetAmount">Net Amount</string>
-    <string name="title_activity_edit_order_list">EditOrderList</string>
+    <string name="title_activity_edit_order_list">Update Order Page</string>
     
     <string name="updateOrder">Update Order</string>
 
