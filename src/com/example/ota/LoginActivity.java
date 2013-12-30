@@ -52,7 +52,6 @@ public class LoginActivity extends Activity {
 			
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				scrollLoginPage.scrollTo(0, lnrLayContentViewLoginPage.getPaddingTop());
 			}
 		});
@@ -61,12 +60,11 @@ public class LoginActivity extends Activity {
 		
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
 			try {
 				// Check if username, password is filled
 				if(username.getText().length() > 0 && password.getText().length() > 0){
 					
-					Log.d("Login status", String.valueOf(checkLoginStatus()));
+					//Log.d("Login status", String.valueOf(checkLoginStatus()));
 					if(checkLoginStatus() == true){
 						// Creating user login session
                         // For testing i am storing name
@@ -88,11 +86,8 @@ public class LoginActivity extends Activity {
 					Toast.makeText(getApplicationContext(), "Login failed.. Please enter username and password", 2).show();
                 }
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Toast.makeText(getApplication(), e.getMessage(), Toast.LENGTH_LONG).show();
 				}
-				
-				
 			}
 	}; 
 

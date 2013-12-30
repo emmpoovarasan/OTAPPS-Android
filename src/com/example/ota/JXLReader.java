@@ -8,6 +8,7 @@ import java.util.TreeSet;
 
 import android.R.integer;
 import android.util.Log;
+import android.widget.Toast;
 
 import jxl.Cell;
 import jxl.CellType;
@@ -28,7 +29,7 @@ public class JXLReader {
     this.areaName = areaName;
   }
   public  ArrayList<String> getProductName() throws IOException{
-	  Log.d("getProductName function", "Successfully entered to getProductName");
+	  //Log.d("getProductName function", "Successfully entered to getProductName");
 	  File inputWorkbook = new File(inputFile);
 	  Workbook w;
 	  //TreeSet treeSetProductName = new TreeSet();
@@ -48,7 +49,7 @@ public class JXLReader {
 		}
 		//arrayProductName.addAll(treeSetProductName);
 	} catch (Exception e) {
-		// TODO: handle exception
+		Toast.makeText(null, e.getMessage(), Toast.LENGTH_LONG).show();
 	}
 	return arrayProductName;
   }

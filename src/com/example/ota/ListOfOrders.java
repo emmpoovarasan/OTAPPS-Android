@@ -65,22 +65,10 @@ public class ListOfOrders extends Activity {
 		lbl_ListOfTotalNetAmount.setText(Html.fromHtml("<b>Total Net Amount : "+ dcf.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));
 		//Log.d("End Executed Total Amount Calc", "Ends --------");
 		
-		/*btnShowListOfOrders = (Button)findViewById(R.id.btnOLshowListOfOrders);
-		btnShowListOfOrders.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				fnLoadOrderList(FilePath.getExternalPath());
-			}
-		});*/
-		
 		btnGotoOrder = (Button)findViewById(R.id.btnOLgoToOrder);
 		btnGotoOrder.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				if(session.isLoggedIn() == true){
 					Intent myPage = new Intent(getApplicationContext(), OrderPage.class);
 					startActivity(myPage);
@@ -92,10 +80,8 @@ public class ListOfOrders extends Activity {
 		
 		btnDashBoard = (Button)findViewById(R.id.btnOLdashBoard);
 		btnDashBoard.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				if(session.isLoggedIn() == true){
 					Intent myPage = new Intent(getApplicationContext(), MainActivity.class);
 					startActivity(myPage);
@@ -107,10 +93,8 @@ public class ListOfOrders extends Activity {
 		// button for logout
 		btnLogOut = (Button)findViewById(R.id.btnOLlogOut);
 		btnLogOut.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				// Clear the session data
 	            // This will clear all session data and
 	            // redirect user to LoginActivity
@@ -118,42 +102,26 @@ public class ListOfOrders extends Activity {
 			}
 		});
 		
-		/*tblListOfOrders = (TableLayout)findViewById(R.id.tblListOfOrders);
-		tblListOfOrders.post(new Runnable() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				tblListOfOrders.scrollTo(tblListOfOrders.getMeasuredWidth(), tblListOfOrders.getMeasuredHeight());
-			}
-		});*/
-		
 		svListOfOrders = (ScrollView)findViewById(R.id.svListOfOrdersTable);
 		svListOfOrders.post(new Runnable() {
-			
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				svListOfOrders.pageScroll(svListOfOrders.getMaxScrollAmount());
 			}
 		});
 		
 		hvListOfOrders = (HorizontalScrollView)findViewById(R.id.hvListOfOrdersTable);
 		hvListOfOrders.post(new Runnable() {
-			
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				hvListOfOrders.pageScroll(hvListOfOrders.getMaxScrollAmount());
 			}
 		});
 		
 		hvListOfOrderButton = (HorizontalScrollView)findViewById(R.id.hvListOfOrderButton);
 		hvListOfOrderButton.post(new Runnable() {
-			
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				hvListOfOrderButton.pageScroll(hvListOfOrderButton.getMaxScrollAmount());
 			}
 		});
@@ -234,8 +202,8 @@ public class ListOfOrders extends Activity {
 				session.checkLogin();
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
-			Log.d("Exception", e.getMessage());
+			//Log.d("Exception", e.getMessage());
+			Toast.makeText(getApplication(), e.getMessage(), Toast.LENGTH_LONG).show();
 		}
 	}
 	
@@ -249,15 +217,15 @@ public class ListOfOrders extends Activity {
 			wb = Workbook.getWorkbook(fp);
 			Sheet st = null;
 			st = wb.getSheet(SelectedSheetName);
-			Log.d("SELECTED SHEET NAME", SelectedSheetName);
+			//Log.d("SELECTED SHEET NAME", SelectedSheetName);
 			Cell cellOrderNo = st.getCell(1, 0);
 			Cell cellOrderedQty = st.getCell(3, st.getRows()-1);
 			Cell cellNetAmount = st.getCell(8, st.getRows()-1);
-			Log.d("GetRowsCount", String.valueOf(st.getRows()-1));
+			//Log.d("GetRowsCount", String.valueOf(st.getRows()-1));
 			if(returnType == "ORDERNO"){
 				MyReturn = String.valueOf(cellOrderNo.getContents().toString());
 				//Toast.makeText(getApplicationContext(), returnType+"/"+MyReturn, 2).show();
-				Log.d("ORDERNO", returnType+"/"+MyReturn);
+				//Log.d("ORDERNO", returnType+"/"+MyReturn);
 			}
 			/*if(returnType == "ORDEREDQTY"){
 				CalcOrderedQty += Double.valueOf(cellOrderedQty.getContents().toString());
@@ -269,12 +237,12 @@ public class ListOfOrders extends Activity {
 				CalcNetAmount += Double.valueOf(cellNetAmount.getContents().toString());
 				MyReturn = String.valueOf(CalcNetAmount);
 				//Toast.makeText(getApplicationContext(), returnType+"/"+MyReturn, 2).show();
-				Log.d("NETAMOUNT", returnType+"/"+MyReturn);
+				//Log.d("NETAMOUNT", returnType+"/"+MyReturn);
 			}
 						
 		} catch (Exception e) {
-			// TODO: handle exception
-			Log.d("Exception", e.getMessage());
+			//Log.d("Exception", e.getMessage());
+			Toast.makeText(getApplication(), e.getMessage(), Toast.LENGTH_LONG).show();
 		}
 		return MyReturn;
 	}

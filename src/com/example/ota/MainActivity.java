@@ -35,10 +35,8 @@ public class MainActivity extends Activity {
 		
 			goToOrders = (Button)findViewById(R.id.goToOrder);
 			goToOrders.setOnClickListener(new OnClickListener() {
-				
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
 					if(session.isLoggedIn() == true){
 						Intent gotoOrderPage = new Intent(getApplicationContext(), OrderPage.class);
 						startActivity(gotoOrderPage);
@@ -51,10 +49,8 @@ public class MainActivity extends Activity {
 			
 			listOfOrders = (Button)findViewById(R.id.listOfOrders);
 			listOfOrders.setOnClickListener(new OnClickListener() {
-				
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
 					if(session.isLoggedIn()==true){
 						Intent listOfOrdersPage = new Intent(getApplicationContext(), ListOfOrders.class);
 						startActivity(listOfOrdersPage);
@@ -69,10 +65,8 @@ public class MainActivity extends Activity {
 	         * */
 			logOut = (Button)findViewById(R.id.logOut);
 			logOut.setOnClickListener(new OnClickListener() {
-				
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
 					// Clear the session data
 		            // This will clear all session data and
 		            // redirect user to LoginActivity
@@ -89,30 +83,20 @@ public class MainActivity extends Activity {
 			
 			exportOrders = (Button)findViewById(R.id.ExportOrders);
 			exportOrders.setOnClickListener(new OnClickListener() {
-				
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
-				if(session.isLoggedIn() == true){
-					String Result="";
-					/*String dataBaseDriver, URL, userName, userPassword;
-					dataBaseDriver = "net.sourceforge.jtds.jdbc.Driver";
-					URL = "jdbc:jtds:sqlserver://192.168.1.80:1433/ota;user=sa;password=flower";
-					userName = "sa";
-					userPassword = "flower";*/
-					//ExportOrders.Connections(dataBaseDriver, URL, userName, userPassword);
-					//Result = ExportOrders.Connections(dataBaseDriver, URL, userName, userPassword);
-					Result = ExportOrders.Connections(AccessPropertyFile.getAccessPropertyValue("dataBaseDriver"),
-							AccessPropertyFile.getAccessPropertyValue("URL"),
-							AccessPropertyFile.getAccessPropertyValue("userName"),
-							AccessPropertyFile.getAccessPropertyValue("userPassword"));
-					Log.d("Output result", Result);
-					Toast.makeText(getApplicationContext(), Result, Toast.LENGTH_LONG).show();
-					Result = "";
-				}else{
-					session.checkLogin();
-				}
-				
+					if(session.isLoggedIn() == true){
+						String Result="";
+						Result = ExportOrders.Connections(AccessPropertyFile.getAccessPropertyValue("dataBaseDriver"),
+								AccessPropertyFile.getAccessPropertyValue("URL"),
+								AccessPropertyFile.getAccessPropertyValue("userName"),
+								AccessPropertyFile.getAccessPropertyValue("userPassword"));
+						//Log.d("Output result", Result);
+						Toast.makeText(getApplicationContext(), Result, Toast.LENGTH_LONG).show();
+						Result = "";
+					}else{
+						session.checkLogin();
+					}
 				}
 			});
 		}

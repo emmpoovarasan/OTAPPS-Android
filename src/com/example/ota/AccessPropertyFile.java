@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.util.Properties;
 
 import android.util.Log;
+import android.widget.Toast;
 
 public class AccessPropertyFile {
 	
@@ -25,11 +26,12 @@ public class AccessPropertyFile {
 				filePath = prop.getProperty("userPassword");	
 			}
 			//System.out.println(filePath);
-			Log.d("File Path", filePath);
+			//Log.d("File Path", filePath);
 			
 		} catch (Exception e) {
 			//System.out.println(e.getMessage());
-			Log.d("Exception", e.getMessage());
+			//Log.d("Exception", e.getMessage());
+			Toast.makeText(null, e.getMessage(), Toast.LENGTH_LONG).show();
 		}
 		return filePath;
 	}

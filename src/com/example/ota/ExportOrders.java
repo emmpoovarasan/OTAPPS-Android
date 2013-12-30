@@ -13,6 +13,7 @@ import jxl.Workbook;
 import jxl.read.biff.BiffException;
 
 import android.util.Log;
+import android.widget.Toast;
 
 public class ExportOrders {
 
@@ -32,35 +33,20 @@ public class ExportOrders {
 			//dataBaseDriver = "net.sourceforge.jtds.jdbc.Driver";
 			
 			Class.forName(dataBaseDriver);
-			Log.d("AFTER CLASS FORNAME ", "SUCCESS");
+			//Log.d("AFTER CLASS FORNAME ", "SUCCESS");
 			//URL = "jdbc:jtds:sqlserver://192.168.1.80:1433/ota;user=sa;password=flower";
 			
 			
 			//conn = DriverManager.getConnection(URL, "sa", "flower");
 			conn = DriverManager.getConnection(URL, userName, userPassword);
 			
-			Log.d("CONNECTION IS OPENED", "SUCCESS");
+			//Log.d("CONNECTION IS OPENED", "SUCCESS");
 			
 			stmt = conn.createStatement();
 			
-			Log.d("STATEMENT IS CREATED", "SUCCESS");
+			//Log.d("STATEMENT IS CREATED", "SUCCESS");
 			
-			/*String insertQry;
-			insertQry = "INSERT INTO TblMstExportOrders VALUES('customer_name','order_no','2013-12-10',
-			'beat_name','rep_name'," +
-					"18,1800,'entered_by',2013-12-10)";
 			
-			stmt.executeUpdate(insertQry);
-			
-			reset = stmt.executeQuery("select * from tblmstexportorders");
-			
-			Log.d("RESULT SET IS OPENED", "SUCCESS");
-			
-			while (reset.next()) {
-				outPuts = outPuts + reset.getString("customer_name");
-				Log.d("Data", reset.getString("customer_name"));
-				
-			}*/
 			File excelFile;
 			Workbook wb;
 			Sheet st;
@@ -71,10 +57,10 @@ public class ExportOrders {
 				wb = Workbook.getWorkbook(excelFile);
 				wb.getSheetNames();
 				totalSheets = wb.getNumberOfSheets();
-				Log.d("Total no of Sheets", String.valueOf(totalSheets));
+				//Log.d("Total no of Sheets", String.valueOf(totalSheets));
 				for(int i=4; i<totalSheets;i++){
 					
-					Log.d("Sheet"+i, wb.getSheet(i).getName());
+					//Log.d("Sheet"+i, wb.getSheet(i).getName());
 					st = wb.getSheet(i);
 					String tblMstString = new String();
 					String tblDtlString = new String();
@@ -123,18 +109,6 @@ public class ExportOrders {
 							cashDis = st.getCell(7, j).getContents();
 							tot_ord_Rate = st.getCell(8, j).getContents();
 							
-							/*if(j==2){
-								tblDtlString = tblDtlString+"('"+customerName + suffixSymbol + orderNo + suffixSymbol 
-								+ slno + suffixSymbol
-										+  productName +  "'," + stockQty + ","+ ord_Qty +","+qty_Rate+","
-										+ tot_ord_Rate + ",'" + repName + suffixSymbol + theDate+"')";
-								//Log.d("last row"+j, productName);
-							}else{
-								tblDtlString = tblDtlString+",('"+customerName + suffixSymbol + orderNo 
-								+ suffixSymbol + slno + suffixSymbol +  productName +  "'," + stockQty + ","
-								+ ord_Qty +","+qty_Rate+","+ tot_ord_Rate + ",'" 
-								+ repName + suffixSymbol + theDate+"')";	
-							}*/
 							
 							tblDtlString = tblDtlString+"('"+customerName + suffixSymbol + orderNo + suffixSymbol
 									+ slno + suffixSymbol
@@ -147,7 +121,7 @@ public class ExportOrders {
 							String InsertTblDtl = "insert into tbldtlexportorders values "+tblDtlString;
 							//Log.d("Details Table Query Builder", InsertTblDtl);
 							stmt.executeUpdate(InsertTblDtl);
-							Log.d("Details Table Query Inserted", "Success");
+							//Log.d("Details Table Query Inserted", "Success");
 							tblDtlString ="";
 							outPuts = "Orders exported successfully";
 							
@@ -172,7 +146,7 @@ public class ExportOrders {
 					String InsertTblMst = "insert into tblmstexportorders values "+tblMstString;
 					//Log.d("Master Table Query Builder", InsertTblMst);
 					stmt.executeUpdate(InsertTblMst);
-					Log.d("Master Table Query Inserted", "Success");
+					//Log.d("Master Table Query Inserted", "Success");
 					tblMstString = "";
 					
 					outPuts = "Orders exported successfully";
@@ -181,36 +155,48 @@ public class ExportOrders {
 					Log.d("Details Table Query Builder", InsertTblDtl);
 					stmt.executeUpdate(InsertTblDtl);
 					Log.d("Details Table Query Inserted", "Success");*/
-					
-					
-					
 				}
 				
 			} catch (BiffException e) {
-				// TODO Auto-generated catch block
-				Log.d("BiffException", e.getMessage());
+				//Log.d("BiffException", e.getMessage());
+				Toast.makeText(null, e.getMessage(), Toast.LENGTH_LONG).show();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				Log.d("IO Exception", e.getMessage());
+				//Log.d("IO Exception", e.getMessage());
+				Toast.makeText(null, e.getMessage(), Toast.LENGTH_LONG).show();
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				Log.d("ParseException", e.getMessage());
+				//Log.d("ParseException", e.getMessage());
+				Toast.makeText(null, e.getMessage(), Toast.LENGTH_LONG).show();
 			}
-			
-			
 			
 			conn.close();
 			
-			
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			Log.d("Class Not Found Exception", e.getMessage());
+			//Log.d("Class Not Found Exception", e.getMessage());
+			Toast.makeText(null, e.getMessage(), Toast.LENGTH_LONG).show();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			Log.d("SQL Exception", e.getMessage());
+			//Log.d("SQL Exception", e.getMessage());
+			Toast.makeText(null, e.getMessage(), Toast.LENGTH_LONG).show();
 		}
 	
 		return outPuts;
 	}
 
 }
+
+
+/*String insertQry;
+insertQry = "INSERT INTO TblMstExportOrders VALUES('customer_name','order_no','2013-12-10',
+'beat_name','rep_name'," +
+		"18,1800,'entered_by',2013-12-10)";
+
+stmt.executeUpdate(insertQry);
+
+reset = stmt.executeQuery("select * from tblmstexportorders");
+
+Log.d("RESULT SET IS OPENED", "SUCCESS");
+
+while (reset.next()) {
+	outPuts = outPuts + reset.getString("customer_name");
+	Log.d("Data", reset.getString("customer_name"));
+	
+}*/

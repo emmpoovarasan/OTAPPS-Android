@@ -94,7 +94,7 @@ public class EditOrderList extends Activity {
 					// TODO Auto-generated method stub
 					if(session.isLoggedIn() == true){
 						TableLayout tblEdit_O_L = (TableLayout)findViewById(R.id.tblEditOrderList);
-						Log.d("Table Row Counts" , String.valueOf(tblEdit_O_L.getChildCount()));
+						//Log.d("Table Row Counts" , String.valueOf(tblEdit_O_L.getChildCount()));
 						if(tblEdit_O_L.getChildCount()>1){
 							fnUpdateTableRowValues(FilePath.getExternalPath(), messageReceivedShopName);
 						}else{
@@ -137,7 +137,7 @@ public class EditOrderList extends Activity {
 				}
 			});
 		} catch (Exception e) {
-			// TODO: handle exception
+			Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
 		}
 		
 		
@@ -347,8 +347,8 @@ public class EditOrderList extends Activity {
 										    lbl_TotalNetAmount1.setText(Html.fromHtml("<b>Total Net Amount : "+ dcf.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));
 										    
 										} catch (NumberFormatException ne) {
-											// TODO: handle exception
-											Log.d("NumberFormat Exception", ne.getMessage());
+											//Log.d("NumberFormat Exception", ne.getMessage());
+											Toast.makeText(getApplication(), ne.getMessage(), Toast.LENGTH_LONG).show();
 											if(orderQty.getText().toString().length() >0){
 												Toast.makeText(getApplicationContext(), "Please enter valid number format.. you entered as "+ne.getMessage(), Toast.LENGTH_LONG).show();
 												//orderQty.setText("0");
@@ -407,7 +407,7 @@ public class EditOrderList extends Activity {
 											    + dcf.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));
 											}
 										} catch (Exception e) {
-											Log.d("Exception", e.getMessage());
+											//Log.d("Exception", e.getMessage());
 											Toast.makeText(getApplicationContext(), 
 													"Please enter valid order quantity.", Toast.LENGTH_LONG).show();
 										}
@@ -456,7 +456,7 @@ public class EditOrderList extends Activity {
 											    + dcf.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));
 											}
 										} catch (Exception e) {
-											Log.d("Exception", e.getMessage());
+											//Log.d("Exception", e.getMessage());
 											Toast.makeText(getApplicationContext(), 
 													"Please enter valid order quantity.", Toast.LENGTH_LONG).show();
 										}
@@ -483,9 +483,11 @@ public class EditOrderList extends Activity {
 					} // end of for loop
 					
 				} catch (BiffException e) {
-					Log.d("BiffException", e.getMessage());
+					//Log.d("BiffException", e.getMessage());
+					Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
 				} catch (IOException e) {
-					Log.d("IOException", e.getMessage());
+					//Log.d("IOException", e.getMessage());
+					Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
 				}
 		
 		}else{
@@ -522,9 +524,10 @@ public class EditOrderList extends Activity {
 					st = workbook.getSheetName(s);
 					if(st.equals(sheetName)){
 						status=true;
-						Log.d("Got Sheet Names"+s+"/"+sheetName, st);
+						//Log.d("Got Sheet Names"+s+"/"+sheetName, st);
 					}else{
-						Log.d("No Action made on sheet"+s+"/"+sheetName, st);
+						//Log.d("No Action made on sheet"+s+"/"+sheetName, st);
+						Toast.makeText(getApplication(), "No Action made on sheet"+s+"/"+sheetName, Toast.LENGTH_LONG).show();
 					}
 				}
 				if(status == false){
@@ -532,7 +535,7 @@ public class EditOrderList extends Activity {
 					Log.d("Status of boolean", String.valueOf(status));
 				}else{
 					sheet = workbook.getSheet(sheetName);
-					Log.d("Status of boolean", String.valueOf(status));
+					//Log.d("Status of boolean", String.valueOf(status));
 				}
 				//Toast.makeText(getApplicationContext(), "Total Child Count is "+tblLoadProductList.getChildCount(), Toast.LENGTH_SHORT).show();
 				// getting values from tablelayout and place to excel
@@ -541,7 +544,7 @@ public class EditOrderList extends Activity {
 					String iRow,inStock,orderQty,productNames,rate,freeQty,tradeDis,cashDis,amount;
 					if(i==0){
 							row = sheet.createRow(i);
-							Log.d("Orderno, BeatName row values", String.valueOf(i));
+							//Log.d("Orderno, BeatName row values", String.valueOf(i));
 							cell = row.createCell((short)0);
 							cell.setCellValue("Order No");
 							// set border to cell
@@ -626,7 +629,7 @@ public class EditOrderList extends Activity {
 					}
 					if(i==1){
 							row = sheet.createRow(i);
-							Log.d("Table Header Row value", String.valueOf(i));
+							//Log.d("Table Header Row value", String.valueOf(i));
 							cell = row.createCell((short)0);
 							cell.setCellValue("S.No");
 							// set border to cell
@@ -719,12 +722,12 @@ public class EditOrderList extends Activity {
 							
 						}
 					if(i>=2 &&  i < tlEditOL.getChildCount()-1){
-						Log.d("Product details rows", String.valueOf(i));
+						//Log.d("Product details rows", String.valueOf(i));
 						iRow=String.valueOf(i-1);
 						productNames = String.valueOf(((TextView)((TableRow)tlEditOL.getChildAt(i+1)).getChildAt(1)).getText());
 						inStock = String.valueOf(((TextView)((TableRow)tlEditOL.getChildAt(i+1)).getChildAt(2)).getText());
-						Log.d("productNames & inStock", productNames.toString() + " & "+inStock.toString());
-						Log.d("Test EditText",String.valueOf(((EditText)((TableRow)tlEditOL.getChildAt(i+1)).getChildAt(3)).getText().toString()));
+						//Log.d("productNames & inStock", productNames.toString() + " & "+inStock.toString());
+						//Log.d("Test EditText",String.valueOf(((EditText)((TableRow)tlEditOL.getChildAt(i+1)).getChildAt(3)).getText().toString()));
 						orderQty = String.valueOf(((EditText)((TableRow)tlEditOL.getChildAt(i+1)).getChildAt(3)).getText().toString());
 						if(orderQty.length()==0){ 
 							orderQty="0";
@@ -752,7 +755,7 @@ public class EditOrderList extends Activity {
 						totalOrderQty += Double.valueOf(orderQty);
 						totalNetAmount += Double.valueOf(amount);
 						row = sheet.createRow(i);
-						Log.d("Details rows", String.valueOf(i));
+						//Log.d("Details rows", String.valueOf(i));
 						cell = row.createCell((short)0);
 						cell.setCellValue(Integer.valueOf(iRow));
 						// set border to cell
@@ -854,12 +857,12 @@ public class EditOrderList extends Activity {
 						cellStyle.setAlignment(cellStyle.ALIGN_RIGHT);
 						cell.setCellStyle(cellStyle);
 					
-						Log.d("List of products"+iRow, String.valueOf(iRow+"@"+productNames+"@"+inStock+"@"+orderQty+"@"+rate+"@"+freeQty+"@"+tradeDis+"@"+cashDis+"@"+amount));
+						//Log.d("List of products"+iRow, String.valueOf(iRow+"@"+productNames+"@"+inStock+"@"+orderQty+"@"+rate+"@"+freeQty+"@"+tradeDis+"@"+cashDis+"@"+amount));
 					}
 						
 						// create total qty and netamount row
 						if(i == tlEditOL.getChildCount()-1){
-							Log.d("create total qty and netamount row number", String.valueOf(tlEditOL.getChildCount()-1));
+							//Log.d("create total qty and netamount row number", String.valueOf(tlEditOL.getChildCount()-1));
 							row = sheet.createRow(i);
 							cell = row.createCell((short)0);
 							// set border to cell
@@ -946,7 +949,7 @@ public class EditOrderList extends Activity {
 							cellStyle.setBorderRight((short)1);
 							cellStyle.setAlignment(cellStyle.ALIGN_RIGHT);
 							cell.setCellStyle(cellStyle);
-							Log.d("Total ordered qty & net amount", String.valueOf(totalOrderQty)+"/"+String.valueOf(totalNetAmount));
+							//Log.d("Total ordered qty & net amount", String.valueOf(totalOrderQty)+"/"+String.valueOf(totalNetAmount));
 						}
 					
 				}
@@ -960,11 +963,11 @@ public class EditOrderList extends Activity {
 			Toast.makeText(getApplicationContext(), sheetName+" is successfully updated", Toast.LENGTH_SHORT).show();
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			Log.d("File Not Found Exception", e.getMessage());
+			//Log.d("File Not Found Exception", e.getMessage());
+			Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			Log.d("IO Exception", e.getMessage());
+			//Log.d("IO Exception", e.getMessage());
+			Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
 		}
 		
 	}

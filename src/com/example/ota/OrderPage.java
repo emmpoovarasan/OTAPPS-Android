@@ -130,34 +130,7 @@ public class OrderPage extends Activity {
 			}
 		});
 		
-		/*// load all products from excel file
-		btnLoadProductList = (Button)findViewById(R.id.btnLoadProductList);
-		btnLoadProductList.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if(session.isLoggedIn() == true){
-					Log.d("Click LoadProduct List", "Click LoadProduct List");
-					tblLoadProductList = (TableLayout)findViewById(R.id.tableLayoutOrder);
-					if(tblLoadProductList.getChildCount()<2){
-						Log.d("Table Rows Count", String.valueOf(tblLoadProductList.getChildCount()));
-						fngetProducts("PRODUCT NAME",FilePath.getExternalPath());
-					}else{
-						Log.d("Else - Table Rows Count", String.valueOf(tblLoadProductList.getChildCount()));
-						tblLoadProductList.removeViews(1, tblLoadProductList.getChildCount()-1);
-						Log.d("Table Rows Count", String.valueOf(tblLoadProductList.getChildCount()));
-						fngetProducts("PRODUCT NAME",FilePath.getExternalPath());
-					}
-					
-				}else{
-					session.checkLogin();
-				}
-				
-			}
-		});*/
-		
-		Log.d("Loaded", getClass().getSimpleName());
+		//Log.d("Loaded", getClass().getSimpleName());
 		// button for save order
 		btnSaveOrder = (Button)findViewById(R.id.btnSaveOrder);
 		btnSaveOrder.setOnClickListener(new OnClickListener() {
@@ -168,7 +141,7 @@ public class OrderPage extends Activity {
 				if(session.isLoggedIn() == true){
 					// call save order list to excel file
 					TableLayout tbllayout = (TableLayout) findViewById(R.id.tableLayoutOrder);
-					Log.d("Table Row Counts" , String.valueOf(tbllayout.getChildCount()));
+					//Log.d("Table Row Counts" , String.valueOf(tbllayout.getChildCount()));
 					if(tbllayout.getChildCount() > 1 ){
 						fnReadTableRowValues(FilePath.getExternalPath());
 					}else{
@@ -190,7 +163,6 @@ public class OrderPage extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				if(session.isLoggedIn() == true){
 					Intent myInt = new Intent(getApplicationContext(), MainActivity.class);
 					startActivity(myInt);
@@ -205,7 +177,6 @@ public class OrderPage extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				// Clear the session data
 	            // This will clear all session data and
 	            // redirect user to LoginActivity
@@ -222,7 +193,7 @@ public class OrderPage extends Activity {
 	private ArrayList<String> loadAreaName(String mySheet) throws IOException{ 
 		JXLReader test = new JXLReader();
 	    test.setInputFile(FilePath.getExternalPath(), mySheet,null);
-	    Log.d("test.setInputFile(actualPathName, mySheet)"," test.setInputFile(actualPathName, mySheet)");
+	    //Log.d("test.setInputFile(actualPathName, mySheet)"," test.setInputFile(actualPathName, mySheet)");
 	    return test.getAreaName();
 	}
 	/**
@@ -235,7 +206,7 @@ public class OrderPage extends Activity {
 	private ArrayList<String> loadShopName(String mySheet, String areaName) throws IOException{
 		JXLReader jxlLoadShopName = new JXLReader();
 		jxlLoadShopName.setInputFile(FilePath.getExternalPath(), mySheet,areaName);
-		Log.d("loadShopName function", "Success to loadShopName");
+		//Log.d("loadShopName function", "Success to loadShopName");
 		return jxlLoadShopName.getShopName();
 	}
 	/**
@@ -250,7 +221,7 @@ public class OrderPage extends Activity {
 		try {
 			arrayBeatName = loadAreaName("AREA NAME");
 		} catch (IOException e) {
-			e.printStackTrace();
+			Toast.makeText(getApplication(), e.getMessage(), Toast.LENGTH_LONG).show();
 		}
 		
 		ArrayAdapter<String> dataAdapterBeatName = new ArrayAdapter<String>(this,
@@ -267,7 +238,6 @@ public class OrderPage extends Activity {
 				@Override
 				public void onItemSelected(AdapterView<?> arg0, View arg1,
 						int arg2, long arg3) {
-					// TODO Auto-generated method stub
 					if(session.isLoggedIn() == true){
 						fnloadShopName();
 					}else{
@@ -277,10 +247,7 @@ public class OrderPage extends Activity {
 				}
 
 				@Override
-				public void onNothingSelected(AdapterView<?> arg0) {
-					// TODO Auto-generated method stub
-					
-				}
+				public void onNothingSelected(AdapterView<?> arg0) {}
 				
 			});
 	}
@@ -289,15 +256,14 @@ public class OrderPage extends Activity {
 	 */
 	private void fnloadShopName(){
 		
-		Log.d("Displayed Shopname", (String)spnBeatName.getSelectedItem());
-		Log.d("Displayed Shopname+1", String.valueOf(spnBeatName.getSelectedItem()));
+		//Log.d("Displayed Shopname", (String)spnBeatName.getSelectedItem());
+		//Log.d("Displayed Shopname+1", String.valueOf(spnBeatName.getSelectedItem()));
 		spnShopName = (Spinner)findViewById(R.id.spinnerShopname);
 		ArrayList<String> arrayShopName = null;
 		try {
 			arrayShopName = loadShopName("CUSTOMER NAME", String.valueOf(spnBeatName.getSelectedItem()));
 		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
+			Toast.makeText(getApplication(), e.getMessage(), Toast.LENGTH_LONG).show();
 		}
 		ArrayAdapter<String> dataAdapterShopName = new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_item, arrayShopName);
@@ -307,17 +273,16 @@ public class OrderPage extends Activity {
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
-				// TODO Auto-generated method stub
 				if(session.isLoggedIn() == true){
-					Log.d("Click LoadProduct List", "Click LoadProduct List");
+					//Log.d("Click LoadProduct List", "Click LoadProduct List");
 					tblLoadProductList = (TableLayout)findViewById(R.id.tableLayoutOrder);
 					if(tblLoadProductList.getChildCount()<2){
-						Log.d("Table Rows Count", String.valueOf(tblLoadProductList.getChildCount()));
+						//Log.d("Table Rows Count", String.valueOf(tblLoadProductList.getChildCount()));
 						fngetProducts("PRODUCT NAME",FilePath.getExternalPath());
 					}else{
-						Log.d("Else - Table Rows Count", String.valueOf(tblLoadProductList.getChildCount()));
+						//Log.d("Else - Table Rows Count", String.valueOf(tblLoadProductList.getChildCount()));
 						tblLoadProductList.removeViews(1, tblLoadProductList.getChildCount()-1);
-						Log.d("Table Rows Count", String.valueOf(tblLoadProductList.getChildCount()));
+						//Log.d("Table Rows Count", String.valueOf(tblLoadProductList.getChildCount()));
 						fngetProducts("PRODUCT NAME",FilePath.getExternalPath());
 					}
 					
@@ -327,10 +292,7 @@ public class OrderPage extends Activity {
 				
 			}
 			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void onNothingSelected(AdapterView<?> arg0) {}
 		});
 	}
 	/**
@@ -357,8 +319,8 @@ public class OrderPage extends Activity {
 				Cell cellInStock = sheet.getCell(2, i);
 				Cell cellRate = sheet.getCell(4, i);
 				
-				Log.d("Values of Products in loading tables"+i, cellProductName.getContents() +"@"
-				+ cellInStock.getContents()+"@"+cellRate.getContents());
+				/*Log.d("Values of Products in loading tables"+i, cellProductName.getContents() +"@"
+				+ cellInStock.getContents()+"@"+cellRate.getContents());*/
 				if(cellProductName.getContents().toString() != ""){
 					// Create the table from the source code without xml:
 					row = new TableRow(this);
@@ -507,7 +469,8 @@ public class OrderPage extends Activity {
 							    
 							} catch (NumberFormatException ne) {
 								// TODO: handle exception
-								Log.d("NumberFormat Exception", ne.getMessage());
+								//Log.d("NumberFormat Exception", ne.getMessage());
+								Toast.makeText(getApplication(), ne.getMessage(), Toast.LENGTH_LONG).show();
 								if(orderQty.getText().toString().length() >0){
 									Toast.makeText(getApplicationContext(), 
 											"Please enter valid number format.. you entered as "+ne.getMessage(),
@@ -571,7 +534,7 @@ public class OrderPage extends Activity {
 								    + df.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));
 								}
 							} catch (Exception e) {
-								Log.d("Exception", e.getMessage());
+								//Log.d("Exception", e.getMessage());
 								Toast.makeText(getApplicationContext(), 
 										"Please enter valid order quantity.", Toast.LENGTH_LONG).show();
 							}
@@ -618,7 +581,7 @@ public class OrderPage extends Activity {
 								    + df.format(getTotalNetAmountAfterChangedOrder()) +"</b>"));
 								}
 							} catch (Exception e) {
-								Log.d("Exception", e.getMessage());
+								//Log.d("Exception", e.getMessage());
 								Toast.makeText(getApplicationContext(), 
 										"Please enter valid order quantity.", Toast.LENGTH_LONG).show();
 							}
@@ -650,9 +613,11 @@ public class OrderPage extends Activity {
 			} // end of for loop
 			
 		} catch (BiffException e) {
-			Log.d("BiffException", e.getMessage());
+			//Log.d("BiffException", e.getMessage());
+			Toast.makeText(getApplication(), e.getMessage(), Toast.LENGTH_LONG).show();
 		} catch (IOException e) {
-			Log.d("IOException", e.getMessage());
+			//Log.d("IOException", e.getMessage());
+			Toast.makeText(getApplication(), e.getMessage(), Toast.LENGTH_LONG).show();
 		}
 	
 	}
@@ -690,17 +655,18 @@ public class OrderPage extends Activity {
 					st = workbook.getSheetName(s);
 					if(st.equals(sheetName)){
 						status=true;
-						Log.d("Got Sheet Names"+s+"/"+sheetName, st);
+						//Log.d("Got Sheet Names"+s+"/"+sheetName, st);
 					}else{
-						Log.d("No Action made on sheet"+s+"/"+sheetName, st);
+						//Log.d("No Action made on sheet"+s+"/"+sheetName, st);
+						Toast.makeText(getApplication(), "No Action made on sheet"+s+"/"+sheetName, Toast.LENGTH_LONG).show();
 					}
 				}
 				if(status == false){
 					sheet = workbook.createSheet(sheetName);
-					Log.d("Status of boolean", String.valueOf(status));
+					//Log.d("Status of boolean", String.valueOf(status));
 				}else{
 					sheet = workbook.getSheet(sheetName);
-					Log.d("Status of boolean", String.valueOf(status));
+					//Log.d("Status of boolean", String.valueOf(status));
 				}
 				
 				// getting values from tablelayout and place to excel
@@ -748,7 +714,7 @@ public class OrderPage extends Activity {
 					
 						if(i==1){
 							row = sheet.createRow(i-1);
-							Log.d("Main Row value", String.valueOf(i-1));
+							//Log.d("Main Row value", String.valueOf(i-1));
 							cell = row.createCell((short)0);
 							cell.setCellValue("Order No");
 							// set border to cell
@@ -831,7 +797,7 @@ public class OrderPage extends Activity {
 							
 							
 							row = sheet.createRow(i);
-							Log.d("Header Row value", String.valueOf(i+1));
+							//Log.d("Header Row value", String.valueOf(i+1));
 							cell = row.createCell((short)0);
 							cell.setCellValue("S.No");
 							// set border to cell
@@ -925,7 +891,7 @@ public class OrderPage extends Activity {
 						}
 						
 						row = sheet.createRow(i+1);
-						Log.d("Details rows", String.valueOf(i+2));
+						//Log.d("Details rows", String.valueOf(i+2));
 						cell = row.createCell((short)0);
 						cell.setCellValue(Integer.valueOf(iRow));
 						// set border to cell
@@ -1115,8 +1081,8 @@ public class OrderPage extends Activity {
 							cell.setCellStyle(cellStyle);
 						}
 					
-					Log.d("List of products"+i, String.valueOf(iRow+"@"+productNames+"@"+inStock+"@"+orderQty
-							+"@"+rate+"@"+freeQty+"@"+tradeDis+"@"+cashDis+"@"+amount));
+					/*Log.d("List of products"+i, String.valueOf(iRow+"@"+productNames+"@"+inStock+"@"+orderQty
+							+"@"+rate+"@"+freeQty+"@"+tradeDis+"@"+cashDis+"@"+amount));*/
 				}
 				
 			}
@@ -1132,11 +1098,11 @@ public class OrderPage extends Activity {
 			lbl_TotalNetAmount1.setText("");
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			Log.d("File Not Found Exception", e.getMessage());
+			//Log.d("File Not Found Exception", e.getMessage());
+			Toast.makeText(getApplication(), e.getMessage(), Toast.LENGTH_LONG).show();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			Log.d("IO Exception", e.getMessage());
+			//Log.d("IO Exception", e.getMessage());
+			Toast.makeText(getApplication(), e.getMessage(), Toast.LENGTH_LONG).show();
 		}
 		
 	}
